@@ -25,8 +25,7 @@ export default function Home() {
 
         <section className="intro" aria-labelledby="title">
           <h1 id="title">
-            A frontier human data and evaluation lab making AI better for
-            creativity.
+            A frontier lab for agentic intelligence.
           </h1>
         </section>
       </main>
