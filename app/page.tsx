@@ -1,23 +1,74 @@
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Modules from "./components/Modules";
-import Demo from "./components/Demo";
-import Positioning from "./components/Positioning";
-import OutputShowcase from "./components/OutputShowcase";
-import Footer from "./components/Footer";
+import Image from "next/image";
+
+import logo from "./icon.png";
 
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <main>
-        <Hero />
-        <Modules />
-        <Demo />
-        <Positioning />
-        <OutputShowcase />
+      <div className="preloader" aria-hidden="true">
+        <div className="loader-lockup">
+          <div className="loader-word loader-left">Ontitled</div>
+          <div className="loader-center">
+            <img
+              src="https://framerusercontent.com/images/rXZq00I8qUTEM9GWwDnoStXjKKw.png?scale-down-to=512&width=1182&height=936"
+              alt=""
+            />
+            <span className="corner corner-tl" />
+            <span className="corner corner-tr" />
+            <span className="corner corner-bl" />
+            <span className="corner corner-br" />
+          </div>
+          <div className="loader-word loader-right">Labs</div>
+        </div>
+      </div>
+
+      <main className="splash">
+        <a className="mark" href="#" aria-label="Ontitled home">
+          <Image src={logo} alt="" width={112} height={112} priority />
+          <span className="mark-word">titled.</span>
+        </a>
+
+        <section className="intro" aria-labelledby="title">
+          <h1 id="title">
+            A frontier lab for agentic intelligence.
+          </h1>
+
+          <nav className="links" aria-label="Projects">
+            <ul>
+              <li>
+                <a href="https://concya.com" target="_blank" rel="noopener noreferrer">
+                  Concya
+                </a>
+              </li>
+              <li>
+                <a href="https://umbiance.com" target="_blank" rel="noopener noreferrer">
+                  Umbiance
+                </a>
+              </li>
+              <li>
+                <a href="https://omposition.com" target="_blank" rel="noopener noreferrer">
+                  Omposition
+                </a>
+              </li>
+              <li>
+                <a href="https://neveranda.com" target="_blank" rel="noopener noreferrer">
+                  Neveranda
+                </a>
+              </li>
+              <li>
+                <a href="https://agenitry.com" target="_blank" rel="noopener noreferrer">
+                  Agenitry
+                </a>
+              </li>
+              <li>
+                <a href="https://tribalisim.com" target="_blank" rel="noopener noreferrer">
+                  Tribalisim
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </section>
       </main>
-      <Footer />
     </>
   );
 }
