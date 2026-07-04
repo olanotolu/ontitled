@@ -70,7 +70,7 @@ a {
 
 .loader-right {
   animation: wordIn 1400ms 260ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-  margin-left: clamp(-14px, -0.8vw, -6px);
+  margin-left: clamp(-20px, -2.4vw, -12px);
 }
 
 .loader-center {
@@ -84,11 +84,10 @@ a {
 }
 
 .loader-center img {
-  border-radius: 22px;
+  border-radius: 18px;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   position: absolute;
-  transform: rotate(-4deg);
   width: 100%;
 }
 
