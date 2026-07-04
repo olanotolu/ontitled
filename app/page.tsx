@@ -30,7 +30,7 @@ export default function Home() {
 
         <section className="intro" aria-labelledby="title">
           <h1 id="title">
-            A frontier lab for agentic intelligence.
+            The Lab of what has not been named yet.
           </h1>
 
           <nav className="links" aria-label="Projects">
