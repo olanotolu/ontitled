@@ -18,7 +18,6 @@ export default function Home() {
             <span className="corner corner-bl" />
             <span className="corner corner-br" />
           </div>
-          <div className="loader-word loader-right">Labs</div>
         </div>
       </div>
 
@@ -30,7 +29,7 @@ export default function Home() {
 
         <section className="intro" aria-labelledby="title">
           <h1 id="title">
-            The Lab of what has not been named yet.
+            before it becomes obvious, it is ontitled.
           </h1>
 
           <nav className="links" aria-label="Projects">
