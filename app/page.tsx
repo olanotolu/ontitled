@@ -22,14 +22,13 @@ export default function Home() {
       </div>
 
       <main className="splash">
-        <a className="mark" href="#" aria-label="Ontitled home">
-          <Image src={logo} alt="" width={112} height={112} priority />
-          <span className="mark-word">titled.</span>
-        </a>
-
         <section className="intro" aria-labelledby="title">
           <h1 id="title">
-            before it becomes obvious, it is ontitled.
+            <span className="tagline-prefix">before it becomes obvious, it is</span>
+            <span className="tagline-logo" aria-hidden="true">
+              <Image src={logo} alt="" width={112} height={112} priority />
+              <span className="tagline-logo-word">titled.</span>
+            </span>
           </h1>
 
           <nav className="links" aria-label="Projects">
