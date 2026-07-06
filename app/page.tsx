@@ -17,7 +17,7 @@ export default function Home() {
       <main className="splash">
         <section className="intro" aria-labelledby="title">
           <h1 id="title">
-            <span className="tagline-prefix">before it becomes obvious, it is</span>
+            <span className="tagline-prefix">A research company for the unnamed future.</span>
             <span className="tagline-logo" aria-hidden="true">
               <Image src={logo} alt="" width={112} height={112} priority />
               <span className="tagline-logo-word">titled.</span>
