@@ -27,18 +27,14 @@ export default function Home() {
           <nav className="links" aria-label="Projects">
             <ul>
               <li>
+                <a href="https://agenitry.com" target="_blank" rel="noopener noreferrer">
+                  Agenitry
+                </a>
+              </li>
+              <li>
                 <a href="https://concya.com" target="_blank" rel="noopener noreferrer">
                   Concya
-                </a>
-              </li>
-              <li>
-                <a href="https://umbiance.com" target="_blank" rel="noopener noreferrer">
-                  Umbiance
-                </a>
-              </li>
-              <li>
-                <a href="https://omposition.com" target="_blank" rel="noopener noreferrer">
-                  Omposition
+                  <span className="link-desc">The Agentic General Manager</span>
                 </a>
               </li>
               <li>
@@ -47,13 +43,23 @@ export default function Home() {
                 </a>
               </li>
               <li>
-                <a href="https://agenitry.com" target="_blank" rel="noopener noreferrer">
-                  Agenitry
+                <a href="https://omposition.com" target="_blank" rel="noopener noreferrer">
+                  Omposition
                 </a>
               </li>
               <li>
                 <a href="https://tribalisim.com" target="_blank" rel="noopener noreferrer">
                   Tribalisim
+                </a>
+              </li>
+              <li>
+                <a href="https://umbiance.com" target="_blank" rel="noopener noreferrer">
+                  Umbiance
+                </a>
+              </li>
+              <li>
+                <a href="https://uninitial.com" target="_blank" rel="noopener noreferrer">
+                  Uninitial
                 </a>
               </li>
             </ul>
