@@ -17,14 +17,14 @@ export default function Home() {
       <main className="splash">
         <section className="intro" aria-labelledby="title">
           <h1 id="title">
-            <span className="tagline-prefix">A research company for the unnamed future.</span>
+            <span className="tagline-prefix">what the future hasn’t named yet.</span>
             <span className="tagline-logo" aria-hidden="true">
               <Image src={logo} alt="" width={112} height={112} priority />
               <span className="tagline-logo-word">titled.</span>
             </span>
           </h1>
 
-          <nav className="links" aria-label="Projects">
+          {/* <nav className="links" aria-label="Projects">
             <ul>
               <li>
                 <a href="https://agenitry.com" target="_blank" rel="noopener noreferrer">
@@ -63,7 +63,7 @@ export default function Home() {
                 </a>
               </li>
             </ul>
-          </nav>
+          </nav> */}
         </section>
       </main>
     </>
