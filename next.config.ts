@@ -15,6 +15,34 @@ const nextConfig: NextConfig = {
         source: "/themis",
         destination: "/themis.html",
       },
+      {
+        source: "/human-creativity-benchmark",
+        destination: "/index.html",
+      },
+      {
+        source: "/research",
+        destination: "/index.html",
+      },
+      {
+        source: "/research/:path*",
+        destination: "/index.html",
+      },
+      {
+        source: "/jobs",
+        destination: "/index.html",
+      },
+      {
+        source: "/jobs/:path*",
+        destination: "/index.html",
+      },
+      {
+        source: "/creative-arena/:path*",
+        destination: "/index.html",
+      },
+      {
+        source: "/vision",
+        destination: "/index.html",
+      },
     ];
   },
 };
