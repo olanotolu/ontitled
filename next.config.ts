@@ -36,6 +36,10 @@ const nextConfig: NextConfig = {
         destination: "/index.html",
       },
       {
+        source: "/company",
+        destination: "/company.html",
+      },
+      {
         source: "/creative-arena/:path*",
         destination: "/index.html",
       },
