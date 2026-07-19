@@ -9,7 +9,11 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/",
-        destination: "/contra.html",
+        destination: "/index.html",
+      },
+      {
+        source: "/themis",
+        destination: "/themis.html",
       },
     ];
   },
