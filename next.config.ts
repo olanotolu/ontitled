@@ -44,6 +44,10 @@ const nextConfig: NextConfig = {
         destination: "/index.html",
       },
       {
+        source: "/our-thesis",
+        destination: "/our-thesis.html",
+      },
+      {
         source: "/company",
         destination: "/company.html",
       },

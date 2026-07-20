@@ -378,6 +378,10 @@
 
 <style>[data-framer-name='"Labs"']{display:none !important;visibility:hidden !important}</style>
 
+<style>
+@supports (aspect-ratio: 1) { body { --framer-aspect-ratio-supported: auto; } }
+</style>
+
 <style id="ontitled-logo-system">
 /* Refined Ontitled wordmark — editorial, not Inter-Black startup */
 @font-face {
@@ -485,8 +489,17 @@
 <link rel="preload" as="image" href="/contra-assets/f7o9I141ECoHTqWsh0w4qbY6A.png" fetchpriority="high">
 <link rel="preload" as="image" href="/contra-assets/ME7EslDeFdIkaETfjy6qdoE0LE.png" fetchpriority="high">
 
+<meta http-equiv="Cache-Control" content="no-cache">
 </head>
 <body>
+<script>
+try {
+  if (typeof NavigateEvent !== 'undefined') {
+    NavigateEvent.prototype.intercept = function() {};
+    NavigateEvent.prototype.preventDefault = function() {};
+  }
+} catch(e) {}
+</script>
 	
 	<!-- Start of bodyStart -->
     
@@ -512,32 +525,41 @@
 
 
 <script>
-/* Force full-page navigation for Company — Framer SPA has no /company route */
+/* Force full-page navigation for inter-page links — Framer SPA router breaks cross-page transitions */
 (function () {
-  function isCompanyLink(a) {
+  var PAGES = ["/", "/themis", "/company", "/app"];
+
+  function isInterPageLink(a) {
     if (!a || a.tagName !== "A") return false;
     var href = a.getAttribute("href") || "";
+    if (!href || href.charAt(0) === "#") return false;
     if (/linkedin\.com\/company/i.test(href)) return false;
-    if (href === "/company" || href === "./company" || href === "company") return true;
+    var target = a.getAttribute("target");
+    if (target === "_blank") return false;
+
+    var path;
     try {
-      var path = new URL(href, window.location.origin).pathname.replace(/\/$/, "") || "/";
-      if (path === "/company") return true;
-    } catch (e) {}
-    var name = a.getAttribute("name") || a.getAttribute("data-framer-name") || "";
-    if (name === "Company") return true;
-    var parent = a.closest("[data-framer-name='Company'], [name='Company']");
-    if (parent) return true;
-    var text = (a.textContent || "").replace(/\s+/g, " ").trim();
-    if (text === "Company" && a.closest("[data-framer-name='Top Nav'], [data-framer-name='Pages'], .framer-n9w9x, header, nav")) return true;
-    return false;
+      path = new URL(href, window.location.origin).pathname.replace(/\/$/, "") || "/";
+    } catch (e) {
+      return false;
+    }
+
+    if (PAGES.indexOf(path) === -1) return false;
+
+    var currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+    if (path === currentPath) return false;
+
+    return true;
   }
 
   function go(e, a) {
-    if (!isCompanyLink(a)) return;
+    if (!isInterPageLink(a)) return;
     e.preventDefault();
     e.stopPropagation();
     if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
-    window.location.assign("/company");
+    var href = a.getAttribute("href") || "";
+    var path = new URL(href, window.location.origin).pathname.replace(/\/$/, "") || "/";
+    window.location.assign(path);
   }
 
   document.addEventListener("click", function (e) {
@@ -548,9 +570,11 @@
   document.addEventListener("auxclick", function (e) {
     if (e.button !== 1) return;
     var a = e.target && e.target.closest && e.target.closest("a");
-    if (!isCompanyLink(a)) return;
+    if (!isInterPageLink(a)) return;
     e.preventDefault();
-    window.open("/company", "_blank");
+    var href = a.getAttribute("href") || "";
+    var path = new URL(href, window.location.origin).pathname.replace(/\/$/, "") || "/";
+    window.open(path, "_blank");
   }, true);
 })();
 </script>
@@ -576,8 +600,8 @@
         a.setAttribute("rel", "noopener");
         a.querySelectorAll("p, span").forEach(function (node) {
           var t = (node.textContent || "").trim();
-          if (t === "Request partnership" || t === "Join Waitlist") {
-            node.textContent = "Try Themis";
+          if (["Request partnership", "Join Waitlist", "Try Themis"].indexOf(t) !== -1) {
+            node.innerHTML = 'Try Themis <span style="font-size:0.55em; font-weight:500; letter-spacing:0.04em; font-style:italic; margin-left:0.2em; opacity:0.85;">* Pre Alpha</span>';
           }
         });
       });
@@ -586,6 +610,10 @@
     }
   }
   rewriteCTAs();
+
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) rewriteCTAs();
+  });
 
   document.addEventListener("error", function (e) {
     var image = e.target;
@@ -605,27 +633,39 @@
   });
   if (document.body) {
     mo.observe(document.body, { childList: true, subtree: true });
-    setTimeout(function () { try { mo.disconnect(); } catch (e) {} }, 5000);
   }
 })();
 </script>
 
 <script>
 (function(){
-  var target = "1YpWh5BISHGKzaV1nH1fCHUhfXc";
-  var framer = "https://framerusercontent.com/images/" + target;
-  var local = "/contra-assets/" + target;
-  function rewrite(url){ return typeof url === "string" ? url.split(framer).join(local) : url; }
+  var framerBase = "https://framerusercontent.com/images/";
+  var localBase = "/contra-assets/";
+  function rewrite(url){
+    if(typeof url !== "string") return url;
+    if(url.indexOf(framerBase) === -1) return url;
+    return url.replace(framerBase, localBase).replace(/\?.*$/, "");
+  }
   function fixImg(img){
-    if(img.src) img.src = rewrite(img.src);
-    if(img.srcset) img.srcset = img.srcset.split(",").map(function(s){
-      var p = s.trim().split(/\s+/);
-      p[0] = rewrite(p[0]);
-      return p.join(" ");
-    }).join(", ");
+    if(img.dataset.ontitledRewritten === "1") return;
+    var changed = false;
+    var newSrc = rewrite(img.src);
+    if(newSrc !== img.src){ img.src = newSrc; changed = true; }
+    if(img.srcset && img.srcset.indexOf(framerBase) !== -1){
+      img.srcset = img.srcset.split(",").map(function(s){
+        var p = s.trim().split(/\s+/);
+        p[0] = rewrite(p[0]);
+        return p.join(" ");
+      }).join(", ");
+      changed = true;
+    }
+    if(changed) img.dataset.ontitledRewritten = "1";
   }
   function scan(){ document.querySelectorAll("img").forEach(fixImg); }
   scan();
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) scan();
+  });
   var mo = new MutationObserver(function(ms){
     ms.forEach(function(m){
       if(m.type === "childList"){
@@ -641,6 +681,39 @@
   if(document.body) mo.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["src","srcset"]});
   else document.addEventListener("DOMContentLoaded",function(){ if(document.body) mo.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["src","srcset"]}); });
   [0,50,200,500,1000].forEach(function(t){ setTimeout(scan,t); });
+})();
+</script>
+
+<script>
+/* bfcache restoration — force full reload to re-hydrate Framer */
+window.addEventListener('pageshow', function(event) {
+  if (event.persisted) {
+    window.location.reload();
+  }
+});
+</script>
+
+<<script>
+/* Keep hover-swap CTA labels ("Try Themis", "Our thesis", etc.) clipped to exactly
+   one line at every breakpoint. The Framer export bakes a single fixed px height for
+   the clipped Label wrapper, but the actual font-size/line-height of the text inside
+   changes per breakpoint, so a static height either clips the text or lets the hidden
+   duplicate ("End") copy peek through. Measure the real rendered height instead. */
+(function(){
+  function fixLabelHeights(){
+    document.querySelectorAll('.framer-1y6rc17').forEach(function(label){
+      var start = label.querySelector('.framer-1s707a6');
+      if(!start) return;
+      var h = start.getBoundingClientRect().height;
+      if(h > 0) label.style.height = h + 'px';
+    });
+  }
+  fixLabelHeights();
+  window.addEventListener('resize', fixLabelHeights);
+  window.addEventListener('pageshow', function(e){ if(e.persisted) fixLabelHeights(); });
+  var mo3 = new MutationObserver(fixLabelHeights);
+  if(document.body) mo3.observe(document.body, {childList:true, subtree:true});
+  [0,100,300,600,1000,2000,3000].forEach(function(t){ setTimeout(fixLabelHeights, t); });
 })();
 </script>
 
