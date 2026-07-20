@@ -8,7 +8,7 @@ function Wordmark() {
   return (
     <Link href="/" className="ob-wordmark" aria-label="Ontitled">
       <span className="ob-mark" aria-hidden="true" />
-      <span>Ontitled</span>
+      <span className="ob-wordmark-text">Ontitled</span>
     </Link>
   );
 }
@@ -27,15 +27,30 @@ function Stepper({
         const done = idx > i;
         const active = step.id === currentId;
         return (
-          <li key={step.id} className={`ob-step${done ? " done" : ""}${active ? " active" : ""}`}>
-            <span className="ob-step-dot" aria-hidden="true">
-              {done ? (
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              ) : (
-                i + 1
-              )}
+          <li
+            key={step.id}
+            className={`ob-step${done ? " done" : ""}${active ? " active" : ""}`}
+          >
+            <span className="ob-step-rail" aria-hidden="true">
+              <span className="ob-step-dot">
+                {done ? (
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                ) : (
+                  i + 1
+                )}
+              </span>
+              {i < steps.length - 1 ? <span className="ob-step-line" /> : null}
             </span>
             <span className="ob-step-text">
               <span className="ob-step-label">{step.label}</span>
@@ -52,41 +67,54 @@ export function OnboardingShell({
   steps,
   currentId,
   showVisual,
+  visualSrc = "/auth/signup-visual.png",
   children,
 }: {
   steps?: StepDef[];
   currentId?: string;
   showVisual?: boolean;
+  visualSrc?: string;
   children: ReactNode;
 }) {
-  return (
-    <div className={`ob-page${showVisual ? " has-visual" : ""}`}>
-      <div className="ob-top">
-        <Wordmark />
-        <a href="/auth/logout" className="ob-logout">
-          Log out
-        </a>
-      </div>
+  const wizard = Boolean(steps && steps.length > 0 && currentId);
 
-      <div className="ob-body">
-        {steps && steps.length > 0 && currentId ? (
+  return (
+    <div
+      className={`ob-page${showVisual ? " has-visual" : ""}${wizard ? " is-wizard" : ""}`}
+    >
+      <header className="ob-top">
+        <Wordmark />
+        {wizard ? (
+          <a href="/auth/logout" className="ob-logout">
+            Log out
+          </a>
+        ) : (
+          <span className="ob-top-spacer" aria-hidden="true" />
+        )}
+      </header>
+
+      {wizard ? (
+        <div className="ob-wizard">
           <aside className="ob-aside">
-            <Stepper steps={steps} currentId={currentId} />
+            <Stepper steps={steps!} currentId={currentId!} />
             <p className="ob-help">
               Need help? <a href="mailto:hello@ontitled.com">Contact support</a>
             </p>
           </aside>
-        ) : null}
+          <main className="ob-main">{children}</main>
+        </div>
+      ) : (
+        <div className="ob-setup">
+          <main className="ob-main">{children}</main>
+        </div>
+      )}
 
-        <main className="ob-main">{children}</main>
-
-        {showVisual ? (
-          <aside className="ob-visual" aria-hidden="true">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/auth/login-visual.jpg" alt="" />
-          </aside>
-        ) : null}
-      </div>
+      {showVisual ? (
+        <div className="ob-visual-wrap" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="ob-visual" src={visualSrc} alt="" />
+        </div>
+      ) : null}
     </div>
   );
 }

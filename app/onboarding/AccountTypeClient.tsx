@@ -26,7 +26,7 @@ export default function AccountTypeClient() {
   }
 
   return (
-    <OnboardingShell showVisual>
+    <OnboardingShell showVisual visualSrc="/auth/signup-visual.png">
       <div className="ob-panel">
         <h1 className="ob-title">Set up your account</h1>
         <p className="ob-sub">What type of account would you like to create?</p>
@@ -39,7 +39,7 @@ export default function AccountTypeClient() {
             role="radio"
             aria-checked={type === "individual"}
           >
-            <span className="ob-radio" />
+            <span className="ob-radio" aria-hidden="true" />
             <span>
               <strong>Individual</strong>
               <span className="ob-choice-desc">I&apos;m opening an account for myself</span>
@@ -52,7 +52,7 @@ export default function AccountTypeClient() {
             role="radio"
             aria-checked={type === "business"}
           >
-            <span className="ob-radio" />
+            <span className="ob-radio" aria-hidden="true" />
             <span>
               <strong>Business</strong>
               <span className="ob-choice-desc">I&apos;m opening an account for my company</span>
