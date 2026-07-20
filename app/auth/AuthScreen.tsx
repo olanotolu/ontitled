@@ -58,7 +58,7 @@ function IconMail() {
 }
 
 function authHref(params: Record<string, string>) {
-  const search = new URLSearchParams({ returnTo: "/onboarding", ...params });
+  const search = new URLSearchParams({ returnTo: "/dashboard", ...params });
   return `/auth/login?${search.toString()}`;
 }
 
