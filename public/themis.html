@@ -581,6 +581,61 @@ try {
 
 
 <script>
+/* Force Themis hero subheading — Framer hydration can re-inject old copy from bundles */
+(function () {
+  var GOOD = "Blind to the effort. Bound to the outcome.";
+  var BAD = /Private evaluations|1\.5M\+ verified creative experts to fine-tune|fine-tune AI for style, tone, and taste/i;
+  var busy = false;
+
+  function apply() {
+    if (busy) return;
+    busy = true;
+    try {
+      var nodes = document.querySelectorAll("p, span, div, h2, h3");
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        if (el.children && el.children.length > 2) continue;
+        var t = (el.textContent || "").replace(/\s+/g, " ").trim();
+        if (!t) continue;
+        if (BAD.test(t) || t === GOOD) {
+          // Only rewrite leaf-ish nodes that are the subheading itself
+          if (BAD.test(t) || (t === GOOD && el.childNodes.length === 1)) {
+            if (t !== GOOD) {
+              if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
+                el.childNodes[0].nodeValue = GOOD;
+              } else if (!el.children.length) {
+                el.textContent = GOOD;
+              } else {
+                var p = el.querySelector("p") || el;
+                if (!(p.children && p.children.length)) p.textContent = GOOD;
+              }
+            }
+          }
+        }
+      }
+    } finally {
+      busy = false;
+    }
+  }
+
+  apply();
+  document.addEventListener("DOMContentLoaded", apply);
+  window.addEventListener("load", apply);
+  window.addEventListener("pageshow", function (e) {
+    if (e.persisted) apply();
+  });
+  [50, 150, 300, 600, 1000, 2000, 4000].forEach(function (ms) {
+    setTimeout(apply, ms);
+  });
+  if (document.body) {
+    new MutationObserver(function () {
+      apply();
+    }).observe(document.body, { childList: true, subtree: true, characterData: true });
+  }
+})();
+</script>
+
+<script>
 (function () {
   // New Auth0 Natural login (app-ontitled) — not the old /app fake form
   var host = (window.location && window.location.hostname) || "";
