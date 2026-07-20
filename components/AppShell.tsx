@@ -161,16 +161,34 @@ const primaryNav: NavDef[] = [
   { label: "Docs", icon: <IconDocs />, hasArrow: true },
 ];
 
-const manageNav: NavDef[] = [{ label: "API Keys", icon: <IconKey /> }];
+const manageNav: NavDef[] = [
+  { label: "API Keys", href: "/settings/api-keys", icon: <IconKey />, match: "/settings/api-keys" },
+  {
+    label: "Settings",
+    href: "/settings/profile",
+    icon: <IconDocs />,
+    match: ["/settings"],
+  },
+];
 
 const adminNav: NavDef[] = [
-  { label: "Users", icon: <IconUsers /> },
-  { label: "Teams", icon: <IconTeams /> },
+  { label: "Team", href: "/settings/team", icon: <IconUsers />, match: "/settings/team" },
+  {
+    label: "Workspace",
+    href: "/settings/workspace",
+    icon: <IconTeams />,
+    match: "/settings/workspace",
+  },
 ];
 
 const bottomNav: NavDef[] = [
-  { label: "Usage", icon: <IconUsage /> },
-  { label: "Billing", icon: <IconBilling /> },
+  { label: "Usage", href: "/settings/usage", icon: <IconUsage />, match: "/settings/usage" },
+  {
+    label: "Billing",
+    href: "/settings/billing",
+    icon: <IconBilling />,
+    match: "/settings/billing",
+  },
 ];
 
 function isActive(pathname: string, item: NavDef) {
@@ -317,32 +335,49 @@ export function AppShell({
           <div className="nav-section">
             <div className="nav-label">Manage</div>
             {manageNav.map((item) => (
-              <NavItem key={item.label} item={item} active={false} onNavigate={closeMenu} />
+              <NavItem
+                key={item.label}
+                item={item}
+                active={isActive(pathname, item)}
+                onNavigate={closeMenu}
+              />
             ))}
           </div>
 
           <div className="nav-section">
             <div className="nav-label">Admin</div>
             {adminNav.map((item) => (
-              <NavItem key={item.label} item={item} active={false} onNavigate={closeMenu} />
+              <NavItem
+                key={item.label}
+                item={item}
+                active={isActive(pathname, item)}
+                onNavigate={closeMenu}
+              />
             ))}
           </div>
 
           <div className="nav-section nav-section-loose">
             {bottomNav.map((item) => (
-              <NavItem key={item.label} item={item} active={false} onNavigate={closeMenu} />
+              <NavItem
+                key={item.label}
+                item={item}
+                active={isActive(pathname, item)}
+                onNavigate={closeMenu}
+              />
             ))}
           </div>
         </nav>
 
         <div className="sidebar-profile">
-          <div className="profile-avatar" aria-hidden="true">
-            {initials}
-          </div>
-          <div className="profile-text">
-            <div className="profile-name">{userName}</div>
-            <div className="profile-email">{userEmail}</div>
-          </div>
+          <Link href="/settings/profile" className="profile-link" onClick={closeMenu}>
+            <div className="profile-avatar" aria-hidden="true">
+              {initials}
+            </div>
+            <div className="profile-text">
+              <div className="profile-name">{userName}</div>
+              <div className="profile-email">{userEmail}</div>
+            </div>
+          </Link>
           <a
             href="/auth/logout"
             className="profile-menu"

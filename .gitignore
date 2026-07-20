@@ -10,3 +10,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 .vercel
+
+# Local settings store
+data/*.json
+data/*.sqlite
+data/*.sqlite-*
+!data/.gitkeep
