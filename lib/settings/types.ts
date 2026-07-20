@@ -1,5 +1,31 @@
 export type MemberRole = "owner" | "admin" | "member";
 
+export type AccountType = "individual" | "business";
+
+export type OnboardingBusiness = {
+  legalName: string;
+  displayName: string;
+  handle: string;
+  website: string;
+  registeredDifferentName: boolean | null;
+};
+
+export type OnboardingOwner = {
+  name: string;
+  percent: number;
+};
+
+export type OnboardingIdentity = {
+  role: string;
+  useCase: string;
+};
+
+export type OnboardingData = {
+  business?: OnboardingBusiness;
+  ownership?: OnboardingOwner[];
+  identity?: OnboardingIdentity;
+};
+
 export type Profile = {
   userId: string;
   email: string;
@@ -8,6 +34,15 @@ export type Profile = {
   deletedAt: string | null;
   createdAt: string;
   updatedAt: string;
+  // onboarding
+  accountType: AccountType | null;
+  onboardingCompleted: boolean;
+  onboardingStep: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  handle: string;
+  onboarding: OnboardingData;
 };
 
 export type Workspace = {
@@ -55,7 +90,7 @@ export type ApiKeyRecord = {
 
 export type UsagePeriod = {
   workspaceId: string;
-  period: string; // YYYY-MM
+  period: string;
   requests: number;
   tokens: number;
   evals: number;
@@ -68,5 +103,19 @@ export type SettingsStoreData = {
   invites: WorkspaceInvite[];
   apiKeys: ApiKeyRecord[];
   usage: UsagePeriod[];
-  userWorkspace: Record<string, string>; // userId -> default workspaceId
+  userWorkspace: Record<string, string>;
 };
+
+export function normalizeProfile(p: Profile): Profile {
+  return {
+    ...p,
+    accountType: p.accountType ?? null,
+    onboardingCompleted: p.onboardingCompleted === true,
+    onboardingStep: p.onboardingStep || "account-type",
+    firstName: p.firstName || "",
+    lastName: p.lastName || "",
+    phone: p.phone || "",
+    handle: p.handle || "",
+    onboarding: p.onboarding || {},
+  };
+}

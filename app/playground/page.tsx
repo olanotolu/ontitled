@@ -1,8 +1,7 @@
-import { auth0 } from "@/lib/auth0";
+import { requireOnboarded } from "@/lib/onboarding/require";
 import PlaygroundClient from "./PlaygroundClient";
 
 export default async function PlaygroundPage() {
-  const session = await auth0.getSession();
-
+  const { session } = await requireOnboarded();
   return <PlaygroundClient session={session} />;
 }

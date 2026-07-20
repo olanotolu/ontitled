@@ -8,6 +8,7 @@ import type {
   WorkspaceInvite,
   WorkspaceMember,
 } from "./types";
+import { normalizeProfile } from "./types";
 import type { AuthUser } from "./auth";
 
 function now() {
@@ -55,6 +56,7 @@ export async function ensureUserWorkspace(user: AuthUser): Promise<{
       const t = now();
       let profile = store.profiles[user.userId];
       if (!profile || profile.deletedAt) {
+        const nameParts = (user.name || "").trim().split(/\s+/);
         profile = {
           userId: user.userId,
           email: user.email,
@@ -63,11 +65,24 @@ export async function ensureUserWorkspace(user: AuthUser): Promise<{
           deletedAt: null,
           createdAt: t,
           updatedAt: t,
+          accountType: null,
+          onboardingCompleted: false,
+          onboardingStep: "account-type",
+          firstName: nameParts[0] || "",
+          lastName: nameParts.slice(1).join(" ") || "",
+          phone: "",
+          handle: "",
+          onboarding: {},
         };
         store.profiles[user.userId] = profile;
       } else {
-        // keep email in sync with Auth0
-        profile.email = user.email || profile.email;
+        const isLegacy = !("onboardingCompleted" in profile);
+        profile = normalizeProfile({
+          ...profile,
+          email: user.email || profile.email,
+        });
+        // Profiles created before onboarding feature skip the wizard
+        if (isLegacy) profile.onboardingCompleted = true;
         store.profiles[user.userId] = profile;
       }
 

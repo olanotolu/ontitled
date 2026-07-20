@@ -1,9 +1,7 @@
-import { auth0 } from "@/lib/auth0";
-import { redirect } from "next/navigation";
+import { requireOnboarded } from "@/lib/onboarding/require";
 import ProfileClient from "./ProfileClient";
 
 export default async function ProfileSettingsPage() {
-  const session = await auth0.getSession();
-  if (!session?.user) redirect("/login");
+  const { session } = await requireOnboarded();
   return <ProfileClient session={session} />;
 }

@@ -6,7 +6,7 @@ type Mode = "login" | "signup";
 function Wordmark() {
   return (
     <Link href="/" className="auth-wordmark" aria-label="Ontitled">
-      <span className="auth-mark" aria-hidden="true" />
+      <img className="auth-mark" src="/ontitled-favicon-transparent.png" alt="" aria-hidden="true" />
       <span className="auth-wordmark-text">Ontitled</span>
     </Link>
   );
@@ -58,7 +58,7 @@ function IconMail() {
 }
 
 function authHref(params: Record<string, string>) {
-  const search = new URLSearchParams({ returnTo: "/dashboard", ...params });
+  const search = new URLSearchParams({ returnTo: "/onboarding", ...params });
   return `/auth/login?${search.toString()}`;
 }
 

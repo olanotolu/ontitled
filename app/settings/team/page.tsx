@@ -1,9 +1,7 @@
-import { auth0 } from "@/lib/auth0";
-import { redirect } from "next/navigation";
+import { requireOnboarded } from "@/lib/onboarding/require";
 import TeamClient from "./TeamClient";
 
 export default async function TeamSettingsPage() {
-  const session = await auth0.getSession();
-  if (!session?.user) redirect("/login");
+  const { session } = await requireOnboarded();
   return <TeamClient session={session} />;
 }

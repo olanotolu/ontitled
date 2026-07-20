@@ -1,8 +1,7 @@
-import { auth0 } from "@/lib/auth0";
+import { requireOnboarded } from "@/lib/onboarding/require";
 import DashboardClient from "./DashboardClient";
 
 export default async function DashboardPage() {
-  const session = await auth0.getSession();
-
+  const { session } = await requireOnboarded();
   return <DashboardClient session={session} />;
 }

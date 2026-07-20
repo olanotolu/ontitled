@@ -1,9 +1,7 @@
-import { auth0 } from "@/lib/auth0";
-import { redirect } from "next/navigation";
+import { requireOnboarded } from "@/lib/onboarding/require";
 import SecurityClient from "./SecurityClient";
 
 export default async function SecuritySettingsPage() {
-  const session = await auth0.getSession();
-  if (!session?.user) redirect("/login");
+  const { session } = await requireOnboarded();
   return <SecurityClient session={session} />;
 }
