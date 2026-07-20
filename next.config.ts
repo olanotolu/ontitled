@@ -16,6 +16,14 @@ const nextConfig: NextConfig = {
         destination: "/themis.html",
       },
       {
+        source: "/dike",
+        destination: "/index.html",
+      },
+      {
+        source: "/dike/:path*",
+        destination: "/index.html",
+      },
+      {
         source: "/human-creativity-benchmark",
         destination: "/index.html",
       },
