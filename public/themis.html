@@ -568,7 +568,9 @@
     try {
       document.querySelectorAll("a").forEach(function (a) {
         var href = (a.getAttribute("href") || "").toLowerCase();
-        if (href.indexOf(CALENDLY) === -1) return;
+        var text = (a.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+        var isThemisCTA = href.indexOf(CALENDLY) !== -1 || text === "join waitlist" || text === "request partnership";
+        if (!isThemisCTA) return;
         a.setAttribute("href", APP_URL);
         a.setAttribute("target", "_blank");
         a.setAttribute("rel", "noopener");
@@ -584,6 +586,19 @@
     }
   }
   rewriteCTAs();
+
+  document.addEventListener("error", function (e) {
+    var image = e.target;
+    if (!image || image.tagName !== "IMG" || image.dataset.fallbackTried === "true") return;
+    var source = image.currentSrc || image.src || "";
+    if (source.indexOf("/contra-assets/") === -1) return;
+    var fallback = source.replace(/\.webp(?=$|[?#])/i, ".png");
+    if (fallback === source) return;
+    image.dataset.fallbackTried = "true";
+    image.srcset = "";
+    image.src = fallback;
+  }, true);
+
   var mo = new MutationObserver(function () {
     if (rewriting) return;
     rewriteCTAs();
