@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import type { Session } from "@auth0/nextjs-auth0";
+import type { SessionData } from "@auth0/nextjs-auth0/types";
 
 /* ——— Icons ——— */
 
@@ -246,7 +246,7 @@ export function AppShell({
 }: {
   children: ReactNode;
   mainClassName?: string;
-  session?: Session | null;
+  session?: SessionData | null;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -257,7 +257,7 @@ export function AppShell({
     if (session?.user) {
       setAuthed(true);
     } else {
-      router.replace("/");
+      router.replace("/login");
     }
   }, [session, router]);
 

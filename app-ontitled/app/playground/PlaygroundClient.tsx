@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AppShell } from "../../components/AppShell";
-import type { Session } from "@auth0/nextjs-auth0";
+import type { SessionData } from "@auth0/nextjs-auth0/types";
 
 const SUGGESTIONS = [
   { label: "Surprise me", icon: "spark" },
@@ -154,7 +154,7 @@ const REASONING_MARKS = ["None", "Min", "Low", "Medium", "High", "XHigh"] as con
 const TOKEN_MARKS = ["Shorter", "Auto"] as const;
 
 type Props = {
-  session: Session | null | undefined;
+  session: SessionData | null | undefined;
 };
 
 export default function PlaygroundClient({ session }: Props) {

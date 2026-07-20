@@ -1,8 +1,7 @@
+import { redirect } from "next/navigation";
 import { auth0 } from "@/lib/auth0";
-import { AuthPageClient } from "./AuthPageClient";
 
-export default async function AuthPage() {
+export default async function RootPage() {
   const session = await auth0.getSession();
-
-  return <AuthPageClient session={session} />;
+  redirect(session ? "/dashboard" : "/login");
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import type { Session } from "@auth0/nextjs-auth0";
+import type { SessionData } from "@auth0/nextjs-auth0/types";
 import { AppShell } from "../../components/AppShell";
 import Link from "next/link";
 
@@ -91,7 +91,7 @@ function HeroArt() {
 }
 
 type Props = {
-  session: Session | null | undefined;
+  session: SessionData | null | undefined;
 };
 
 export default function DashboardClient({ session }: Props) {
