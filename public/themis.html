@@ -527,7 +527,7 @@ try {
 <script>
 /* Force full-page navigation for inter-page links — Framer SPA router breaks cross-page transitions */
 (function () {
-  var PAGES = ["/", "/themis", "/company", "/app"];
+  var PAGES = ["/", "/themis", "/company"];
 
   function isInterPageLink(a) {
     if (!a || a.tagName !== "A") return false;
@@ -582,7 +582,12 @@ try {
 
 <script>
 (function () {
-  var APP_URL = "/app";
+  // New Auth0 Natural login (app-ontitled) — not the old /app fake form
+  var host = (window.location && window.location.hostname) || "";
+  var APP_URL =
+    host === "localhost" || host === "127.0.0.1"
+      ? "http://localhost:3001/login"
+      : "https://app-ontitled.vercel.app/login";
   var CALENDLY = "calendly.com/partnerships-contra/contra-labs-partnership-request";
   var rewriting = false;
 
@@ -593,11 +598,17 @@ try {
       document.querySelectorAll("a").forEach(function (a) {
         var href = (a.getAttribute("href") || "").toLowerCase();
         var text = (a.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-        var isThemisCTA = href.indexOf(CALENDLY) !== -1 || text === "join waitlist" || text === "request partnership";
+        var isThemisCTA =
+          href.indexOf(CALENDLY) !== -1 ||
+          href === "/app" ||
+          href.indexOf("/app") === 0 ||
+          text === "join waitlist" ||
+          text === "request partnership" ||
+          text.indexOf("try themis") !== -1;
         if (!isThemisCTA) return;
         a.setAttribute("href", APP_URL);
-        a.setAttribute("target", "_blank");
-        a.setAttribute("rel", "noopener");
+        a.removeAttribute("target");
+        a.removeAttribute("rel");
         a.querySelectorAll("p, span").forEach(function (node) {
           var t = (node.textContent || "").trim();
           if (["Request partnership", "Join Waitlist", "Try Themis"].indexOf(t) !== -1) {
