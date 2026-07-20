@@ -567,7 +567,7 @@
         var href = (a.getAttribute("href") || "").toLowerCase();
         if (href.indexOf(CALENDLY) === -1) return;
         a.setAttribute("href", APP_URL);
-        a.removeAttribute("target");
+        a.setAttribute("target", "_blank");
         a.setAttribute("rel", "noopener");
         a.querySelectorAll("p, span").forEach(function (node) {
           var t = (node.textContent || "").trim();

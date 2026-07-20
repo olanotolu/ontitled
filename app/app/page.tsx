@@ -158,7 +158,7 @@ export default function AuthPage() {
                 type="email"
                 inputMode="email"
                 autoComplete="email"
-                placeholder="panda"
+                placeholder="johndoe@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -174,7 +174,7 @@ export default function AuthPage() {
                 className="auth-input"
                 type="password"
                 autoComplete={mode === "signin" ? "current-password" : "new-password"}
-                placeholder="panda"
+                placeholder="123456"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
