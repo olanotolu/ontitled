@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 
@@ -7,6 +8,11 @@ const sourceSerif = Source_Serif_4({
   variable: "--font-source-serif",
   display: "swap",
 });
+
+export const metadata: Metadata = {
+  title: "Themis — [Ontitled]",
+  description: "Sign in to Themis",
+};
 
 export default function RootLayout({
   children,

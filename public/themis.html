@@ -637,12 +637,8 @@ try {
 
 <script>
 (function () {
-  // New Auth0 Natural login (app-ontitled) — not the old /app fake form
-  var host = (window.location && window.location.hostname) || "";
-  var APP_URL =
-    host === "localhost" || host === "127.0.0.1"
-      ? "http://localhost:3001/login"
-      : "https://app-ontitled.vercel.app/login";
+  // Same-domain Auth0 Natural login
+  var APP_URL = "/login";
   var CALENDLY = "calendly.com/partnerships-contra/contra-labs-partnership-request";
   var rewriting = false;
 
