@@ -833,8 +833,7 @@
           <ul class="nav-links nav-links-desktop" id="navLinks">
             <li><a href="/themis">Themis</a></li>
             <li><a href="/dike">Dike</a></li>
-            <li><a href="/research">Research</a></li>
-            <li><a href="/research#datasets">Datasets</a></li>
+            <li><a href="/index">Index</a></li>
             <li><a href="/jobs">Jobs</a></li>
             <li><a href="/company" aria-current="page">Company</a></li>
           </ul>
@@ -858,7 +857,7 @@
         <li><a href="/themis">Themis</a></li>
         <li><a href="/dike">Dike</a></li>
         <li><a href="/company" aria-current="page">Company</a></li>
-        <li><a href="/research">Research</a></li>
+        <li><a href="/index">Index</a></li>
         <li><a href="/jobs">Jobs</a></li>
       </ul>
     </div>
@@ -883,8 +882,8 @@
           the benchmark for how models understand and produce creative work.
         </p>
         <div class="actions reveal reveal-delay-2">
-          <a class="btn btn-primary" href="./research">
-            Our research
+          <a class="btn btn-primary" href="./index">
+            Index
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a class="btn btn-ghost" href="./themis">
@@ -953,8 +952,7 @@
 
       <ul class="footer-links">
         <li><a href="/themis">Themis</a></li>
-        <li><a href="/research">Research</a></li>
-        <li><a href="/research#datasets">Datasets</a></li>
+        <li><a href="/index">Index</a></li>
         <li><a href="/jobs">Jobs</a></li>
       </ul>
     </div>
@@ -1040,5 +1038,64 @@
       }
     })();
   </script>
+
+<script>
+/* Remove Datasets nav + block external contralabs.com research#datasets leaks */
+(function () {
+  function isDatasetsLink(a) {
+    if (!a || a.tagName !== "A") return false;
+    var href = (a.getAttribute("href") || "").toLowerCase();
+    var text = (a.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+    if (text === "datasets") return true;
+    if (href.indexOf("research#datasets") !== -1) return true;
+    if (href.indexOf("/datasets") !== -1 && href.indexOf("huggingface") === -1) return true;
+    if (href.indexOf("contralabs.com") !== -1 && href.indexOf("research") !== -1) return true;
+    return false;
+  }
+
+  function scrub(root) {
+    var scope = root && root.querySelectorAll ? root : document;
+    var links = scope.querySelectorAll ? scope.querySelectorAll("a") : [];
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      if (!isDatasetsLink(a)) continue;
+      var node = a.closest('[data-framer-name="Link"], [data-framer-name="Human Creativity Benchmark"], .framer-mkxirh, .framer-1sa4zri-container, .framer-bj4eth-container') || a;
+      if (node && node.parentNode) node.parentNode.removeChild(node);
+    }
+  }
+
+  function blockExternal(e) {
+    var a = e.target && e.target.closest ? e.target.closest("a") : null;
+    if (!a) return;
+    var href = a.getAttribute("href") || "";
+    if (/contralabs\.com\/research/i.test(href) || /research#datasets/i.test(href) || /\/research(\/|$|#)/i.test(href)) {
+      e.preventDefault();
+      e.stopPropagation();
+      var next = "/index";
+      try {
+        var u = new URL(href, window.location.origin);
+        if (u.pathname.indexOf("/research") === 0) next = u.pathname.replace(/^\/research/, "/index") + u.hash;
+      } catch (err) {}
+      window.location.assign(next);
+    }
+  }
+
+  document.addEventListener("click", blockExternal, true);
+  document.addEventListener("auxclick", blockExternal, true);
+
+  function run() { scrub(document); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
+  else run();
+  setTimeout(run, 0);
+  setTimeout(run, 250);
+  setTimeout(run, 1000);
+  setTimeout(run, 2500);
+  if (document.body) {
+    var mo = new MutationObserver(function () { run(); });
+    mo.observe(document.body, { childList: true, subtree: true });
+  }
+})();
+</script>
+
 </body>
 </html>

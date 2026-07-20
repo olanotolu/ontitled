@@ -5,6 +5,30 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
+  async redirects() {
+    return [
+      {
+        source: "/datasets",
+        destination: "/index",
+        permanent: true,
+      },
+      {
+        source: "/datasets/:path*",
+        destination: "/index",
+        permanent: true,
+      },
+      {
+        source: "/research",
+        destination: "/index",
+        permanent: true,
+      },
+      {
+        source: "/research/:path*",
+        destination: "/index/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
@@ -28,11 +52,11 @@ const nextConfig: NextConfig = {
         destination: "/index.html",
       },
       {
-        source: "/research",
+        source: "/index",
         destination: "/index.html",
       },
       {
-        source: "/research/:path*",
+        source: "/index/:path*",
         destination: "/index.html",
       },
       {

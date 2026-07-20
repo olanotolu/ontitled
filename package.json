@@ -6,10 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "supabase:link": "supabase link --project-ref evwquagmfetnjhenpaqd",
+    "supabase:push": "supabase db push",
+    "supabase:types": "supabase gen types typescript --linked > lib/supabase/database.types.ts",
+    "supabase:status": "supabase projects list"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^4.25.0",
+    "@supabase/supabase-js": "^2.110.7",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest"
