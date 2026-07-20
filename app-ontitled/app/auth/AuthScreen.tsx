@@ -1,5 +1,3 @@
-"use client";
-
 import type { ReactNode } from "react";
 import Link from "next/link";
 
@@ -17,7 +15,7 @@ function Wordmark() {
 function IconGoogle() {
   return (
     <span className="auth-google-badge" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="14" height="14">
+      <svg viewBox="0 0 24 24" width="12" height="12">
         <path
           fill="#4285F4"
           d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
@@ -44,11 +42,11 @@ function IconMail() {
     <svg
       className="auth-mail-icon"
       viewBox="0 0 24 24"
-      width="16"
-      height="16"
+      width="15"
+      height="15"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.75"
+      strokeWidth="1.6"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
@@ -75,11 +73,11 @@ const copy: Record<
 > = {
   login: {
     title: "Welcome back",
-    visual: "/auth/login-visual.jpg",
+    // Latest Natural refs use soft sky on both screens
+    visual: "/auth/signup-visual.png",
     body: (
       <>
-        Need to create an account?{" "}
-        <Link href="/signup">Sign up here</Link>.
+        Need to create an account? <Link href="/signup">Sign up here</Link>.
       </>
     ),
   },
@@ -107,7 +105,7 @@ export function AuthScreen({ mode, error }: { mode: Mode; error?: string }) {
 
   return (
     <div className="auth-page">
-      <div className="auth-left">
+      <div className="auth-shell">
         <header className="auth-brand">
           <Wordmark />
         </header>
@@ -128,7 +126,7 @@ export function AuthScreen({ mode, error }: { mode: Mode; error?: string }) {
             <div className="auth-actions">
               <a className="auth-btn auth-btn-google" href={googleHref}>
                 <IconGoogle />
-                Continue with Google
+                <span>Continue with Google</span>
               </a>
 
               <div className="auth-divider" aria-hidden="true">
@@ -137,7 +135,7 @@ export function AuthScreen({ mode, error }: { mode: Mode; error?: string }) {
 
               <a className="auth-btn auth-btn-email" href={emailHref}>
                 <IconMail />
-                Continue with email
+                <span>Continue with email</span>
               </a>
             </div>
           </div>
@@ -156,9 +154,10 @@ export function AuthScreen({ mode, error }: { mode: Mode; error?: string }) {
         </footer>
       </div>
 
-      <aside className="auth-right" aria-hidden="true">
+      {/* Bottom-right 500×500 panel — matches natural.com geometry */}
+      <div className="auth-visual-wrap" aria-hidden="true">
         <img className="auth-visual" src={visual} alt="" />
-      </aside>
+      </div>
     </div>
   );
 }
