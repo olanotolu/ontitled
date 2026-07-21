@@ -25,7 +25,7 @@ const ASSETS = path.join(PUBLIC, "contra-assets");
 
 const TARGETS = {
   home: "home.html",
-  index: "index-page.html",
+  index: "index.html",
   themis: "themis.html",
   company: "company.html",
   thesis: "our-thesis.html",

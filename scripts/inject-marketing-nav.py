@@ -16,7 +16,7 @@ PUBLIC = ROOT / "public"
 
 MARKETING_PAGES = [
     "home.html",
-    "index-page.html",
+    "index.html",
     "themis.html",
     "company.html",
     "our-thesis.html",

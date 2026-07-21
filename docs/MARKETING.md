@@ -7,7 +7,7 @@ Static Framer exports + a **shared Ontitled nav shell**. Product app (Auth0) sta
 | URL | File | Notes |
 |-----|------|--------|
 | `/` | `public/home.html` | Brand home |
-| `/index` | `public/index-page.html` | Creative Arena / research (was contralabs `/research`) |
+| `/index` | `public/index.html` | Creative Arena / research (was contralabs `/research`) |
 | `/themis` | `public/themis.html` | Themis product marketing |
 | `/company` | `public/company.html` | About |
 | `/our-thesis` | `public/our-thesis.html` | Short thesis |

@@ -42,11 +42,11 @@ const nextConfig: NextConfig = {
         // Index page = Creative Arena / research (must not collide with home)
         {
           source: "/index",
-          destination: "/index-page.html",
+          destination: "/index.html",
         },
         {
           source: "/index/:path*",
-          destination: "/index-page.html",
+          destination: "/index.html",
         },
         {
           source: "/",
@@ -68,7 +68,7 @@ const nextConfig: NextConfig = {
         },
         {
           source: "/human-creativity-benchmark",
-          destination: "/index-page.html",
+          destination: "/index.html",
         },
         {
           source: "/jobs",
@@ -88,7 +88,7 @@ const nextConfig: NextConfig = {
         },
         {
           source: "/creative-arena/:path*",
-          destination: "/index-page.html",
+          destination: "/index.html",
         },
         {
           source: "/vision",

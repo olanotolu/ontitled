@@ -10,7 +10,7 @@ components/          # Shared React UI (AppShell, settings)
 lib/                 # Auth0, Supabase, settings helpers
 public/
   home.html          # /
-  index-page.html    # /index  (Creative Arena / research)
+  index.html    # /index  (Creative Arena / research)
   themis.html        # /themis
   company.html       # /company
   our-thesis.html    # /our-thesis
@@ -32,7 +32,7 @@ supabase/            # Migrations
 | URL | File |
 |-----|------|
 | `/` | `public/home.html` |
-| `/index` | `public/index-page.html` |
+| `/index` | `public/index.html` |
 | `/themis` | `public/themis.html` |
 | `/company` | `public/company.html` |
 | `/our-thesis` | `public/our-thesis.html` |
