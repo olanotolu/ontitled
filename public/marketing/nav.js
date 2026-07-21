@@ -1,6 +1,6 @@
 /**
  * Shared Ontitled marketing nav.
- * Mounts ribbon + bar, hides ONLY Contra/Framer site chrome (never content Headers).
+ * Mounts ribbon + bar, hides ONLY Ontitled/Framer site chrome (never content Headers).
  */
 (function () {
   "use strict";
@@ -85,7 +85,7 @@
     );
   }
 
-  function hideContraChrome() {
+  function hideOntitledChrome() {
     document.querySelectorAll("[data-framer-name]").forEach(function (el) {
       var name = (el.getAttribute("data-framer-name") || "").trim().toLowerCase();
       if (CHROME_NAMES[name]) el.classList.add("ot-hide-framer-nav");
@@ -206,7 +206,7 @@
   function boot() {
     pinIndexPath();
     mountNav();
-    hideContraChrome();
+    hideOntitledChrome();
     watchPreLoader();
   }
 
@@ -217,8 +217,8 @@
   }
 
   window.addEventListener("load", function () {
-    hideContraChrome();
-    setTimeout(hideContraChrome, 200);
-    setTimeout(hideContraChrome, 800);
+    hideOntitledChrome();
+    setTimeout(hideOntitledChrome, 200);
+    setTimeout(hideOntitledChrome, 800);
   });
 })();

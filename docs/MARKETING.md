@@ -22,7 +22,7 @@ Auth: `proxy.ts` skips marketing paths; Auth0 only on app routes.
 | Asset | Role |
 |-------|------|
 | `public/marketing/nav.css` | Ribbon + bar + mobile drawer |
-| `public/marketing/nav.js` | Mount nav, hide Framer/Contra chrome, current page |
+| `public/marketing/nav.js` | Mount nav, hide Framer/Ontitled chrome, current page |
 
 Injected into every marketing HTML via:
 
@@ -46,7 +46,7 @@ This localizes `framerusercontent.com` assets into `public/contra-assets/`, ligh
 
 Run with `npm run dev`, then hard-refresh each URL (Cmd+Shift+R).
 
-- [ ] **`/`** — home hero loads; **black** ribbon + **[Ontitled]** nav (not Contra)
+- [ ] **`/`** — home hero loads; **black** ribbon + **[Ontitled]** nav (not Ontitled)
 - [ ] **`/index`** — “Creative intelligence.” content; same Ontitled nav; **no** splash; **no** “contra LABS”
 - [ ] **Refresh `/index`** — still Index content (not home glitch)
 - [ ] **`/themis`** — Themis page + shared nav

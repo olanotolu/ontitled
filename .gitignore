@@ -34,6 +34,9 @@ data/*.sqlite-*
 # Local-only archive (Framer dumps, scratch assets)
 _archive/
 
+# Inspiration / reference HTML (not part of the app)
+inspo/
+
 # Nested experiment apps (if recreated)
 app-ontitled/
 **/node_modules/

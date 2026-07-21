@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Replace all visible 'Contra' references with '[Ontitled]' in HTML and JS files."""
+"""Replace all visible 'Ontitled' references with '[Ontitled]' in HTML and JS files."""
 import re
 from pathlib import Path
 
@@ -11,7 +11,7 @@ json_files = list(Path('public/contra-assets').glob('*.json'))
 
 # Skip patterns - don't replace these
 skip_patterns = ['contra-assets', 'contralabs', 'contra.com', 'contrahq', 
-                 'contra-asset', 'ContraLabs', 'contralabs_ai', 'contra-assets/']
+                 'contra-asset', 'OntitledLabs', 'contralabs_ai', 'contra-assets/']
 
 def should_skip(ctx):
     for p in skip_patterns:
@@ -20,44 +20,44 @@ def should_skip(ctx):
     return False
 
 def replace_contra(text):
-    # Replace visible "Contra" text but not URLs or identifiers
-    # Pattern: Contra followed by space, apostrophe, quote, or end of word
+    # Replace visible "Ontitled" text but not URLs or identifiers
+    # Pattern: Ontitled followed by space, apostrophe, quote, or end of word
     # But not part of contralabs, contra.com, etc.
     
     replacements = [
         # Specific phrases
-        ('What is Contra Pro?', 'What is [Ontitled] Pro?'),
-        ('Contra Pro is currently', '[Ontitled] Pro is currently'),
-        ('Contra Pro', '[Ontitled] Pro'),
-        ('Contra is setting', '[Ontitled] is setting'),
-        ('How does Contra help', 'How does [Ontitled] help'),
-        ('Contra connects', '[Ontitled] connects'),
-        ('Contra helps', '[Ontitled] helps'),
-        ('Contra to evaluate', '[Ontitled] to evaluate'),
-        ('Contra to train', '[Ontitled] to train'),
-        ('Using Contra', 'Using [Ontitled]'),
-        ('with Contra', 'with [Ontitled]'),
-        ('on Contra', 'on [Ontitled]'),
-        ('by Contra', 'by [Ontitled]'),
-        ('trusted by Contra', 'trusted by [Ontitled]'),
-        ('Run by Contra', 'Run by [Ontitled]'),
+        ('What is Ontitled Pro?', 'What is [Ontitled] Pro?'),
+        ('Ontitled Pro is currently', '[Ontitled] Pro is currently'),
+        ('Ontitled Pro', '[Ontitled] Pro'),
+        ('Ontitled is setting', '[Ontitled] is setting'),
+        ('How does Ontitled help', 'How does [Ontitled] help'),
+        ('Ontitled connects', '[Ontitled] connects'),
+        ('Ontitled helps', '[Ontitled] helps'),
+        ('Ontitled to evaluate', '[Ontitled] to evaluate'),
+        ('Ontitled to train', '[Ontitled] to train'),
+        ('Using Ontitled', 'Using [Ontitled]'),
+        ('with Ontitled', 'with [Ontitled]'),
+        ('on Ontitled', 'on [Ontitled]'),
+        ('by Ontitled', 'by [Ontitled]'),
+        ('trusted by Ontitled', 'trusted by [Ontitled]'),
+        ('Run by Ontitled', 'Run by [Ontitled]'),
         # Apostrophe variants
-        ('Contra\u2019s reviewers', '[Ontitled]\u2019s reviewers'),
-        ("Contra's reviewers", "[Ontitled]'s reviewers"),
-        ('Contra\u2019s', '[Ontitled]\u2019s'),
-        ("Contra's", "[Ontitled]'s"),
+        ('Ontitled\u2019s reviewers', '[Ontitled]\u2019s reviewers'),
+        ("Ontitled's reviewers", "[Ontitled]'s reviewers"),
+        ('Ontitled\u2019s', '[Ontitled]\u2019s'),
+        ("Ontitled's", "[Ontitled]'s"),
         # Logo / display names
-        ('"Contra"', '"[Ontitled]"'),
-        ('`Contra`', '`[Ontitled]`'),
-        ('&quot;Contra&quot;', '&quot;[Ontitled]&quot;'),
-        ('>Contra<', '>[Ontitled]<'),
-        # Standalone Contra at end of sentence or before punctuation
-        ('Contra ', '[Ontitled] '),
-        ('Contra.', '[Ontitled].'),
-        ('Contra,', '[Ontitled],'),
-        ('Contra/', '[Ontitled]/'),
-        # Meet the Contra + Labs ecosystem
-        ('Meet the Contra', 'Learn about [Ontitled]'),
+        ('"Ontitled"', '"[Ontitled]"'),
+        ('`Ontitled`', '`[Ontitled]`'),
+        ('&quot;Ontitled&quot;', '&quot;[Ontitled]&quot;'),
+        ('>Ontitled<', '>[Ontitled]<'),
+        # Standalone Ontitled at end of sentence or before punctuation
+        ('Ontitled ', '[Ontitled] '),
+        ('Ontitled.', '[Ontitled].'),
+        ('Ontitled,', '[Ontitled],'),
+        ('Ontitled/', '[Ontitled]/'),
+        # Meet the Ontitled + Labs ecosystem
+        ('Meet the Ontitled', 'Learn about [Ontitled]'),
         ('Labs ecosystem', 'ecosystem'),
     ]
     
