@@ -1,8 +1,62 @@
 import { auth0 } from "./lib/auth0";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export async function proxy(request: Request) {
-  const authResponse = await auth0.middleware(request);
-  return authResponse;
+/**
+ * Auth0 only for product routes. Marketing HTML (/index, /, /themis, …)
+ * must not run auth middleware — it breaks hard-refresh on static pages.
+ */
+const AUTH_MATCHERS = [
+  /^\/dashboard(?:\/|$)/,
+  /^\/playground(?:\/|$)/,
+  /^\/settings(?:\/|$)/,
+  /^\/login(?:\/|$)/,
+  /^\/signup(?:\/|$)/,
+  /^\/app(?:\/|$)/,
+  /^\/api(?:\/|$)/,
+  /^\/auth(?:\/|$)/,
+  /^\/authorize(?:\/|$)/,
+  /^\/access-token(?:\/|$)/,
+];
+
+export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Static marketing assets / pages — pass through
+  if (
+    pathname.startsWith("/contra-assets") ||
+    pathname.startsWith("/fonts") ||
+    pathname.startsWith("/marketing") ||
+    pathname.startsWith("/auth/") ||
+    pathname.endsWith(".html") ||
+    pathname.endsWith(".ico") ||
+    pathname.endsWith(".png") ||
+    pathname.endsWith(".jpg") ||
+    pathname.endsWith(".woff2") ||
+    pathname === "/" ||
+    pathname === "/index" ||
+    pathname.startsWith("/index/") ||
+    pathname === "/themis" ||
+    pathname === "/company" ||
+    pathname === "/our-thesis" ||
+    pathname === "/research" ||
+    pathname.startsWith("/research/") ||
+    pathname === "/dike" ||
+    pathname.startsWith("/dike/") ||
+    pathname === "/jobs" ||
+    pathname.startsWith("/jobs/") ||
+    pathname === "/vision" ||
+    pathname.startsWith("/creative-arena")
+  ) {
+    return NextResponse.next();
+  }
+
+  const needsAuth = AUTH_MATCHERS.some((re) => re.test(pathname));
+  if (!needsAuth) {
+    return NextResponse.next();
+  }
+
+  return auth0.middleware(request);
 }
 
 export const config = {

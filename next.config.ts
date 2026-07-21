@@ -27,63 +27,76 @@ const nextConfig: NextConfig = {
         destination: "/index/:path*",
         permanent: true,
       },
+      // Old static filename — keep bookmarks working
+      {
+        source: "/index.html",
+        destination: "/",
+        permanent: false,
+      },
     ];
   },
   async rewrites() {
-    return [
-      {
-        source: "/",
-        destination: "/index.html",
-      },
-      {
-        source: "/themis",
-        destination: "/themis.html",
-      },
-      {
-        source: "/dike",
-        destination: "/index.html",
-      },
-      {
-        source: "/dike/:path*",
-        destination: "/index.html",
-      },
-      {
-        source: "/human-creativity-benchmark",
-        destination: "/index.html",
-      },
-      {
-        source: "/index",
-        destination: "/index.html",
-      },
-      {
-        source: "/index/:path*",
-        destination: "/index.html",
-      },
-      {
-        source: "/jobs",
-        destination: "/index.html",
-      },
-      {
-        source: "/jobs/:path*",
-        destination: "/index.html",
-      },
-      {
-        source: "/our-thesis",
-        destination: "/our-thesis.html",
-      },
-      {
-        source: "/company",
-        destination: "/company.html",
-      },
-      {
-        source: "/creative-arena/:path*",
-        destination: "/index.html",
-      },
-      {
-        source: "/vision",
-        destination: "/index.html",
-      },
-    ];
+    // beforeFiles: win over public/ filesystem quirks (esp. /index vs index.html)
+    return {
+      beforeFiles: [
+        // Index page = Creative Arena / research (must not collide with home)
+        {
+          source: "/index",
+          destination: "/index-page.html",
+        },
+        {
+          source: "/index/:path*",
+          destination: "/index-page.html",
+        },
+        {
+          source: "/",
+          destination: "/home.html",
+        },
+      ],
+      afterFiles: [
+        {
+          source: "/themis",
+          destination: "/themis.html",
+        },
+        {
+          source: "/dike",
+          destination: "/home.html",
+        },
+        {
+          source: "/dike/:path*",
+          destination: "/home.html",
+        },
+        {
+          source: "/human-creativity-benchmark",
+          destination: "/index-page.html",
+        },
+        {
+          source: "/jobs",
+          destination: "/home.html",
+        },
+        {
+          source: "/jobs/:path*",
+          destination: "/home.html",
+        },
+        {
+          source: "/our-thesis",
+          destination: "/our-thesis.html",
+        },
+        {
+          source: "/company",
+          destination: "/company.html",
+        },
+        {
+          source: "/creative-arena/:path*",
+          destination: "/index-page.html",
+        },
+        {
+          source: "/vision",
+          destination: "/home.html",
+        },
+      ],
+      fallback: [],
+    };
   },
 };
 
