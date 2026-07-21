@@ -27,12 +27,14 @@
 }
 
 /*
-  Kill Framer site chrome ASAP (no wait for .ot-nav-ready) so the ribbon
-  never doubles behind the Ontitled bar.
+  Kill Framer site chrome ASAP so the ribbon never doubles behind ot-nav.
   NEVER match bare "Header" / "Banner" — content blocks use those names.
+  Avoid left:-9999px (can expand scroll width).
 */
+html, body {
+  overflow-x: clip;
+}
 [data-framer-name="Top Nav"],
-[data-framer-name="Top Nav"] *,
 [data-framer-name="Logo Banner"],
 a[data-framer-name="Logo Banner"],
 [data-framer-name="Nav"],
@@ -44,23 +46,78 @@ a[data-framer-name="Logo Banner"],
 [data-framer-name="Logo Ribbon"],
 .framer-hw1M8,
 .ot-hide-framer-nav,
-.ot-hide-framer-nav *,
 .nav-legacy,
 a.nav-ribbon.nav-legacy,
 header.nav.nav-legacy {
   display: none !important;
   visibility: hidden !important;
   pointer-events: none !important;
-  opacity: 0 !important;
-  height: 0 !important;
-  max-height: 0 !important;
   width: 0 !important;
-  max-width: 0 !important;
+  height: 0 !important;
   overflow: hidden !important;
-  transform: none !important;
-  position: absolute !important;
-  left: -9999px !important;
+  position: fixed !important;
+  inset: 0 auto auto 0 !important;
+  clip-path: inset(50%) !important;
+  border: 0 !important;
   z-index: -1 !important;
+}
+
+/*
+  Section 1 hero bg video — only AFTER preloader settles (final variants).
+  Intro animation runs untouched; settled state was ~1184px wide at x≈256.
+  Center + cover so the video fills the hero viewport.
+*/
+#hero .framer-v-xyucv8 [data-framer-name="Viewport Wrapper"],
+#hero .framer-v-1aexcau [data-framer-name="Viewport Wrapper"] {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  transform: none !important;
+  overflow: hidden !important;
+}
+#hero .framer-v-xyucv8 [data-framer-name="Symbol & Images"],
+#hero .framer-v-xyucv8 [data-framer-name="Images"],
+#hero .framer-v-xyucv8 [data-framer-name="HERO BKG Image"],
+#hero .framer-v-xyucv8 .framer-7c4vl2,
+#hero .framer-v-xyucv8 .framer-1r65zn7,
+#hero .framer-v-xyucv8 .framer-ef5qa0,
+#hero .framer-v-xyucv8 .framer-1slvs2a-container,
+#hero .framer-v-1aexcau [data-framer-name="Symbol & Images"],
+#hero .framer-v-1aexcau [data-framer-name="Images"],
+#hero .framer-v-1aexcau [data-framer-name="HERO BKG Image"],
+#hero .framer-v-1aexcau .framer-7c4vl2,
+#hero .framer-v-1aexcau .framer-1r65zn7,
+#hero .framer-v-1aexcau .framer-ef5qa0,
+#hero .framer-v-1aexcau .framer-1slvs2a-container {
+  position: absolute !important;
+  inset: 0 !important;
+  left: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  flex: none !important;
+  transform: none !important;
+  overflow: hidden !important;
+}
+#hero .framer-v-xyucv8 video,
+#hero .framer-v-1aexcau video {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+/* Side wordmarks in settled state only — they force the 4:3 left offset */
+#hero .framer-v-xyucv8 [data-framer-name="Labs"],
+#hero .framer-v-xyucv8 [data-framer-name="Symbol"],
+#hero .framer-v-1aexcau [data-framer-name="Labs"],
+#hero .framer-v-1aexcau [data-framer-name="Symbol"] {
+  display: none !important;
 }
 
 /* Ribbon */
