@@ -62,62 +62,34 @@ header.nav.nav-legacy {
   z-index: -1 !important;
 }
 
-/*
-  Section 1 hero bg video — only AFTER preloader settles (final variants).
-  Intro animation runs untouched; settled state was ~1184px wide at x≈256.
-  Center + cover so the video fills the hero viewport.
-*/
-#hero .framer-v-xyucv8 [data-framer-name="Viewport Wrapper"],
-#hero .framer-v-1aexcau [data-framer-name="Viewport Wrapper"] {
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  transform: none !important;
-  overflow: hidden !important;
+/* Root splash: keep the intro clean until Framer reaches its native final variant. */
+body:has(#hero [data-framer-name="Pre_Loader"]):not(:has(.framer-BN6LX[data-framer-name*="-17 (END"])) .ot-nav,
+body:has(#hero [data-framer-name="Pre_Loader"]):not(:has(.framer-BN6LX[data-framer-name*="-17 (END"])) .ot-nav-ribbon {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
-#hero .framer-v-xyucv8 [data-framer-name="Symbol & Images"],
-#hero .framer-v-xyucv8 [data-framer-name="Images"],
-#hero .framer-v-xyucv8 [data-framer-name="HERO BKG Image"],
-#hero .framer-v-xyucv8 .framer-7c4vl2,
-#hero .framer-v-xyucv8 .framer-1r65zn7,
-#hero .framer-v-xyucv8 .framer-ef5qa0,
-#hero .framer-v-xyucv8 .framer-1slvs2a-container,
-#hero .framer-v-1aexcau [data-framer-name="Symbol & Images"],
-#hero .framer-v-1aexcau [data-framer-name="Images"],
-#hero .framer-v-1aexcau [data-framer-name="HERO BKG Image"],
-#hero .framer-v-1aexcau .framer-7c4vl2,
-#hero .framer-v-1aexcau .framer-1r65zn7,
-#hero .framer-v-1aexcau .framer-ef5qa0,
-#hero .framer-v-1aexcau .framer-1slvs2a-container {
-  position: absolute !important;
-  inset: 0 !important;
-  left: 0 !important;
-  top: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-width: none !important;
-  max-height: none !important;
-  margin: 0 !important;
-  flex: none !important;
-  transform: none !important;
-  overflow: hidden !important;
-}
-#hero .framer-v-xyucv8 video,
-#hero .framer-v-1aexcau video {
-  display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  object-position: center center !important;
-}
-/* Side wordmarks in settled state only — they force the 4:3 left offset */
-#hero .framer-v-xyucv8 [data-framer-name="Labs"],
-#hero .framer-v-xyucv8 [data-framer-name="Symbol"],
-#hero .framer-v-1aexcau [data-framer-name="Labs"],
-#hero .framer-v-1aexcau [data-framer-name="Symbol"] {
+#hero:has(.framer-BN6LX[data-framer-name*="-17 (END"]) .framer-NLAj7 {
   display: none !important;
+}
+
+@media (max-width: 809.98px) {
+  .ot-logo {
+    font-size: 18px !important;
+  }
+  .ot-nav-shell {
+    padding-left: 56px !important;
+    padding-right: 16px !important;
+  }
+  .ot-nav-ribbon {
+    left: 12px !important;
+    width: 28px !important;
+    height: 60px !important;
+  }
+  .ot-nav-ribbon svg {
+    width: 28px !important;
+    height: 60px !important;
+  }
 }
 
 /* Ribbon */
@@ -131,6 +103,14 @@ header.nav.nav-legacy {
   height: 92px;
   text-decoration: none;
   pointer-events: auto;
+  opacity: 0;
+}
+.ot-nav-show .ot-nav-ribbon {
+  animation: ot-ribbon-in 0.4s ease-out both;
+}
+@keyframes ot-ribbon-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .ot-nav-ribbon svg {
   display: block;
@@ -149,6 +129,14 @@ header.nav.nav-legacy {
   pointer-events: none;
   font-family: var(--ot-sans);
   -webkit-font-smoothing: antialiased;
+  opacity: 0;
+}
+.ot-nav-show .ot-nav {
+  animation: ot-nav-in 0.4s ease-out both;
+}
+@keyframes ot-nav-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 .ot-nav *,
 .ot-nav-ribbon * {

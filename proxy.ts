@@ -27,7 +27,6 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/contra-assets") ||
     pathname.startsWith("/fonts") ||
     pathname.startsWith("/marketing") ||
-    pathname.startsWith("/auth/") ||
     pathname.endsWith(".html") ||
     pathname.endsWith(".ico") ||
     pathname.endsWith(".png") ||

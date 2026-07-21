@@ -178,10 +178,36 @@
     }
   }
 
+  function preLoaderActive() {
+    var hero = document.querySelector("#hero");
+    if (!hero) return false;
+    return !hero.querySelector('.framer-BN6LX[data-framer-name*="-17 (END"]');
+  }
+
+  function showNav() {
+    document.body.classList.add("ot-nav-show");
+  }
+
+  function watchPreLoader() {
+    if (!preLoaderActive()) {
+      showNav();
+      return;
+    }
+    var tries = 0;
+    var timer = setInterval(function () {
+      tries++;
+      if (!preLoaderActive() || tries > 60) {
+        clearInterval(timer);
+        showNav();
+      }
+    }, 100);
+  }
+
   function boot() {
     pinIndexPath();
     mountNav();
     hideContraChrome();
+    watchPreLoader();
   }
 
   if (document.readyState === "loading") {
