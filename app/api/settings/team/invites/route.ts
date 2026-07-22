@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requireUser } from "@/lib/settings/auth";
 import { ensureUserWorkspace } from "@/lib/settings/ensure";
 import { createInvite, requireMembership } from "@/lib/settings/repository";
+import { sendInviteEmail } from "@/lib/email/send";
 import type { MemberRole } from "@/lib/settings/types";
 
 export async function POST(req: Request) {
@@ -34,6 +35,14 @@ export async function POST(req: Request) {
       process.env.APP_BASE_URL ||
       process.env.AUTH0_BASE_URL ||
       "https://www.ontitled.com";
+    const inviteUrl = `${base.replace(/\/$/, "")}/invites/${invite.token}`;
+
+    sendInviteEmail({
+      to: invite.email,
+      inviteUrl,
+      workspaceName: workspace.name,
+    }).catch(() => {});
+
     return NextResponse.json({
       invite: {
         id: invite.id,
@@ -41,7 +50,7 @@ export async function POST(req: Request) {
         role: invite.role,
         expiresAt: invite.expiresAt,
         createdAt: invite.createdAt,
-        inviteUrl: `${base.replace(/\/$/, "")}/invites/${invite.token}`,
+        inviteUrl,
       },
     });
   } catch (e) {
