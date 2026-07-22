@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 vi.mock("@/lib/supabase", () => ({
   isSupabaseConfigured: vi.fn(() => false),
@@ -13,6 +13,13 @@ const { getSettingsBackend, AccountDeletedError, getProfile, getWorkspaceForUser
 const { ensureUserWorkspace } = await vi.importActual<typeof import("@/lib/settings/ensure")>(
   "@/lib/settings/ensure"
 );
+
+beforeEach(() => {
+  const g = globalThis as Record<string, unknown> & {
+    __ontitledSettingsStore?: unknown;
+  };
+  delete g.__ontitledSettingsStore;
+});
 
 describe("getSettingsBackend", () => {
   it("returns json when SETTINGS_BACKEND=json", () => {

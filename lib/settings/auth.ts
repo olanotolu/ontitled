@@ -1,5 +1,6 @@
 import { auth0 } from "@/lib/auth0";
 import { NextResponse } from "next/server";
+import { getProfile } from "./repository";
 
 export type AuthUser = {
   userId: string;
@@ -24,4 +25,23 @@ export async function requireUser(): Promise<
       name: (u.name as string) || (u.email as string) || "User",
     },
   };
+}
+
+export async function requireActiveUser(): Promise<
+  { user: AuthUser } | { error: NextResponse }
+> {
+  const result = await requireUser();
+  if ("error" in result) return result;
+
+  const profile = await getProfile(result.user.userId);
+  if (profile?.deletedAt) {
+    return {
+      error: NextResponse.json(
+        { error: "account_deleted" },
+        { status: 403 }
+      ),
+    };
+  }
+
+  return result;
 }
