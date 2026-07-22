@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "vitest run",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "marketing:nav": "python3 scripts/inject-marketing-nav.py",
     "marketing:import": "node scripts/marketing-import.mjs",
@@ -27,6 +29,7 @@
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "typescript": "latest"
+    "typescript": "latest",
+    "vitest": "^4.1.10"
   }
 }
