@@ -154,17 +154,18 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
 }
 
 /*
- * Paper grain: keep the texture, but lift it so the page reads brighter
- * (soft-light brightens the cream instead of multiplying gray over it).
+ * Paper grain — match Framer export (subtle).
+ * Do NOT use soft-light / high opacity: that reads as TV static.
+ * Original: container 0.1, tile 0.5. Nudge only slightly for presence.
  */
 [data-framer-name="Texture (Z=10)"] .framer-1kb2pfb-container {
-  opacity: 0.55 !important;
-  mix-blend-mode: soft-light !important;
+  opacity: 0.12 !important;
+  mix-blend-mode: normal !important;
+  filter: none !important;
 }
 [data-framer-name="Texture (Z=10)"] .framer-1kb2pfb-container > div {
-  opacity: 0.85 !important;
-  /* Slight lift so speckles feel airy, not ashy */
-  filter: brightness(1.35) contrast(1.05) !important;
+  opacity: 0.5 !important;
+  filter: none !important;
 }
 
 @media (max-width: 809.98px) {
