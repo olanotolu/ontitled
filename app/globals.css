@@ -1089,6 +1089,17 @@ a.tinker-logo {
   padding: 8px;
 }
 
+.pg-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  padding: 10px 16px;
+  margin: 0 16px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 .pg-stage {
   flex: 1;
   min-height: 0;

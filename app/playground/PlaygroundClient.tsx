@@ -169,22 +169,60 @@ export default function PlaygroundClient({ session }: Props) {
     DEFAULT_SYSTEM.replace("{{ current_date }}", new Date().toISOString().slice(0, 10))
   );
   const [settingsOpen, setSettingsOpen] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const charCount = systemPrompt.length;
   const hasChat = messages.length > 0;
 
-  function send(text: string) {
+  async function send(text: string) {
     const trimmed = text.trim();
-    if (!trimmed) return;
-    setMessages((m) => [
-      ...m,
-      { role: "user", text: trimmed },
-      {
-        role: "assistant",
-        text: "Playground is local-only for now — wire Themis here when the API is ready. Your prompt was received.",
-      },
-    ]);
+    if (!trimmed || loading) return;
     setInput("");
+    setError(null);
+
+    setMessages((m) => [...m, { role: "user", text: trimmed }]);
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/themis/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          messages: [
+            ...messages.map((m) => ({ role: m.role, content: m.text })),
+            { role: "user", content: trimmed },
+          ],
+          model: model === "Themis Mini" ? "themis-mini" : "themis",
+          systemPrompt,
+        }),
+      });
+
+      if (res.status === 401) {
+        setError("Session expired. Please log in again.");
+        return;
+      }
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Error ${res.status}`);
+      }
+
+      const data = await res.json();
+      setMessages((m) => [
+        ...m,
+        {
+          role: "assistant",
+          text: data.message?.content || "No response received.",
+        },
+      ]);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Something went wrong";
+      setError(msg);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function onSubmit(e: React.FormEvent) {
@@ -219,6 +257,16 @@ export default function PlaygroundClient({ session }: Props) {
           </header>
 
           <div className="pg-stage">
+            {error ? (
+              <div className="pg-error" role="alert">
+                {error}
+                {error.includes("Session expired") ? (
+                  <a href="/login" style={{ marginLeft: 12, color: "inherit", textDecoration: "underline" }}>
+                    Log in
+                  </a>
+                ) : null}
+              </div>
+            ) : null}
             {!hasChat ? (
               <div className="pg-empty">
                 <h2 className="pg-headline">Science is better when shared.</h2>
@@ -274,10 +322,10 @@ export default function PlaygroundClient({ session }: Props) {
                 <button
                   type="submit"
                   className="pg-send"
-                  aria-label="Send"
-                  disabled={!input.trim()}
+                  aria-label={loading ? "Sending…" : "Send"}
+                  disabled={!input.trim() || loading}
                 >
-                  <IconSend />
+                  {loading ? "…" : <IconSend />}
                 </button>
               </div>
             </form>
