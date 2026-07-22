@@ -1,4 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 
 vi.mock("@/lib/supabase", () => ({
   isSupabaseConfigured: vi.fn(() => false),
@@ -14,11 +16,14 @@ const { ensureUserWorkspace } = await vi.importActual<typeof import("@/lib/setti
   "@/lib/settings/ensure"
 );
 
-beforeEach(() => {
+beforeEach(async () => {
   const g = globalThis as Record<string, unknown> & {
     __ontitledSettingsStore?: unknown;
   };
   delete g.__ontitledSettingsStore;
+  try {
+    await fs.unlink(path.join(process.cwd(), "data", "settings-store.json"));
+  } catch {}
 });
 
 describe("getSettingsBackend", () => {
@@ -81,9 +86,11 @@ describe("JSON backend – profile and workspace lifecycle", () => {
   });
 
   it("throws AccountDeletedError for soft-deleted user", async () => {
-    await softDeleteAccount(userId);
+    const uid = "test|deleted_" + Date.now();
+    await ensureUserWorkspace({ userId: uid, email: "del@example.com", name: "Del User" });
+    await softDeleteAccount(uid);
     await expect(
-      ensureUserWorkspace({ userId, email: "test@example.com", name: "Test User" })
+      ensureUserWorkspace({ userId: uid, email: "del@example.com", name: "Del User" })
     ).rejects.toThrow(AccountDeletedError);
   });
 
@@ -93,8 +100,10 @@ describe("JSON backend – profile and workspace lifecycle", () => {
   });
 
   it("getWorkspaceForUser throws for deleted user", async () => {
-    await expect(
-      getWorkspaceForUser({ userId, email: "test@example.com", name: "Test User" })
-    ).rejects.toThrow(AccountDeletedError);
+    const uid = "test|deleted2_" + Date.now();
+    const user = { userId: uid, email: "del2@example.com", name: "Del2 User" };
+    await ensureUserWorkspace(user);
+    await softDeleteAccount(uid);
+    await expect(getWorkspaceForUser(user)).rejects.toThrow(AccountDeletedError);
   });
 });

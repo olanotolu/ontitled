@@ -497,6 +497,26 @@ async function sbGetUsageHistory(
   return (data || []).map(mapUsage);
 }
 
+async function sbFindApiKeyByHash(hash: string): Promise<ApiKeyRecord | null> {
+  const sb = createServiceClient();
+  const { data } = await sb
+    .from("api_keys")
+    .select("*")
+    .eq("key_hash", hash)
+    .is("revoked_at", null)
+    .single();
+  if (!data) return null;
+  return mapApiKey(data);
+}
+
+async function sbTouchApiKeyLastUsed(id: string): Promise<void> {
+  const sb = createServiceClient();
+  await sb
+    .from("api_keys")
+    .update({ last_used_at: now() } as any)
+    .eq("id", id);
+}
+
 // ——— JSON backend implementations ———
 
 async function jsonGetProfile(userId: string): Promise<Profile | null> {
@@ -815,6 +835,24 @@ async function jsonGetUsageHistory(
   });
 }
 
+async function jsonFindApiKeyByHash(hash: string): Promise<ApiKeyRecord | null> {
+  return withStore((store) => {
+    return (
+      store.apiKeys.find((k) => k.keyHash === hash && !k.revokedAt) ?? null
+    );
+  });
+}
+
+async function jsonTouchApiKeyLastUsed(id: string): Promise<void> {
+  await withStore(
+    (store) => {
+      const key = store.apiKeys.find((k) => k.id === id);
+      if (key) key.lastUsedAt = now();
+    },
+    { mutate: true }
+  );
+}
+
 // ——— Public API (routes to the correct backend) ———
 
 export async function getProfile(userId: string): Promise<Profile | null> {
@@ -922,4 +960,16 @@ export async function getUsageHistory(
   return useSupabase()
     ? sbGetUsageHistory(workspaceId, months)
     : jsonGetUsageHistory(workspaceId, months);
+}
+
+export async function findApiKeyByHash(hash: string): Promise<ApiKeyRecord | null> {
+  return useSupabase()
+    ? sbFindApiKeyByHash(hash)
+    : jsonFindApiKeyByHash(hash);
+}
+
+export async function touchApiKeyLastUsed(id: string): Promise<void> {
+  return useSupabase()
+    ? sbTouchApiKeyLastUsed(id)
+    : jsonTouchApiKeyLastUsed(id);
 }

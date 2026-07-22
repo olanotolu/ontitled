@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
-import { requireActiveUser } from "@/lib/settings/auth";
-import { ensureUserWorkspace } from "@/lib/settings/ensure";
+import { authenticateRequest } from "@/lib/settings/api-key-auth";
 import { buildThemisProvider } from "@/lib/themis/providers/factory";
 import type { ThemisChatRequest } from "@/lib/themis/types";
 
 export async function POST(req: Request) {
-  const auth = await requireActiveUser();
+  const auth = await authenticateRequest(req);
   if ("error" in auth) return auth.error;
 
   let body: ThemisChatRequest;
@@ -22,14 +21,12 @@ export async function POST(req: Request) {
     );
   }
 
-  const { workspace } = await ensureUserWorkspace(auth.user);
-
   const provider = buildThemisProvider();
 
   try {
     const response = await provider.chat(body, {
-      userId: auth.user.userId,
-      workspaceId: workspace.id,
+      userId: auth.mode === "session" ? auth.user.userId : auth.userId,
+      workspaceId: auth.workspaceId,
     });
 
     return NextResponse.json(response);
