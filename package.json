@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "marketing:nav": "python3 scripts/inject-marketing-nav.py",
     "marketing:import": "node scripts/marketing-import.mjs",
@@ -23,7 +22,8 @@
     "@supabase/supabase-js": "^2.110.7",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "thinking-orbs": "^0.1.1"
   },
   "devDependencies": {
     "@types/node": "latest",

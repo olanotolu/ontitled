@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ThinkingOrb } from "thinking-orbs";
 import { AppShell } from "../../components/AppShell";
 import type { SessionData } from "@auth0/nextjs-auth0/types";
 
@@ -322,11 +323,16 @@ export default function PlaygroundClient({ session }: Props) {
                 <button
                   type="submit"
                   className="pg-send"
-                  aria-label={loading ? "Sending…" : "Send"}
+                  aria-label={loading ? "Themis is solving…" : "Send"}
                   disabled={!input.trim() || loading}
+                  data-loading={loading}
                 >
-                  {loading ? "…" : <IconSend />}
-                </button>
+                  {loading ? (
+                    <ThinkingOrb state="solving" size={20} speed={1.35} />
+                  ) : (
+                    <IconSend />
+                  )}
+               </button>
               </div>
             </form>
             <p className="pg-disclaimer">
