@@ -135,14 +135,31 @@ function IconClose() {
   );
 }
 
-function IconPanel() {
+function IconSun() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="16" rx="2" />
-      <path d="M9 4v16" />
+      <circle cx="12" cy="12" r="5" />
+      <line x1="12" y1="1" x2="12" y2="3" />
+      <line x1="12" y1="21" x2="12" y2="23" />
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+      <line x1="1" y1="12" x2="3" y2="12" />
+      <line x1="21" y1="12" x2="23" y2="12" />
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
     </svg>
   );
 }
+
+function IconMoon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  );
+}
+
+type Theme = "light" | "dark";
 
 type NavDef = {
   label: string;
@@ -270,6 +287,23 @@ export function AppShell({
   const pathname = usePathname();
   const [authed, setAuthed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<Theme>("light");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("theme") as Theme | null;
+    const initial = saved || "light";
+    setTheme(initial);
+    document.documentElement.classList.toggle("dark", initial === "dark");
+    document.documentElement.classList.toggle("light", initial === "light");
+  }, []);
+
+  useEffect(() => {
+    if (authed) {
+      localStorage.setItem("theme", theme);
+      document.documentElement.classList.toggle("dark", theme === "dark");
+      document.documentElement.classList.toggle("light", theme === "light");
+    }
+  }, [theme, authed]);
 
   useEffect(() => {
     if (session?.user) {
@@ -286,6 +320,7 @@ export function AppShell({
   if (!authed) {
     return (
       <div className="dash-loading" aria-busy="true">
+        <span className="sr-only">Loading dashboard</span>
         <span className="dash-loading-dot" />
       </div>
     );
@@ -317,9 +352,6 @@ export function AppShell({
           <Link href="/dashboard" className="tinker-logo" onClick={closeMenu}>
             [Ontitled]
           </Link>
-          <button type="button" className="sidebar-collapse" aria-label="Collapse sidebar">
-            <IconPanel />
-          </button>
         </div>
 
         <nav className="sidebar-nav" aria-label="Main">
@@ -368,6 +400,20 @@ export function AppShell({
           </div>
         </nav>
 
+        <div className="sidebar-bottom">
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={() => setTheme((t) => (t === "light" ? "dark" : "light"))}
+            aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+          >
+            <span className="theme-toggle-icon">
+              {theme === "light" ? <IconMoon /> : <IconSun />}
+            </span>
+            <span>{theme === "light" ? "Dark mode" : "Light mode"}</span>
+          </button>
+        </div>
+
         <div className="sidebar-profile">
           <Link href="/settings/profile" className="profile-link" onClick={closeMenu}>
             <div className="profile-avatar" aria-hidden="true">
@@ -389,7 +435,7 @@ export function AppShell({
         </div>
       </aside>
 
-      <main className={`dash-main${mainClassName ? ` ${mainClassName}` : ""}`}>{children}</main>
+      <main id="dashboard-main" className={`dash-main${mainClassName ? ` ${mainClassName}` : ""}`}>{children}</main>
     </div>
   );
 }

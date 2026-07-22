@@ -1,9 +1,15 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import { ThinkingOrb } from "thinking-orbs";
+import { BorderBeam } from "border-beam";
 import { AppShell } from "../../components/AppShell";
 import type { SessionData } from "@auth0/nextjs-auth0/types";
+
+const ThinkingOrb = dynamic(
+  () => import("thinking-orbs").then((m) => m.ThinkingOrb),
+  { ssr: false },
+);
 
 const SUGGESTIONS = [
   { label: "Surprise me", icon: "spark" },
@@ -297,14 +303,32 @@ export default function PlaygroundClient({ session }: Props) {
                 {messages.map((m, i) => (
                   <div key={i} className={`pg-msg pg-msg-${m.role}`}>
                     <div className="pg-msg-body">{m.text}</div>
-                  </div>
+                </div>
                 ))}
-              </div>
+                {loading ? (
+                  <div className="pg-msg pg-msg-assistant pg-msg-thinking">
+                    <BorderBeam
+                      size="md"
+                      colorVariant="ocean"
+                      theme="auto"
+                      borderRadius={16}
+                      strength={0.85}
+                      className="pg-thinking-beam"
+                    >
+                      <div className="pg-thinking-card">
+                        <ThinkingOrb state="solving" size={20} speed={1.35} />
+                        <span className="pg-thinking-label">Themis is solving</span>
+                     </div>
+                   </BorderBeam>
+                 </div>
+                ) : null}
+             </div>
             )}
           </div>
 
           <div className="pg-composer-wrap">
-            <form className="pg-composer" onSubmit={onSubmit}>
+            <BorderBeam size="md" colorVariant="ocean" theme="auto" borderRadius={999} className="pg-composer-beam">
+              <form className="pg-composer" onSubmit={onSubmit}>
               <input
                 className="pg-input"
                 type="text"
@@ -335,6 +359,7 @@ export default function PlaygroundClient({ session }: Props) {
                </button>
               </div>
             </form>
+            </BorderBeam>
             <p className="pg-disclaimer">
               Themis is AI and can make mistakes. Your use must follow our{" "}
               <button type="button" className="pg-inline-link">
