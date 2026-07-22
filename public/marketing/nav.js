@@ -6,7 +6,7 @@
   "use strict";
 
   var CTA =
-    "https://calendly.com/partnerships-contra/contra-labs-partnership-request";
+    "https://calendly.com/partnerships-ontitled/ontitled-partnership-request";
 
   var LINKS = [
     { href: "/themis", label: "Themis" },
@@ -110,15 +110,15 @@
         el.classList.add("ot-hide-framer-nav");
       });
 
-    // Only hide fixed chrome that literally says "contra LABS" (short brand mark)
+    // Only hide fixed chrome that literally says "Ontitled" (brand mark)
     document.querySelectorAll("a, p, span").forEach(function (el) {
       if (el.closest(".ot-nav, .ot-nav-ribbon, .ot-nav-drawer, #otNavRoot")) return;
       var t = (el.textContent || "").replace(/\s+/g, " ").trim();
       if (!t || t.length > 24) return;
       if (
-        !/^contra\s*labs$/i.test(t) &&
-        t !== "contra LABS" &&
-        t !== "CONTRA LABS"
+        !/^ontitled$/i.test(t) &&
+        t !== "Ontitled" &&
+        t !== "ONTITLED"
       ) {
         return;
       }
@@ -188,17 +188,134 @@
     document.body.classList.add("ot-nav-show");
   }
 
-  function watchPreLoader() {
-    if (!preLoaderActive()) {
+  var splashFinishing = false;
+
+  /**
+   * Soft exit: fade splash → reveal hero → hard-remove overlay.
+   * Hard display:none without a fade felt abrupt / monotone.
+   */
+  function forceHidePreLoader() {
+    if (splashFinishing || document.body.classList.contains("ot-preloader-done")) {
       showNav();
+      killBgVideos();
+      rewriteHeroCta();
+      return;
+    }
+    splashFinishing = true;
+    killBgVideos();
+    document.body.classList.add("ot-preloader-exiting");
+    showNav();
+    // Start hero content fade-in while splash is dissolving
+    requestAnimationFrame(function () {
+      document.body.classList.add("ot-hero-in");
+    });
+    rewriteHeroCta();
+
+    window.setTimeout(function () {
+      document
+        .querySelectorAll(
+          '#hero [data-framer-name="Pre_Loader"], #hero .framer-ghci25-container, [data-framer-name="Pre_Loader"]'
+        )
+        .forEach(function (el) {
+          el.style.setProperty("display", "none", "important");
+          el.style.setProperty("pointer-events", "none", "important");
+          el.style.setProperty("opacity", "0", "important");
+          el.style.setProperty("visibility", "hidden", "important");
+        });
+      document.body.classList.add("ot-preloader-done");
+      document.body.classList.remove("ot-preloader-exiting");
+      splashFinishing = false;
+      rewriteHeroCta();
+    }, 720);
+  }
+
+  /** Remove decorative bg videos (user: no longer needed). */
+  function killBgVideos() {
+    document.body.classList.add("ot-no-bg-video");
+    var selectors = [
+      "#hero video",
+      '[data-framer-name="HERO BKG Image"] video',
+      '[data-framer-name="Image Scramble"] video',
+      '[data-framer-name="BKG"] video',
+      'video[src*="xXF7zMolOXHM52BTEfXsZnKa0Fw"]',
+      'video[src*="hmg5dFU33RwVgzS4V0wrSxuKJ3E"]',
+      'video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"]',
+    ];
+    document.querySelectorAll(selectors.join(",")).forEach(function (v) {
+      try {
+        v.pause();
+        v.removeAttribute("src");
+        v.load && v.load();
+      } catch (e) {}
+      v.style.setProperty("display", "none", "important");
+    });
+  }
+
+  /**
+   * Hero primary CTA: "Request partnership" → "Try Themis" → /themis
+   * Framer rehydrates from modules, so we re-apply after splash + on a short loop.
+   */
+  function rewriteHeroCta() {
+    var hero = document.querySelector("#hero, [data-framer-name='HERO']");
+    var scope = hero || document;
+    var links = scope.querySelectorAll("a");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      var href = (a.getAttribute("href") || "").toLowerCase();
+      var text = (a.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+      var isCalendlyPartner =
+        href.indexOf("calendly.com/partnerships-") !== -1 ||
+        href.indexOf("calendly.com/partnerships") !== -1;
+      var isPartnerCopy =
+        text.indexOf("request partnership") !== -1 ||
+        (text.indexOf("partner") !== -1 && text.indexOf("request") !== -1);
+      // Primary dark CTA in hero Buttons row (even if already "Try Themis")
+      var inButtons =
+        !!a.closest('[data-framer-name="Buttons"]') &&
+        (isCalendlyPartner ||
+          href === "/themis" ||
+          text.indexOf("try themis") !== -1 ||
+          isPartnerCopy);
+      if (!isCalendlyPartner && !isPartnerCopy && !inButtons) continue;
+      // Only rewrite the primary pill in the Buttons group / calendly partners
+      if (inButtons || isCalendlyPartner || isPartnerCopy) {
+        a.setAttribute("href", "/themis");
+        a.removeAttribute("target");
+        a.removeAttribute("rel");
+      }
+      var walker = document.createTreeWalker(a, NodeFilter.SHOW_TEXT, null);
+      var node;
+      while ((node = walker.nextNode())) {
+        var raw = node.textContent || "";
+        if (/request\s*partnership/i.test(raw) || /^partner/i.test(raw.trim())) {
+          node.textContent = "Try Themis";
+        }
+      }
+    }
+  }
+
+  function watchPreLoader() {
+    // Always drop bg video — splash no longer depends on it
+    killBgVideos();
+    rewriteHeroCta();
+
+    if (!preLoaderActive()) {
+      // END already reached (or no loader) — still must strip the cream overlay
+      forceHidePreLoader();
       return;
     }
     var tries = 0;
     var timer = setInterval(function () {
       tries++;
-      if (!preLoaderActive() || tries > 60) {
+      rewriteHeroCta();
+      // When Framer hits *-17 (END), hide the full Pre_Loader (not just show nav)
+      if (!preLoaderActive()) {
         clearInterval(timer);
-        showNav();
+        forceHidePreLoader();
+      } else if (tries > 50) {
+        // ~5s hard cap so a stuck D-01 never freezes the hero bg
+        clearInterval(timer);
+        forceHidePreLoader();
       }
     }, 100);
   }
@@ -208,6 +325,10 @@
     mountNav();
     hideOntitledChrome();
     watchPreLoader();
+    // Re-assert CTA after Framer late hydration
+    [400, 900, 1600, 2800, 4500].forEach(function (ms) {
+      setTimeout(rewriteHeroCta, ms);
+    });
   }
 
   if (document.readyState === "loading") {

@@ -819,7 +819,7 @@
 
 <link rel="preload" as="image" href="/ontitled-favicon-transparent.png" fetchpriority="high">
 
-<link rel="stylesheet" href="/marketing/nav.css?v=95762" id="ot-marketing-nav-css" />
+<link rel="stylesheet" href="/marketing/nav.css?v=95767" id="ot-marketing-nav-css" />
 </head>
 <body>
   <a class="nav-ribbon nav-legacy" href="/" aria-label="[Ontitled] home">
@@ -843,7 +843,7 @@
           </ul>
         </div>
         <div class="nav-right">
-          <a class="nav-cta nav-cta-desktop" href="https://calendly.com/partnerships-contra/contra-labs-partnership-request" target="_blank" rel="noopener">Get in touch</a>
+          <a class="nav-cta nav-cta-desktop" href="https://calendly.com/partnerships-ontitled/ontitled-partnership-request" target="_blank" rel="noopener">Get in touch</a>
           <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="navToggle">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
               <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
@@ -855,9 +855,9 @@
 
     <!-- Mobile menu (mirrors Framer drawer) -->
     <div class="nav-drawer" id="navDrawer" hidden>
-      <a class="nav-cta" href="https://calendly.com/partnerships-contra/contra-labs-partnership-request" target="_blank" rel="noopener">Get in touch</a>
+      <a class="nav-cta" href="https://calendly.com/partnerships-ontitled/ontitled-partnership-request" target="_blank" rel="noopener">Get in touch</a>
       <ul class="nav-drawer-list">
-        <li><a href="https://contra.com/creative-arena">Creative Arena</a></li>
+        <li><a href="https://ontitled.com/creative-arena">Creative Arena</a></li>
         <li><a href="/themis">Themis</a></li>
         <li><a href="/dike">Dike</a></li>
         <li><a href="/company" aria-current="page">Company</a></li>
@@ -950,7 +950,7 @@
               </a>
             </li>
           </ul>
-          <a class="footer-cta" href="https://calendly.com/partnerships-contra/contra-labs-partnership-request" target="_blank" rel="noopener">Request partnership</a>
+          <a class="footer-cta" href="https://calendly.com/partnerships-ontitled/ontitled-partnership-request" target="_blank" rel="noopener">Request partnership</a>
         </div>
       </div>
 
@@ -1044,7 +1044,7 @@
   </script>
 
 <script>
-/* Remove Datasets nav + block external contralabs.com research#datasets leaks */
+/* Remove Datasets nav + block external research#datasets leaks */
 (function () {
   function isDatasetsLink(a) {
     if (!a || a.tagName !== "A") return false;
@@ -1053,7 +1053,7 @@
     if (text === "datasets") return true;
     if (href.indexOf("research#datasets") !== -1) return true;
     if (href.indexOf("/datasets") !== -1 && href.indexOf("huggingface") === -1) return true;
-    if (href.indexOf("contralabs.com") !== -1 && href.indexOf("research") !== -1) return true;
+    if (href.indexOf("ontitled.com") !== -1 && href.indexOf("research") !== -1) return true;
     return false;
   }
 
@@ -1072,7 +1072,7 @@
     var a = e.target && e.target.closest ? e.target.closest("a") : null;
     if (!a) return;
     var href = a.getAttribute("href") || "";
-    if (/contralabs\.com\/research/i.test(href) || /research#datasets/i.test(href) || /\/research(\/|$|#)/i.test(href)) {
+    if (/ontitled\.com\/research/i.test(href) || /research#datasets/i.test(href) || /\/research(\/|$|#)/i.test(href)) {
       e.preventDefault();
       e.stopPropagation();
       var next = "/index";
@@ -1101,6 +1101,6 @@
 })();
 </script>
 
-<script src="/marketing/nav.js?v=95762" id="ot-marketing-nav-js" defer></script>
+<script src="/marketing/nav.js?v=95767" id="ot-marketing-nav-js" defer></script>
 </body>
 </html>

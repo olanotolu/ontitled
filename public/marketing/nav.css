@@ -62,15 +62,109 @@ header.nav.nav-legacy {
   z-index: -1 !important;
 }
 
-/* Root splash: keep the intro clean until Framer reaches its native final variant. */
-body:has(#hero [data-framer-name="Pre_Loader"]):not(:has(.framer-BN6LX[data-framer-name*="-17 (END"])) .ot-nav,
-body:has(#hero [data-framer-name="Pre_Loader"]):not(:has(.framer-BN6LX[data-framer-name*="-17 (END"])) .ot-nav-ribbon {
+/* Root splash: hide Ontitled nav until Framer finishes (or we force-done). */
+body:has(#hero [data-framer-name="Pre_Loader"]):not(:has(.framer-BN6LX[data-framer-name*="-17 (END"])):not(.ot-preloader-done):not(.ot-preloader-exiting) .ot-nav,
+body:has(#hero [data-framer-name="Pre_Loader"]):not(:has(.framer-BN6LX[data-framer-name*="-17 (END"])):not(.ot-preloader-done):not(.ot-preloader-exiting) .ot-nav-ribbon {
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
 }
-#hero:has(.framer-BN6LX[data-framer-name*="-17 (END"]) .framer-NLAj7 {
+
+/* Nav fades in with the hero (not a hard pop) */
+.ot-nav,
+.ot-nav-ribbon {
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.55s linear;
+}
+
+/*
+ * Splash → main: soft dissolve instead of a hard cut.
+ * Pre_Loader is absolute inset:0 z-index:4 cream; we fade it, then remove.
+ */
+#hero [data-framer-name="Pre_Loader"],
+#hero .framer-ghci25-container {
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.7s linear,
+    filter 0.7s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  will-change: opacity, filter;
+}
+
+body.ot-preloader-exiting #hero [data-framer-name="Pre_Loader"],
+body.ot-preloader-exiting #hero .framer-ghci25-container {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  filter: blur(6px) !important;
+}
+
+body.ot-preloader-done #hero [data-framer-name="Pre_Loader"],
+body.ot-preloader-done #hero .framer-ghci25-container,
+#hero:has(.framer-BN6LX[data-framer-name*="-17 (END"]).ot-preloader-done [data-framer-name="Pre_Loader"] {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* Hero content eases in after splash (less monotone hard cut) */
+#hero [data-framer-name="Content"] {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.08s,
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.08s;
+  will-change: opacity, transform;
+}
+
+body.ot-hero-in #hero [data-framer-name="Content"],
+body.ot-preloader-done #hero [data-framer-name="Content"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Prefer reduced motion: skip the flourish */
+@media (prefers-reduced-motion: reduce) {
+  #hero [data-framer-name="Pre_Loader"],
+  #hero .framer-ghci25-container,
+  #hero [data-framer-name="Content"],
+  .ot-nav,
+  .ot-nav-ribbon {
+    transition: none !important;
+    filter: none !important;
+  }
+  #hero [data-framer-name="Content"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* No hero / decorative background videos — static paper + texture only */
+#hero video,
+[data-framer-name="HERO BKG Image"] video,
+[data-framer-name="Image Scramble"] video,
+[data-framer-name="BKG"] video,
+body.ot-no-bg-video video[src*="xXF7zMolOXHM52BTEfXsZnKa0Fw"],
+body.ot-no-bg-video video[src*="hmg5dFU33RwVgzS4V0wrSxuKJ3E"],
+body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
+/*
+ * Paper grain: keep the texture, but lift it so the page reads brighter
+ * (soft-light brightens the cream instead of multiplying gray over it).
+ */
+[data-framer-name="Texture (Z=10)"] .framer-1kb2pfb-container {
+  opacity: 0.55 !important;
+  mix-blend-mode: soft-light !important;
+}
+[data-framer-name="Texture (Z=10)"] .framer-1kb2pfb-container > div {
+  opacity: 0.85 !important;
+  /* Slight lift so speckles feel airy, not ashy */
+  filter: brightness(1.35) contrast(1.05) !important;
 }
 
 @media (max-width: 809.98px) {
