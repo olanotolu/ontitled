@@ -1,8 +1,7 @@
-import { randomBytes } from "node:crypto";
 import { NextResponse } from "next/server";
 import { requireUser } from "@/lib/settings/auth";
-import { ensureUserWorkspace, id, now } from "@/lib/settings/ensure";
-import { withStore } from "@/lib/settings/store";
+import { ensureUserWorkspace } from "@/lib/settings/ensure";
+import { createInvite, requireMembership } from "@/lib/settings/repository";
 import type { MemberRole } from "@/lib/settings/types";
 
 export async function POST(req: Request) {
@@ -21,45 +20,15 @@ export async function POST(req: Request) {
   }
 
   try {
-    const invite = await withStore(
-      (store) => {
-        const member = store.members.find(
-          (m) => m.workspaceId === workspace.id && m.userId === auth.user.userId
-        );
-        if (!member || (member.role !== "owner" && member.role !== "admin")) {
-          throw new Error("Forbidden");
-        }
-        if (
-          store.members.some(
-            (m) => m.workspaceId === workspace.id && m.email.toLowerCase() === email
-          )
-        ) {
-          throw new Error("User is already a member");
-        }
-        // replace existing pending invite for same email
-        store.invites = store.invites.filter(
-          (i) =>
-            !(
-              i.workspaceId === workspace.id &&
-              i.email.toLowerCase() === email &&
-              !i.acceptedAt
-            )
-        );
-        const row = {
-          id: id("inv"),
-          workspaceId: workspace.id,
-          email,
-          role: role as "admin" | "member",
-          token: randomBytes(18).toString("base64url"),
-          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-          acceptedAt: null as string | null,
-          createdAt: now(),
-        };
-        store.invites.push(row);
-        return row;
-      },
-      { mutate: true }
-    );
+    const member = await requireMembership(workspace.id, auth.user.userId);
+    if (!member || (member.role !== "owner" && member.role !== "admin")) {
+      throw new Error("Forbidden");
+    }
+    const invite = await createInvite({
+      workspaceId: workspace.id,
+      email,
+      role: role as "admin" | "member",
+    });
 
     const base =
       process.env.APP_BASE_URL ||
@@ -72,7 +41,7 @@ export async function POST(req: Request) {
         role: invite.role,
         expiresAt: invite.expiresAt,
         createdAt: invite.createdAt,
-        inviteUrl: `${base.replace(/\/$/, "")}/settings/team?invite=${invite.token}`,
+        inviteUrl: `${base.replace(/\/$/, "")}/invites/${invite.token}`,
       },
     });
   } catch (e) {

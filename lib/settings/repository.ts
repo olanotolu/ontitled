@@ -441,6 +441,51 @@ async function sbDeleteInvite(workspaceId: string, id: string): Promise<void> {
   if (error) throw error;
 }
 
+async function sbFindInviteByToken(token: string): Promise<WorkspaceInvite | null> {
+  const sb = createServiceClient();
+  const { data } = await sb
+    .from("workspace_invites")
+    .select("*")
+    .eq("token", token)
+    .is("accepted_at", null)
+    .single();
+  if (!data) return null;
+  return mapInvite(data);
+}
+
+async function sbAcceptInvite(
+  token: string,
+  userId: string,
+  email: string
+): Promise<WorkspaceInvite> {
+  const sb = createServiceClient();
+  const invite = await sbFindInviteByToken(token);
+  if (!invite) throw new Error("Invite not found or already accepted");
+  if (new Date(invite.expiresAt) < new Date()) throw new Error("Invite has expired");
+
+  const t = now();
+  await sb
+    .from("workspace_invites")
+    .update({ accepted_at: t } as any)
+    .eq("token", token);
+
+  await sb.from("workspace_members").upsert({
+    workspace_id: invite.workspaceId,
+    user_id: userId,
+    email,
+    role: invite.role,
+    created_at: t,
+  });
+
+  await sb.from("user_workspaces").upsert({
+    user_id: userId,
+    workspace_id: invite.workspaceId,
+    updated_at: t,
+  });
+
+  return { ...invite, acceptedAt: t };
+}
+
 async function sbRemoveMember(workspaceId: string, userId: string): Promise<void> {
   const sb = createServiceClient();
   await sb
@@ -784,6 +829,51 @@ async function jsonDeleteInvite(workspaceId: string, id: string): Promise<void> 
   );
 }
 
+async function jsonFindInviteByToken(token: string): Promise<WorkspaceInvite | null> {
+  return withStore((store) => {
+    return (
+      store.invites.find((i) => i.token === token && !i.acceptedAt) ?? null
+    );
+  });
+}
+
+async function jsonAcceptInvite(
+  token: string,
+  userId: string,
+  email: string
+): Promise<WorkspaceInvite> {
+  return withStore(
+    (store) => {
+      const invite = store.invites.find(
+        (i) => i.token === token && !i.acceptedAt
+      );
+      if (!invite) throw new Error("Invite not found or already accepted");
+      if (new Date(invite.expiresAt) < new Date()) throw new Error("Invite has expired");
+
+      const t = now();
+      invite.acceptedAt = t;
+
+      const existing = store.members.find(
+        (m) => m.workspaceId === invite.workspaceId && m.userId === userId
+      );
+      if (!existing) {
+        store.members.push({
+          workspaceId: invite.workspaceId,
+          userId,
+          email,
+          role: invite.role,
+          createdAt: t,
+        });
+      }
+
+      store.userWorkspace[userId] = invite.workspaceId;
+
+      return { ...invite };
+    },
+    { mutate: true }
+  );
+}
+
 async function jsonRemoveMember(workspaceId: string, userId: string): Promise<void> {
   await withStore(
     (store) => {
@@ -972,4 +1062,20 @@ export async function touchApiKeyLastUsed(id: string): Promise<void> {
   return useSupabase()
     ? sbTouchApiKeyLastUsed(id)
     : jsonTouchApiKeyLastUsed(id);
+}
+
+export async function findInviteByToken(token: string): Promise<WorkspaceInvite | null> {
+  return useSupabase()
+    ? sbFindInviteByToken(token)
+    : jsonFindInviteByToken(token);
+}
+
+export async function acceptInvite(
+  token: string,
+  userId: string,
+  email: string
+): Promise<WorkspaceInvite> {
+  return useSupabase()
+    ? sbAcceptInvite(token, userId, email)
+    : jsonAcceptInvite(token, userId, email);
 }
