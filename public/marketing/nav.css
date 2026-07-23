@@ -62,9 +62,71 @@ header.nav.nav-legacy {
   z-index: -1 !important;
 }
 
-/* Root splash: hide Ontitled nav until Framer finishes (or we force-done). */
-body:has(#hero [data-framer-name="Pre_Loader"]):not(:has(.framer-BN6LX[data-framer-name*="-17 (END"])):not(.ot-preloader-done):not(.ot-preloader-exiting) .ot-nav,
-body:has(#hero [data-framer-name="Pre_Loader"]):not(:has(.framer-BN6LX[data-framer-name*="-17 (END"])):not(.ot-preloader-done):not(.ot-preloader-exiting) .ot-nav-ribbon {
+/*
+ * Home splash: Ontitled-owned overlay (not Framer Pre_Loader).
+ * Framer's export is stuck on D-01 (missing clean handoff) and injecting into
+ * its tree causes React hydration mismatches that freeze appear animations.
+ */
+#ot-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 10060;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fbfaf6;
+  pointer-events: none;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.65s linear,
+    filter 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, filter;
+}
+#ot-splash .ot-splash-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+#ot-splash .ot-splash-mark {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#ot-splash .ot-splash-mark svg {
+  display: block;
+  width: 38px;
+  height: 38px;
+}
+#ot-splash .ot-splash-word {
+  font-family: "GT Standard L Medium", "GT Standard", var(--ot-sans);
+  font-weight: 500;
+  font-size: clamp(32px, 5vw, 48px);
+  letter-spacing: -0.045em;
+  line-height: 1;
+  color: #2b2b29;
+  white-space: nowrap;
+}
+
+/* Hide broken Framer preloader completely — we own the splash now */
+#hero [data-framer-name="Pre_Loader"],
+#hero .framer-ghci25-container {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+/* Hide nav while our splash is up */
+body.ot-splash-active:not(.ot-preloader-exiting):not(.ot-preloader-done) .ot-nav,
+body.ot-splash-active:not(.ot-preloader-exiting):not(.ot-preloader-done) .ot-nav-ribbon {
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
@@ -76,35 +138,17 @@ body:has(#hero [data-framer-name="Pre_Loader"]):not(:has(.framer-BN6LX[data-fram
   transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.55s linear;
 }
 
-/*
- * Splash → main: soft dissolve instead of a hard cut.
- * Pre_Loader is absolute inset:0 z-index:4 cream; we fade it, then remove.
- */
-#hero [data-framer-name="Pre_Loader"],
-#hero .framer-ghci25-container {
-  transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    visibility 0.7s linear,
-    filter 0.7s cubic-bezier(0.22, 1, 0.36, 1) !important;
-  will-change: opacity, filter;
-}
-
-body.ot-preloader-exiting #hero [data-framer-name="Pre_Loader"],
-body.ot-preloader-exiting #hero .framer-ghci25-container {
+body.ot-preloader-exiting #ot-splash {
   opacity: 0 !important;
   visibility: hidden !important;
-  pointer-events: none !important;
-  filter: blur(6px) !important;
+  filter: blur(6px);
 }
 
-body.ot-preloader-done #hero [data-framer-name="Pre_Loader"],
-body.ot-preloader-done #hero .framer-ghci25-container,
-#hero:has(.framer-BN6LX[data-framer-name*="-17 (END"]).ot-preloader-done [data-framer-name="Pre_Loader"] {
+body.ot-preloader-done #ot-splash {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
-  z-index: -1 !important;
 }
 
 /* Hero content eases in after splash (less monotone hard cut) */
@@ -123,19 +167,29 @@ body.ot-preloader-done #hero [data-framer-name="Content"] {
   transform: none;
 }
 
+/*
+ * Framer appear often sticks at opacity:0.001 after hydration mismatches.
+ * Force-reveal hero appear nodes once splash is done (inline !important needed).
+ */
+body.ot-hero-in #hero [data-framer-appear-id],
+body.ot-preloader-done #hero [data-framer-appear-id] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 /* Prefer reduced motion: skip the flourish */
 @media (prefers-reduced-motion: reduce) {
-  #hero [data-framer-name="Pre_Loader"],
-  #hero .framer-ghci25-container,
+  #ot-splash,
   #hero [data-framer-name="Content"],
   .ot-nav,
   .ot-nav-ribbon {
     transition: none !important;
     filter: none !important;
   }
-  #hero [data-framer-name="Content"] {
-    opacity: 1;
-    transform: none;
+  #hero [data-framer-name="Content"],
+  #hero [data-framer-appear-id] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
@@ -503,3 +557,8 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
     height: 64px;
   }
 }
+
+/* ================================================================
+   Hero centering — handled in home.html inline (<style id="ot-hero-center">)
+   Keeping this block empty so prior rules don't fight the inline ones.
+   ================================================================ */

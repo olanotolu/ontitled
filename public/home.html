@@ -495,9 +495,81 @@
 
 <meta http-equiv="Cache-Control" content="max-age=3600, must-revalidate">
 
-<link rel="stylesheet" href="/marketing/nav.css?v=95768" id="ot-marketing-nav-css" />
+<link rel="stylesheet" href="/marketing/nav.css?v=95780" id="ot-marketing-nav-css" />
+<style id="ot-hero-center">
+/* Hero: dead-center content within viewport (Framer Pre_Loader is hidden by nav.css) */
+#hero .framer-1xw5mz8 {
+  aspect-ratio: unset !important;
+  height: 100dvh !important;
+  min-height: 100dvh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 88px 24px 48px !important;
+  position: relative !important;
+}
+
+/* Inner content column — centered stack, constrained width */
+#hero .framer-1txigli,
+#hero [data-framer-name="Content"] {
+  flex: 0 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 28px !important;
+  width: auto !important;
+  max-width: 760px !important;
+  margin: 0 auto !important;
+  height: auto !important;
+}
+
+/* Heading — centered text */
+#hero .framer-1b9fgsv,
+#hero [data-framer-name="Header"] {
+  --framer-text-alignment: center !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+/* Force Framer text children to inherit center */
+#hero [data-framer-component-type="Text"] > * {
+  --framer-text-alignment: center !important;
+  text-align: center !important;
+}
+
+/* Buttons row — centered horizontally */
+#hero .framer-1c8zu1u,
+#hero [data-framer-name="Buttons"] {
+  justify-content: center !important;
+  align-items: center !important;
+  width: auto !important;
+}
+
+@media (max-width: 810px) {
+  #hero .framer-1xw5mz8 {
+    padding: 72px 20px 32px !important;
+  }
+  #hero .framer-1txigli,
+  #hero [data-framer-name="Content"] {
+    gap: 22px !important;
+    max-width: 620px !important;
+  }
+}
+</style>
 </head>
 <body>
+<div id="ot-splash" aria-hidden="true">
+  <div class="ot-splash-inner">
+    <div class="ot-splash-mark">
+      <svg viewBox="0 0 24 24" width="38" height="38" aria-hidden="true"><path d="M12 1.5 L22.5 12 L12 22.5 L1.5 12 Z" fill="#2b2b29"/></svg>
+    </div>
+    <div class="ot-splash-word">[Ontitled]</div>
+  </div>
+</div>
+<script>document.body.classList.add("ot-splash-active");</script>
+
 <noscript><style>[data-framer-appear-id]{opacity:1!important;transform:none!important}</style></noscript>
 <script>
 try {
@@ -846,6 +918,82 @@ window.addEventListener('pageshow', function(event) {
 })();
 </script>
 
-<script src="/marketing/nav.js?v=95768" id="ot-marketing-nav-js" defer></script>
+<script src="/marketing/nav.js?v=95780" id="ot-marketing-nav-js" defer></script>
+<script>
+/* Hero centering only — splash is owned by /marketing/nav.js (#ot-splash).
+   Do NOT inject nodes into Framer's Pre_Loader tree (hydration mismatch freezes appear). */
+(function () {
+  function apply() {
+    var hero = document.getElementById("hero");
+    if (!hero) return;
+
+    // Prefer Content column; never use .framer-t1s44y (collides with Pre_Loader diamond BR)
+    var root = hero.querySelector(".framer-1xw5mz8") || hero;
+    root.style.setProperty("aspect-ratio", "unset", "important");
+    root.style.setProperty("height", "100dvh", "important");
+    root.style.setProperty("min-height", "100dvh", "important");
+    root.style.setProperty("display", "flex", "important");
+    root.style.setProperty("flex-direction", "column", "important");
+    root.style.setProperty("justify-content", "center", "important");
+    root.style.setProperty("align-items", "center", "important");
+    root.style.setProperty("padding", "88px 24px 48px", "important");
+    root.style.setProperty("position", "relative", "important");
+
+    var col =
+      hero.querySelector('[data-framer-name="Content"]') ||
+      hero.querySelector(".framer-1txigli");
+    if (col) {
+      col.style.setProperty("display", "flex", "important");
+      col.style.setProperty("flex-direction", "column", "important");
+      col.style.setProperty("align-items", "center", "important");
+      col.style.setProperty("justify-content", "center", "important");
+      col.style.setProperty("text-align", "center", "important");
+      col.style.setProperty("width", "auto", "important");
+      col.style.setProperty("max-width", "760px", "important");
+      col.style.setProperty("margin", "0 auto", "important");
+      col.style.setProperty("flex", "0 1 auto", "important");
+      col.style.setProperty("gap", "28px", "important");
+      col.style.setProperty("height", "auto", "important");
+    }
+
+    var head =
+      hero.querySelector('[data-framer-name="Header"]') ||
+      hero.querySelector(".framer-1b9fgsv");
+    if (head) {
+      head.style.setProperty("text-align", "center", "important");
+      head.style.setProperty("--framer-text-alignment", "center", "important");
+    }
+
+    hero.querySelectorAll('[data-framer-component-type="Text"] > *').forEach(function (el) {
+      el.style.setProperty("text-align", "center", "important");
+      el.style.setProperty("--framer-text-alignment", "center", "important");
+    });
+
+    var btns =
+      hero.querySelector('[data-framer-name="Buttons"]') ||
+      hero.querySelector(".framer-1c8zu1u");
+    if (btns) {
+      btns.style.setProperty("justify-content", "center", "important");
+      btns.style.setProperty("align-items", "center", "important");
+      btns.style.setProperty("width", "auto", "important");
+    }
+  }
+
+  function schedule() {
+    apply();
+    setTimeout(apply, 200);
+    setTimeout(apply, 800);
+    setTimeout(apply, 1800);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", schedule);
+  } else {
+    schedule();
+  }
+  window.addEventListener("load", schedule);
+  window.addEventListener("resize", apply);
+})();
+</script>
 </body>
 </html>

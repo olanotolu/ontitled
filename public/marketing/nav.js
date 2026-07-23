@@ -178,10 +178,9 @@
     }
   }
 
-  function preLoaderActive() {
-    var hero = document.querySelector("#hero");
-    if (!hero) return false;
-    return !hero.querySelector('.framer-BN6LX[data-framer-name*="-17 (END"]');
+  function isHomeSplashPage() {
+    // Only the marketing home has the Framer Pre_Loader / hero splash.
+    return !!document.querySelector('#hero [data-framer-name="Pre_Loader"], #hero .framer-ghci25-container');
   }
 
   function showNav() {
@@ -191,14 +190,62 @@
   var splashFinishing = false;
 
   /**
+   * Ontitled-owned splash (outside Framer). Avoids mutating the Pre_Loader tree,
+   * which caused React hydration mismatches and stuck appear animations.
+   */
+  function mountSplash() {
+    if (!isHomeSplashPage()) return;
+    if (document.body.classList.contains("ot-preloader-done")) return;
+
+    document.body.classList.add("ot-splash-active");
+
+    // Prefer the static first-paint node in home.html; create only if missing.
+    var el = document.getElementById("ot-splash");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "ot-splash";
+      el.setAttribute("aria-hidden", "true");
+      el.innerHTML =
+        '<div class="ot-splash-inner">' +
+        '<div class="ot-splash-mark">' +
+        '<svg viewBox="0 0 24 24" width="38" height="38" aria-hidden="true">' +
+        '<path d="M12 1.5 L22.5 12 L12 22.5 L1.5 12 Z" fill="#2b2b29"/>' +
+        "</svg></div>" +
+        '<div class="ot-splash-word">[Ontitled]</div>' +
+        "</div>";
+      document.body.appendChild(el);
+    }
+
+    // Hard-hide broken Framer preloader so it never covers the hero.
+    document
+      .querySelectorAll(
+        '#hero [data-framer-name="Pre_Loader"], #hero .framer-ghci25-container, [data-framer-name="Pre_Loader"]'
+      )
+      .forEach(function (node) {
+        node.style.setProperty("display", "none", "important");
+        node.style.setProperty("pointer-events", "none", "important");
+        node.style.setProperty("opacity", "0", "important");
+        node.style.setProperty("visibility", "hidden", "important");
+      });
+  }
+
+  /** Framer appear often freezes at opacity:0.001 after hydration errors. */
+  function revealAppear() {
+    document.querySelectorAll("#hero [data-framer-appear-id]").forEach(function (el) {
+      el.style.setProperty("opacity", "1", "important");
+      el.style.setProperty("transform", "none", "important");
+    });
+  }
+
+  /**
    * Soft exit: fade splash → reveal hero → hard-remove overlay.
-   * Hard display:none without a fade felt abrupt / monotone.
    */
   function forceHidePreLoader() {
     if (splashFinishing || document.body.classList.contains("ot-preloader-done")) {
       showNav();
       killBgVideos();
       rewriteHeroCta();
+      revealAppear();
       return;
     }
     splashFinishing = true;
@@ -208,10 +255,13 @@
     // Start hero content fade-in while splash is dissolving
     requestAnimationFrame(function () {
       document.body.classList.add("ot-hero-in");
+      revealAppear();
     });
     rewriteHeroCta();
 
     window.setTimeout(function () {
+      var splash = document.getElementById("ot-splash");
+      if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
       document
         .querySelectorAll(
           '#hero [data-framer-name="Pre_Loader"], #hero .framer-ghci25-container, [data-framer-name="Pre_Loader"]'
@@ -224,9 +274,11 @@
         });
       document.body.classList.add("ot-preloader-done");
       document.body.classList.remove("ot-preloader-exiting");
+      document.body.classList.remove("ot-splash-active");
       splashFinishing = false;
+      revealAppear();
       rewriteHeroCta();
-    }, 720);
+    }, 680);
   }
 
   /** Remove decorative bg videos (user: no longer needed). */
@@ -254,6 +306,7 @@
   /**
    * Hero primary CTA: "Request partnership" → "Try Themis" → /themis
    * Framer rehydrates from modules, so we re-apply after splash + on a short loop.
+   * Prefer href-only rewrites when possible to reduce text hydration churn.
    */
   function rewriteHeroCta() {
     var hero = document.querySelector("#hero, [data-framer-name='HERO']");
@@ -294,40 +347,50 @@
     }
   }
 
-  function watchPreLoader() {
-    // Always drop bg video — splash no longer depends on it
+  function watchSplash() {
     killBgVideos();
-    rewriteHeroCta();
 
-    if (!preLoaderActive()) {
-      // END already reached (or no loader) — still must strip the cream overlay
-      forceHidePreLoader();
+    if (!isHomeSplashPage()) {
+      // No home splash (other marketing pages) — just show nav.
+      showNav();
+      rewriteHeroCta();
       return;
     }
-    var tries = 0;
-    var timer = setInterval(function () {
-      tries++;
-      rewriteHeroCta();
-      // When Framer hits *-17 (END), hide the full Pre_Loader (not just show nav)
-      if (!preLoaderActive()) {
-        clearInterval(timer);
-        forceHidePreLoader();
-      } else if (tries > 50) {
-        // ~5s hard cap so a stuck D-01 never freezes the hero bg
-        clearInterval(timer);
+
+    mountSplash();
+    // Hold brand mark briefly, then soft handoff. Hard-capped so a stuck
+    // Framer D-01 never freezes the page.
+    var holdMs = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? 200
+      : 1200;
+    window.setTimeout(function () {
+      forceHidePreLoader();
+    }, holdMs);
+
+    // Safety net if something re-inserts the Framer preloader late
+    window.setTimeout(function () {
+      if (!document.body.classList.contains("ot-preloader-done")) {
         forceHidePreLoader();
       }
-    }, 100);
+      revealAppear();
+      rewriteHeroCta();
+    }, holdMs + 1500);
   }
 
   function boot() {
     pinIndexPath();
     mountNav();
     hideOntitledChrome();
-    watchPreLoader();
-    // Re-assert CTA after Framer late hydration
+    watchSplash();
+    // Re-assert CTA / appear after Framer late hydration
     [400, 900, 1600, 2800, 4500].forEach(function (ms) {
-      setTimeout(rewriteHeroCta, ms);
+      setTimeout(function () {
+        rewriteHeroCta();
+        if (document.body.classList.contains("ot-preloader-done") ||
+            document.body.classList.contains("ot-hero-in")) {
+          revealAppear();
+        }
+      }, ms);
     });
   }
 
