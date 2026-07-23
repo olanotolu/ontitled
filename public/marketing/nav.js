@@ -60,13 +60,13 @@
       '<path d="M 62 128.979 C 57.834 127.71 53.925 125.957 50.356 123.798 C 45.31 120.894 40.991 117.089 37.692 112.642 C 35.187 109.429 33.16 105.897 31.714 102.135 L 30.652 102.135 L 30.652 130 L 30.652 102.135 L 29.575 102.135 C 28.163 105.868 26.2 109.375 23.773 112.568 C 20.548 117.035 16.328 120.857 11.389 123.773 C 7.901 125.94 4.076 127.702 0.001 128.978 L 0.001 130 L 0 130 L 0 0 L 62 0 Z" fill="#2b2b29"/>' +
       '<image href="/ontitled-favicon-transparent.png" x="8" y="18" width="46" height="46" preserveAspectRatio="xMidYMid meet" />' +
       "</svg></a>" +
-      '<header class="ot-nav" id="otNav">' +
+      '<header class="ot-nav" id="otNav" role="banner">' +
       '<div class="ot-nav-shell"><div class="ot-nav-inner">' +
       '<div class="ot-nav-left">' +
       '<a class="ot-logo" href="/">[Ontitled]</a>' +
-      '<ul class="ot-nav-links ot-nav-links-desktop">' +
+      '<nav aria-label="Primary"><ul class="ot-nav-links ot-nav-links-desktop">' +
       linkHtml() +
-      "</ul></div>" +
+      "</ul></nav></div>" +
       '<div class="ot-nav-right">' +
       '<a class="ot-nav-cta ot-nav-cta-desktop" href="' +
       CTA +
@@ -79,9 +79,9 @@
       '<a class="ot-nav-cta" href="' +
       CTA +
       '" target="_blank" rel="noopener">Get in touch</a>' +
-      '<ul class="ot-nav-drawer-list">' +
+      '<nav aria-label="Mobile primary"><ul class="ot-nav-drawer-list">' +
       linkHtml() +
-      "</ul></div></header>"
+      "</ul></nav></div></header>"
     );
   }
 
@@ -229,12 +229,60 @@
       });
   }
 
-  /** Framer appear often freezes at opacity:0.001 after hydration errors. */
+  /** Framer appear often freezes at opacity:0.001 / scale(0) after hydration errors. */
   function revealAppear() {
     document.querySelectorAll("#hero [data-framer-appear-id]").forEach(function (el) {
       el.style.setProperty("opacity", "1", "important");
       el.style.setProperty("transform", "none", "important");
     });
+    // Building gallery: Framer code-component bakes transform:scale(0) on
+    // [data-framer-name="Symbol & Images"] until it hydrates; if hydration
+    // stalls the gallery stays invisible. Force reveal.
+    document.querySelectorAll('[data-framer-name="Symbol & Images"]').forEach(function (el) {
+      el.style.setProperty("opacity", "1", "important");
+      el.style.setProperty("transform", "none", "important");
+    });
+    // Stuck appear nodes page-wide (opacity:0.001) — reveal after splash so
+    // content is never silently blank. Scope to appear-id only to avoid
+    // touching the rescaled 1920px canvas container.
+    document.querySelectorAll("[data-framer-appear-id]").forEach(function (el) {
+      if (el.closest(".ot-nav, .ot-nav-ribbon, #otNavRoot")) return;
+      var cur = (el.getAttribute("style") || "") + (el.style.cssText || "");
+      if (/opacity:\s*0\.00?1/.test(cur) || /scale\(0\)/.test(cur)) {
+        el.style.setProperty("opacity", "1", "important");
+        el.style.setProperty("transform", "none", "important");
+      }
+    });
+  }
+
+  /**
+   * Safety net for legacy "Labs" nodes. The CSS hide-rule matches both quoted
+   * and un-quoted data-framer-name="Labs" forms, but Framer can rehydrate with
+   * new variants — strip any remaining ones at runtime too.
+   */
+  function hideLegacyLabs() {
+    document.querySelectorAll('[data-framer-name="Labs"], [data-framer-name="\\\"Labs\\\""]').forEach(function (el) {
+      el.style.setProperty("display", "none", "important");
+      el.style.setProperty("visibility", "hidden", "important");
+    });
+  }
+
+  /** Decorative SVGs without aria-hidden — hide from AT. */
+  function hideDecorativeSvg() {
+    document.querySelectorAll(
+      '#main svg[role="presentation"]:not([aria-hidden])'
+    ).forEach(function (el) {
+      el.setAttribute("aria-hidden", "true");
+    });
+  }
+
+  /** Give Framer's #main a main landmark for screen-reader region nav. */
+  function landmarkMain() {
+    var main = document.getElementById("main");
+    if (main && !main.getAttribute("role")) {
+      main.setAttribute("role", "main");
+      main.setAttribute("aria-label", "Main content");
+    }
   }
 
   /**
@@ -381,11 +429,16 @@
     pinIndexPath();
     mountNav();
     hideOntitledChrome();
+    landmarkMain();
+    hideLegacyLabs();
+    hideDecorativeSvg();
     watchSplash();
-    // Re-assert CTA / appear after Framer late hydration
+    // Re-assert CTA / appear / labs / svg after Framer late hydration
     [400, 900, 1600, 2800, 4500].forEach(function (ms) {
       setTimeout(function () {
         rewriteHeroCta();
+        hideLegacyLabs();
+        hideDecorativeSvg();
         if (document.body.classList.contains("ot-preloader-done") ||
             document.body.classList.contains("ot-hero-in")) {
           revealAppear();
@@ -404,5 +457,10 @@
     hideOntitledChrome();
     setTimeout(hideOntitledChrome, 200);
     setTimeout(hideOntitledChrome, 800);
+    setTimeout(function () {
+      hideLegacyLabs();
+      hideDecorativeSvg();
+      landmarkMain();
+    }, 300);
   });
 })();

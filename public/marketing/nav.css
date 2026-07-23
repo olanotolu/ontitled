@@ -354,7 +354,10 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
   color: var(--ot-ink);
   transition: opacity 0.15s ease;
   white-space: nowrap;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 4px;
+  min-height: 44px;
   opacity: 0.92;
 }
 .ot-nav-links a:hover {
@@ -375,7 +378,8 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
+  min-height: 44px;
+  height: 44px;
   padding: 0 18px;
   border-radius: 999px;
   background: var(--ot-ink);
@@ -562,3 +566,24 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
    Hero centering — handled in home.html inline (<style id="ot-hero-center">)
    Keeping this block empty so prior rules don't fight the inline ones.
    ================================================================ */
+
+/* Safety nets — guard against Framer hydration stalls so content is never
+   silently invisible, and the 1920px Building canvas never blows layout if
+   the rescale script hasn't run yet. */
+.framer-fp1rch-container {
+  overflow-x: clip;
+  max-width: 100vw;
+}
+
+/* Reveal any appear node + the Symbol & Images gallery once splash is done,
+   even outside #hero (page-wide appear nodes use this body class). */
+body.ot-preloader-done [data-framer-appear-id],
+body.ot-hero-in [data-framer-appear-id] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+body.ot-preloader-done [data-framer-name="Symbol & Images"],
+body.ot-hero-in [data-framer-name="Symbol & Images"] {
+  opacity: 1 !important;
+  transform: none !important;
+}

@@ -20,7 +20,7 @@
   --ink: #2b2b29;
   --ink-soft: #494444;
   --muted: rgba(43, 43, 41, 0.62);
-  --faint: rgba(43, 43, 41, 0.38);
+  --faint: rgba(43, 43, 41, 0.66);
   --line: rgba(43, 43, 41, 0.1);
   --sage: #a5beba;
   --sage-deep: #387478;
@@ -30,7 +30,7 @@
 
   --dash-ink: #111111;
   --dash-muted: #71717a;
-  --dash-faint: #a1a1aa;
+  --dash-faint: #6b7280;
   --dash-line: #e4e4e7;
   --dash-surface: #f4f4f5;
   --dash-soft: #fafafa;
@@ -327,13 +327,13 @@ input {
 .auth-legal {
   font-size: 12px;
   line-height: 1.5;
-  color: #8c8b89;
+  color: #525252;
   margin: 0 0 12px;
   max-width: 42ch;
 }
 
 .auth-legal a {
-  color: #8c8b89;
+  color: #525252;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -350,7 +350,7 @@ input {
 
 .auth-footlinks a {
   font-size: 12px;
-  color: #8c8b89;
+  color: #525252;
   text-decoration: none;
 }
 
@@ -471,14 +471,14 @@ input {
     --ink: #e4e4e7;
     --ink-soft: #a1a1aa;
     --muted: rgba(228, 228, 231, 0.7);
-    --faint: rgba(228, 228, 231, 0.45);
+    --faint: rgba(228, 228, 231, 0.7);
     --line: rgba(228, 228, 231, 0.12);
     --sage: #5a8a85;
     --sage-deep: #6bc4c8;
 
     --dash-ink: #e4e4e7;
     --dash-muted: #a1a1aa;
-    --dash-faint: #71717a;
+    --dash-faint: #9ca3af;
     --dash-line: #27272a;
     --dash-surface: #27272a;
     --dash-soft: #18181b;
@@ -503,14 +503,14 @@ html.dark {
   --ink: #e4e4e7;
   --ink-soft: #a1a1aa;
   --muted: rgba(228, 228, 231, 0.7);
-  --faint: rgba(228, 228, 231, 0.45);
+  --faint: rgba(228, 228, 231, 0.7);
   --line: rgba(228, 228, 231, 0.12);
   --sage: #5a8a85;
   --sage-deep: #6bc4c8;
 
   --dash-ink: #e4e4e7;
   --dash-muted: #a1a1aa;
-  --dash-faint: #71717a;
+  --dash-faint: #9ca3af;
   --dash-line: #27272a;
   --dash-surface: #27272a;
   --dash-soft: #18181b;
@@ -1436,8 +1436,8 @@ a.tinker-logo {
 .pg-tool-btn {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border: 0;
   border-radius: 999px;
   background: transparent;
@@ -1454,8 +1454,8 @@ a.tinker-logo {
 .pg-send {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border: 0;
   border-radius: 999px;
   background: var(--dash-ink);
