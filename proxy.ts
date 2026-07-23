@@ -15,6 +15,7 @@ const AUTH_MATCHERS = [
   /^\/app(?:\/|$)/,
   /^\/api(?:\/|$)/,
   /^\/auth(?:\/|$)/,
+  /^\/logout(?:\/|$)/, // alias → /auth/logout (also match if hit directly)
   /^\/authorize(?:\/|$)/,
   /^\/access-token(?:\/|$)/,
 ];

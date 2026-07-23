@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireUser } from "@/lib/settings/auth";
 import { ensureUserWorkspace } from "@/lib/settings/ensure";
-import { withStore } from "@/lib/settings/store";
+import { deleteInvite, requireMembership } from "@/lib/settings/repository";
 
 export async function DELETE(
   _req: Request,
@@ -13,22 +13,11 @@ export async function DELETE(
   const { id } = await ctx.params;
 
   try {
-    await withStore(
-      (store) => {
-        const member = store.members.find(
-          (m) => m.workspaceId === workspace.id && m.userId === auth.user.userId
-        );
-        if (!member || (member.role !== "owner" && member.role !== "admin")) {
-          throw new Error("Forbidden");
-        }
-        const before = store.invites.length;
-        store.invites = store.invites.filter(
-          (i) => !(i.id === id && i.workspaceId === workspace.id)
-        );
-        if (store.invites.length === before) throw new Error("Invite not found");
-      },
-      { mutate: true }
-    );
+    const member = await requireMembership(workspace.id, auth.user.userId);
+    if (!member || (member.role !== "owner" && member.role !== "admin")) {
+      throw new Error("Forbidden");
+    }
+    await deleteInvite(workspace.id, id);
     return NextResponse.json({ ok: true });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Revoke failed";

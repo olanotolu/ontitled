@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireUser } from "@/lib/settings/auth";
-import { ensureUserWorkspace, now } from "@/lib/settings/ensure";
-import { withStore } from "@/lib/settings/store";
+import { ensureUserWorkspace } from "@/lib/settings/ensure";
+import { updateProfile } from "@/lib/settings/repository";
 
 export async function GET() {
   const auth = await requireUser();
@@ -23,22 +23,15 @@ export async function PATCH(req: Request) {
     jobTitle?: string;
   };
 
-  const profile = await withStore(
-    (store) => {
-      const p = store.profiles[auth.user.userId];
-      if (!p || p.deletedAt) throw new Error("Profile not found");
-      if (typeof body.displayName === "string") {
-        p.displayName = body.displayName.trim().slice(0, 80) || p.displayName;
-      }
-      if (typeof body.jobTitle === "string") {
-        p.jobTitle = body.jobTitle.trim().slice(0, 80);
-      }
-      p.updatedAt = now();
-      store.profiles[auth.user.userId] = p;
-      return p;
-    },
-    { mutate: true }
-  );
-
-  return NextResponse.json({ profile });
+  try {
+    const profile = await updateProfile(auth.user.userId, {
+      displayName: body.displayName,
+      jobTitle: body.jobTitle,
+    });
+    return NextResponse.json({ profile });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "Update failed";
+    const status = msg === "Profile not found" ? 404 : 400;
+    return NextResponse.json({ error: msg }, { status });
+  }
 }

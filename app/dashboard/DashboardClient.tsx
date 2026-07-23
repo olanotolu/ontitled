@@ -97,6 +97,9 @@ type Props = {
 export default function DashboardClient({ session }: Props) {
   return (
     <AppShell session={session}>
+      <a href="#dashboard-main" className="skip-link">
+        Skip to content
+      </a>
       <div className="dash-content">
         <section className="hero">
           <div className="hero-text">
@@ -139,9 +142,9 @@ export default function DashboardClient({ session }: Props) {
                 <ul key={i} className="link-col">
                   {col.map((label) => (
                     <li key={label}>
-                      <button type="button" className="text-link">
+                      <a href="#" className="text-link">
                         {label}
-                      </button>
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -164,9 +167,9 @@ export default function DashboardClient({ session }: Props) {
                 <ul key={i} className="link-col">
                   {col.map((label) => (
                     <li key={label}>
-                      <button type="button" className="text-link">
+                      <a href="#" className="text-link">
                         {label}
-                      </button>
+                      </a>
                     </li>
                   ))}
                 </ul>

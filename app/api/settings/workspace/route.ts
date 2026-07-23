@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireUser } from "@/lib/settings/auth";
-import { ensureUserWorkspace, now, slugify } from "@/lib/settings/ensure";
-import { withStore } from "@/lib/settings/store";
+import { ensureUserWorkspace } from "@/lib/settings/ensure";
+import { updateWorkspace, requireMembership } from "@/lib/settings/repository";
 
 export async function GET() {
   const auth = await requireUser();
@@ -22,36 +22,15 @@ export async function PATCH(req: Request) {
   };
 
   try {
-    const updated = await withStore(
-      (store) => {
-        const w = store.workspaces[workspace.id];
-        if (!w) throw new Error("Workspace not found");
-        const member = store.members.find(
-          (m) => m.workspaceId === w.id && m.userId === auth.user.userId
-        );
-        if (!member || (member.role !== "owner" && member.role !== "admin")) {
-          throw new Error("Forbidden");
-        }
-        if (typeof body.name === "string") {
-          w.name = body.name.trim().slice(0, 80) || w.name;
-        }
-        if (typeof body.slug === "string") {
-          const next = slugify(body.slug);
-          const clash = Object.values(store.workspaces).some(
-            (x) => x.slug === next && x.id !== w.id
-          );
-          if (clash) throw new Error("Slug already taken");
-          w.slug = next;
-        }
-        if (typeof body.timezone === "string" && body.timezone.trim()) {
-          w.timezone = body.timezone.trim().slice(0, 64);
-        }
-        w.updatedAt = now();
-        store.workspaces[w.id] = w;
-        return w;
-      },
-      { mutate: true }
-    );
+    const member = await requireMembership(workspace.id, auth.user.userId);
+    if (!member || (member.role !== "owner" && member.role !== "admin")) {
+      throw new Error("Forbidden");
+    }
+    const updated = await updateWorkspace(workspace.id, {
+      name: body.name,
+      slug: body.slug,
+      timezone: body.timezone,
+    });
     return NextResponse.json({ workspace: updated });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Update failed";

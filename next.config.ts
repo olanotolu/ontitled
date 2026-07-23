@@ -33,6 +33,12 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: false,
       },
+      // Convenience alias — Auth0 SDK mounts sign-out at /auth/logout
+      {
+        source: "/logout",
+        destination: "/auth/logout",
+        permanent: false,
+      },
     ];
   },
   async rewrites() {

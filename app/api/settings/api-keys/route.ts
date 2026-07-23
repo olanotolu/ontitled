@@ -3,10 +3,8 @@ import { requireUser } from "@/lib/settings/auth";
 import {
   ensureUserWorkspace,
   generateApiKeySecret,
-  id,
-  now,
 } from "@/lib/settings/ensure";
-import { withStore } from "@/lib/settings/store";
+import { createApiKey, requireMembership } from "@/lib/settings/repository";
 
 export async function GET() {
   const auth = await requireUser();
@@ -41,38 +39,29 @@ export async function POST(req: Request) {
     : ["read", "write"];
   if (!scopes.length) scopes.push("read");
 
-  const { secret, keyPrefix, keyHash } = generateApiKeySecret();
-  const record = await withStore(
-    (store) => {
-      const member = store.members.find(
-        (m) => m.workspaceId === workspace.id && m.userId === auth.user.userId
-      );
-      if (!member) throw new Error("Forbidden");
-      const row = {
-        id: id("key"),
-        workspaceId: workspace.id,
-        name,
-        keyPrefix,
-        keyHash,
-        scopes,
-        createdAt: now(),
-        lastUsedAt: null,
-        revokedAt: null,
-      };
-      store.apiKeys.push(row);
-      return row;
-    },
-    { mutate: true }
-  );
-
-  return NextResponse.json({
-    key: {
-      id: record.id,
-      name: record.name,
-      keyPrefix: record.keyPrefix,
-      scopes: record.scopes,
-      createdAt: record.createdAt,
-      secret, // shown once
-    },
-  });
+  try {
+    const member = await requireMembership(workspace.id, auth.user.userId);
+    if (!member) throw new Error("Forbidden");
+    const { secret, keyPrefix, keyHash } = generateApiKeySecret();
+    const record = await createApiKey({
+      workspaceId: workspace.id,
+      name,
+      keyPrefix,
+      keyHash,
+      scopes,
+    });
+    return NextResponse.json({
+      key: {
+        id: record.id,
+        name: record.name,
+        keyPrefix: record.keyPrefix,
+        scopes: record.scopes,
+        createdAt: record.createdAt,
+        secret,
+      },
+    });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "Create failed";
+    return NextResponse.json({ error: msg }, { status: 400 });
+  }
 }
