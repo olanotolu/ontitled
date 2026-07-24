@@ -428,7 +428,7 @@ input {
   }
 }
 
-/* ——— Dashboard (Tinker-style) ——— */
+/* ——— Dashboard (Ontitled) ——— */
 .dash-loading {
   min-height: 100dvh;
   display: grid;
@@ -545,7 +545,7 @@ html.dark .profile-avatar {
   padding: 18px 16px 10px 18px;
 }
 
-.tinker-logo {
+.ot-logo-sidebar {
   font-size: 17px;
   font-weight: 500;
   letter-spacing: -0.025em;
@@ -595,7 +595,7 @@ html.dark .profile-avatar {
   transition: background 0.12s ease, color 0.12s ease;
 }
 
-a.tinker-logo {
+a.ot-logo-sidebar {
   text-decoration: none;
 }
 

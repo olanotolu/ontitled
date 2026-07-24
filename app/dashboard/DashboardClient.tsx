@@ -5,14 +5,14 @@ import { AppShell } from "../../components/AppShell";
 import Link from "next/link";
 
 const sdkCols = [
-  ["Get Started", "Models & Pricing", "Model Deprecations", "LoRA Primer"],
-  ["Loss Functions", "Clock Cycles & Pipelining", "Session Metrics", "OpenAI-Compatible API"],
-  ["CLI Reference", "API Reference"],
+  ["Get Started", "API Reference", "Pricing", "Model Deprecations"],
+  ["Themis Mini", "Evaluation Guide", "Session Metrics", "OpenAI-Compatible API"],
+  ["CLI Reference", "Themis"],
 ];
 
 const cookbookCols = [
-  ["Get Started", "Supervised Learning", "Reinforcement Learning"],
-  ["Evaluation", "Storage", "Preferences"],
+  ["Get Started", "Evaluations", "Taste Benchmarks"],
+  ["Expert Onboarding", "Pricing", "Preferences"],
   ["Recipes", "API Reference", "Contributing"],
 ];
 
@@ -75,16 +75,16 @@ function HeroArt() {
       <svg viewBox="0 0 440 300" fill="none" className="hero-art-svg">
         <path
           d="M42 92c-8 48 14 98 62 118 46 20 108 8 148-22 22-16 48-12 62 8 18 26 52 34 84 18 28-14 42-48 34-78-10-38-42-64-82-70-48-8-78 8-118 4-42-4-78-18-112-8-36 10-68 24-78 30z"
-          fill="#111111"
+          fill="#2b2b29"
         />
-        <ellipse cx="210" cy="78" rx="92" ry="58" fill="#111111" />
+        <ellipse cx="210" cy="78" rx="92" ry="58" fill="#2b2b29" />
         <path
           d="M292 28c36-18 92-8 118 28 24 34 20 86-12 116-28 26-74 28-106 6-34-24-44-70-28-108 6-14 16-30 28-42z"
-          fill="#2563EB"
+          fill="#387478"
         />
-        <ellipse cx="348" cy="88" rx="48" ry="42" fill="#3B82F6" opacity="0.55" />
-        <circle cx="248" cy="228" r="38" fill="#4ADE80" />
-        <circle cx="388" cy="198" r="44" fill="#EF4444" />
+        <ellipse cx="348" cy="88" rx="48" ry="42" fill="#83a8a4" opacity="0.55" />
+        <circle cx="248" cy="228" r="38" fill="#a5beba" />
+        <circle cx="388" cy="198" r="44" fill="#387478" opacity="0.85" />
       </svg>
     </div>
   );
@@ -107,12 +107,12 @@ export default function DashboardClient({ session }: Props) {
               Introducing <strong>Themis</strong>
             </p>
             <h1 className="hero-headline">
-              Open weights,
+              Title the
               <br />
-              ready to tinker.
+              work, not the token.
             </h1>
             <p className="hero-desc">
-              An efficient open reasoning model for text, images, and audio, available to fine-tune.
+              The independent infrastructure for pricing, verifying, and settling autonomous work.
             </p>
             <div className="hero-actions">
               <Link href="/playground" className="btn btn-soft">
@@ -132,7 +132,7 @@ export default function DashboardClient({ session }: Props) {
               <span className="bento-icon">
                 <IconSdk />
               </span>
-              <h2 className="bento-title">Tinker SDK</h2>
+              <h2 className="bento-title">Ontitled SDK</h2>
               <span className="bento-ext">
                 <IconExternal />
               </span>
@@ -142,7 +142,7 @@ export default function DashboardClient({ session }: Props) {
                 <ul key={i} className="link-col">
                   {col.map((label) => (
                     <li key={label}>
-                      <a href="#" className="text-link">
+                      <a href="/themis" className="text-link">
                         {label}
                       </a>
                     </li>
@@ -167,7 +167,7 @@ export default function DashboardClient({ session }: Props) {
                 <ul key={i} className="link-col">
                   {col.map((label) => (
                     <li key={label}>
-                      <a href="#" className="text-link">
+                      <a href="/themis" className="text-link">
                         {label}
                       </a>
                     </li>
@@ -187,7 +187,7 @@ export default function DashboardClient({ session }: Props) {
             <div className="empty-body">
               <p className="empty-desc">Your training sessions will appear here.</p>
               <button type="button" className="btn btn-outline">
-                Get started with Tinker SDK <IconExternal />
+                Get started with the Ontitled SDK <IconExternal />
               </button>
             </div>
           </section>
