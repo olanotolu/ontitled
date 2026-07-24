@@ -232,12 +232,12 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
   }
   .ot-nav-ribbon {
     left: 12px !important;
-    width: 28px !important;
-    height: 60px !important;
+    width: 40px !important;
+    height: 84px !important;
   }
   .ot-nav-ribbon svg {
-    width: 28px !important;
-    height: 60px !important;
+    width: 40px !important;
+    height: 84px !important;
   }
 }
 
@@ -248,8 +248,8 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
   left: 48px;
   z-index: 10050;
   display: block;
-  width: 44px;
-  height: 92px;
+  width: 64px;
+  height: 132px;
   text-decoration: none;
   pointer-events: auto;
   opacity: 0;
@@ -263,8 +263,8 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
 }
 .ot-nav-ribbon svg {
   display: block;
-  width: 44px;
-  height: 92px;
+  width: 64px;
+  height: 132px;
 }
 
 /* Bar */
@@ -304,7 +304,7 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
   max-width: 1920px;
   margin: 0 auto;
   height: 72px;
-  padding: 8px 48px 0 120px;
+  padding: 8px 48px 0 140px;
   display: flex;
   align-items: center;
 }
@@ -466,12 +466,12 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
   }
   .ot-nav-ribbon {
     left: 56px;
-    width: 48px;
-    height: 100px;
+    width: 70px;
+    height: 144px;
   }
   .ot-nav-ribbon svg {
-    width: 48px;
-    height: 100px;
+    width: 70px;
+    height: 144px;
   }
   .ot-nav-left,
   .ot-nav-links {
@@ -497,12 +497,12 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
   }
   .ot-nav-ribbon {
     left: 32px;
-    width: 40px;
-    height: 84px;
+    width: 56px;
+    height: 116px;
   }
   .ot-nav-ribbon svg {
-    width: 40px;
-    height: 84px;
+    width: 56px;
+    height: 116px;
   }
   .ot-nav-left,
   .ot-nav-links {
@@ -523,12 +523,12 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
   }
   .ot-nav-ribbon {
     left: 16px;
-    width: 34px;
-    height: 72px;
+    width: 48px;
+    height: 100px;
   }
   .ot-nav-ribbon svg {
-    width: 34px;
-    height: 72px;
+    width: 48px;
+    height: 100px;
   }
   .ot-nav-cta {
     height: 36px;
@@ -540,7 +540,7 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
 @media (max-width: 810px) {
   .ot-nav-shell {
     height: 56px;
-    padding: 4px 16px 0 56px;
+    padding: 4px 16px 0 64px;
   }
   .ot-nav-links-desktop {
     display: none;
@@ -553,12 +553,12 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
   }
   .ot-nav-ribbon {
     left: 12px;
-    width: 30px;
-    height: 64px;
+    width: 42px;
+    height: 88px;
   }
   .ot-nav-ribbon svg {
-    width: 30px;
-    height: 64px;
+    width: 42px;
+    height: 88px;
   }
 }
 

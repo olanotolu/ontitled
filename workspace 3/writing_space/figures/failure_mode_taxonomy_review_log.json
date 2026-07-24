@@ -1,0 +1,22 @@
+{
+  "user_prompt": "Failure mode taxonomy diagram for AI verification business. Top node: 'Ontitled Business Model Failure Modes'. Three main branches: 1) 'Competitive Displacement' with sub-branches: 'Braintrust adds buyer controls', 'ServiceNow extends to settlement', 'Zendesk/Intercom expand cross-vendor', 'Nevermined adds independent verification'. 2) 'Economic Collapse' with sub-branches: 'Jevons Paradox - tasks become too cheap to verify', 'Disintermediation - buyers/vendors go direct', 'Verification cost exceeds task value', 'Goodhart optimization makes checks useless'. 3) 'Structural Impossibility' with sub-branches: 'Credit rating agency conflict of interest', 'AI tasks too open-ended to verify', 'Historical analogy invalid', 'Regulatory capture by incumbents'. Use red color for failure nodes, blue for root, hierarchical tree layout left-to-right. Professional business diagram style.",
+  "doc_type": "report",
+  "quality_threshold": 7.5,
+  "iterations": [
+    {
+      "iteration": 1,
+      "success": false,
+      "error": "API request failed (HTTP 429): {'message': \"No deployments available for selected model, Try again in 30 seconds. Passed model=gemini-3-pro-image-preview. pre-call-checks=False, cooldown_list=['35e40df1-1f19-4e6b-9c35-c1701d569107']\", 'type': 'None', 'param': 'None', 'code': '429'}"
+    },
+    {
+      "iteration": 2,
+      "success": false,
+      "error": "API request failed (HTTP 429): {'message': 'litellm.NotFoundError: Vertex_aiException - {\\n  \"error\": {\\n    \"code\": 404,\\n    \"message\": \"Publisher model `projects/precise-plane-464905-s0/locations/global/publishers/google/models/gemini-3-pro-image-preview` was not found or your project does not have access to it. Ensure you are using a valid model name and that the model is available in the specified region. For more information, see: https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations.\",\\n    \"status\": \"NOT_FOUND\"\\n  }\\n}\\n. Received Model Group=gemini-3-pro-image-preview\\nAvailable Model Group Fallbacks=[\\'gemini-3-pro-image-preview-official\\']\\nError doing the fallback: No deployments available for selected model, Try again in 30 seconds. Passed model=gemini-3-pro-image-preview-official. pre-call-checks=False, cooldown_list=[\\'35e40df1-1f19-4e6b-9c35-c1701d569107\\']', 'type': None, 'param': None, 'code': '429'}"
+    }
+  ],
+  "final_image": null,
+  "final_score": 0.0,
+  "success": false,
+  "early_stop": false,
+  "early_stop_reason": null
+}
