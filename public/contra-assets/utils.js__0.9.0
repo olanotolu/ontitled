@@ -1,7 +1,0 @@
-/*
- * Utils (framer/utils@0.9.0)
- *
- * Learn More: https://www.framer.com/asset-urls
- */
-
-export * from "/contra-assets/Utils.js"

@@ -41,3 +41,9 @@ inspo/
 app-ontitled/
 **/node_modules/
 **/.next/
+---
+workspace 3/
+research/
+.opencode/
+docs/superpowers/
+public/contra-assets/
