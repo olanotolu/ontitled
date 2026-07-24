@@ -58,7 +58,7 @@
       '<a class="ot-nav-ribbon" href="/" aria-label="[Ontitled] home">' +
       '<svg viewBox="0 0 62 130" xmlns="http://www.w3.org/2000/svg" role="presentation">' +
       '<path d="M 62 128.979 C 57.834 127.71 53.925 125.957 50.356 123.798 C 45.31 120.894 40.991 117.089 37.692 112.642 C 35.187 109.429 33.16 105.897 31.714 102.135 L 30.652 102.135 L 30.652 130 L 30.652 102.135 L 29.575 102.135 C 28.163 105.868 26.2 109.375 23.773 112.568 C 20.548 117.035 16.328 120.857 11.389 123.773 C 7.901 125.94 4.076 127.702 0.001 128.978 L 0.001 130 L 0 130 L 0 0 L 62 0 Z" fill="#2b2b29"/>' +
-      '<image href="/ontitled-favicon-transparent.png" x="12" y="26" width="67" height="67" preserveAspectRatio="xMidYMid meet" />' +
+      '<image href="/ontitled-favicon-transparent.png" x="3" y="10" width="56" height="56" preserveAspectRatio="xMidYMid meet" />' +
       "</svg></a>" +
       '<header class="ot-nav" id="otNav" role="banner">' +
       '<div class="ot-nav-shell"><div class="ot-nav-inner">' +
