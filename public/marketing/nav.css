@@ -224,7 +224,7 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
 
 @media (max-width: 809.98px) {
   .ot-logo {
-    font-size: 18px !important;
+    font-size: 26px !important;
   }
   .ot-nav-shell {
     padding-left: 56px !important;
@@ -324,7 +324,7 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
 .ot-logo {
   font-family: var(--ot-logo);
   font-weight: 600;
-  font-size: 22px;
+  font-size: 36px;
   letter-spacing: -0.03em;
   color: var(--ot-ink);
   white-space: nowrap;
@@ -481,7 +481,7 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
     font-size: 15px;
   }
   .ot-logo {
-    font-size: 24px;
+    font-size: 40px;
   }
   .ot-nav-cta {
     height: 42px;
@@ -512,7 +512,7 @@ body.ot-no-bg-video video[src*="MLWPbW1dUQawJLhhun3dBwpgJak"] {
     font-size: 14px;
   }
   .ot-logo {
-    font-size: 20px;
+    font-size: 32px;
   }
 }
 
