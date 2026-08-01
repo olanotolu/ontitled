@@ -46,15 +46,5 @@ workspace 3/
 research/
 .opencode/
 docs/superpowers/
-public/contra-assets/*.js
-public/contra-assets/*.mjs
-public/contra-assets/*.mjs.map
-public/contra-assets/*.css
-public/contra-assets/*.css.map
-public/contra-assets/*.woff2
-public/contra-assets/*.woff
-public/contra-assets/*.ttf
-public/contra-assets/*.html
-public/contra-assets/*.wasm
 public/contra-assets/*.mp4
 public/contra-assets/*.webm
