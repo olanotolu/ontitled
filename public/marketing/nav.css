@@ -78,6 +78,7 @@ header.nav.nav-legacy {
   pointer-events: none;
   opacity: 1;
   visibility: visible;
+  filter: blur(0);
   transition:
     opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
     visibility 0.65s linear,
@@ -190,6 +191,12 @@ body.ot-preloader-done #hero [data-framer-appear-id] {
   #hero [data-framer-appear-id] {
     opacity: 1 !important;
     transform: none !important;
+  }
+  body.ot-preloader-exiting #ot-splash,
+  body.ot-preloader-done #ot-splash {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
   }
 }
 

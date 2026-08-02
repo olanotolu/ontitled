@@ -326,7 +326,7 @@
       splashFinishing = false;
       revealAppear();
       rewriteHeroCta();
-    }, 680);
+    }, 720);
   }
 
   /** Remove decorative bg videos (user: no longer needed). */
@@ -400,6 +400,11 @@
 
     if (!isHomeSplashPage()) {
       // No home splash (other marketing pages) — just show nav.
+      // Clear any stale ot-splash-active from the inline init script so
+      // the nav isn't hidden and the static splash div doesn't linger.
+      document.body.classList.remove("ot-splash-active");
+      var staleSplash = document.getElementById("ot-splash");
+      if (staleSplash) staleSplash.style.display = "none";
       showNav();
       rewriteHeroCta();
       return;
@@ -425,7 +430,10 @@
     }, holdMs + 1500);
   }
 
+  var booted = false;
   function boot() {
+    if (booted) return;
+    booted = true;
     pinIndexPath();
     mountNav();
     hideOntitledChrome();
