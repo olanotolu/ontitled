@@ -11,6 +11,7 @@
   var LINKS = [
     { href: "/themis", label: "Themis" },
     { href: "/company", label: "Company" },
+    { href: "/our-thesis", label: "Our thesis" },
   ];
 
   // Exact chrome names only — never bare "Header" / "Banner" (content uses those)
