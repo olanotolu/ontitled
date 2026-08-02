@@ -371,10 +371,7 @@
       // Primary dark CTA in hero Buttons row (even if already "Try Dyson")
       var inButtons =
         !!a.closest('[data-framer-name="Buttons"]') &&
-        (isCalendlyPartner ||
-          href === "/dyson" ||
-          text.indexOf("try dyson") !== -1 ||
-          isPartnerCopy);
+        (isCalendlyPartner || isPartnerCopy);
       if (!isCalendlyPartner && !isPartnerCopy && !inButtons) continue;
       // Only rewrite the primary pill in the Buttons group / calendly partners
       if (inButtons || isCalendlyPartner || isPartnerCopy) {

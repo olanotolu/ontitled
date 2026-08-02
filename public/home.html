@@ -708,15 +708,9 @@ try {
 
   rewritePartnershipButtons();
   window.addEventListener('pageshow', function(e){ if(e.persisted) rewritePartnershipButtons(); });
-  if (document.body) {
-    mo = new MutationObserver(schedule);
-    // childList only — do NOT watch attributes (self-trigger risk)
-    mo.observe(document.body, { childList: true, subtree: true });
-    setTimeout(function () { try { mo.disconnect(); } catch (e) {} }, 6000);
-  }
-  [0, 100, 300, 600, 1000, 2000, 3000].forEach(function (t) {
-    setTimeout(rewritePartnershipButtons, t);
-  });
+  // Run once after Framer hydration; observing the live button tree causes
+  // hover-state churn while Framer swaps the Start/End label layers.
+  setTimeout(rewritePartnershipButtons, 1000);
 })();
 </script>
 
@@ -761,14 +755,9 @@ try {
 
   rewriteThesisButtons();
   window.addEventListener('pageshow', function (e) { if (e.persisted) rewriteThesisButtons(); });
-  if (document.body) {
-    mo2 = new MutationObserver(schedule);
-    mo2.observe(document.body, { childList: true, subtree: true });
-    setTimeout(function () { try { mo2.disconnect(); } catch (e) {} }, 6000);
-  }
-  [0, 100, 300, 600, 1000, 2000, 3000].forEach(function (t) {
-    setTimeout(rewriteThesisButtons, t);
-  });
+  // Run once after Framer hydration; observing the live button tree causes
+  // hover-state churn while Framer swaps the Start/End label layers.
+  setTimeout(rewriteThesisButtons, 1000);
 })();
 </script>
 
@@ -994,6 +983,6 @@ window.addEventListener('pageshow', function(event) {
 })();
 </script>
 
-<script src="/marketing/nav.js?v=96400" id="ot-marketing-nav-js" defer></script>
+<script src="/marketing/nav.js?v=96500" id="ot-marketing-nav-js" defer></script>
 </body>
 </html>
