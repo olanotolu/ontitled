@@ -5,7 +5,7 @@ import { AuthScreen } from "../auth/AuthScreen";
 
 export const metadata: Metadata = {
   title: "Log in — [Ontitled]",
-  description: "Sign in to Themis",
+  description: "Sign in to Dyson",
 };
 
 export default async function LoginPage({

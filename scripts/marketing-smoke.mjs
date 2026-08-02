@@ -29,10 +29,10 @@ const checks = [
     name: "index (research)",
   },
   {
-    path: "/themis",
+    path: "/dyson",
     must: ["marketing/nav.css", "marketing/nav.js", "[Ontitled]"],
     mustNot: [],
-    name: "themis",
+    name: "dyson",
   },
   {
     path: "/company",

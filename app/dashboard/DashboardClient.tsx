@@ -6,8 +6,8 @@ import Link from "next/link";
 
 const sdkCols = [
   ["Get Started", "API Reference", "Pricing", "Model Deprecations"],
-  ["Themis Mini", "Evaluation Guide", "Session Metrics", "OpenAI-Compatible API"],
-  ["CLI Reference", "Themis"],
+  ["Dyson Mini", "Evaluation Guide", "Session Metrics", "OpenAI-Compatible API"],
+  ["CLI Reference", "Dyson"],
 ];
 
 const cookbookCols = [
@@ -104,7 +104,7 @@ export default function DashboardClient({ session }: Props) {
         <section className="hero">
           <div className="hero-text">
             <p className="hero-kicker">
-              Introducing <strong>Themis</strong>
+              Introducing <strong>Dyson</strong>
             </p>
             <h1 className="hero-headline">
               Title the
@@ -142,7 +142,7 @@ export default function DashboardClient({ session }: Props) {
                 <ul key={i} className="link-col">
                   {col.map((label) => (
                     <li key={label}>
-                      <a href="/themis" className="text-link">
+                      <a href="/dyson" className="text-link">
                         {label}
                       </a>
                     </li>
@@ -167,7 +167,7 @@ export default function DashboardClient({ session }: Props) {
                 <ul key={i} className="link-col">
                   {col.map((label) => (
                     <li key={label}>
-                      <a href="/themis" className="text-link">
+                      <a href="/dyson" className="text-link">
                         {label}
                       </a>
                     </li>

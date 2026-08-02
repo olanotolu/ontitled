@@ -17,7 +17,7 @@ See [docs/MARKETING.md](../docs/MARKETING.md).
 | `download-contra-assets.js` | Older bulk asset download |
 | `localize-external.js` | Older index.html localizer |
 | `fix-contra-refs.py` | Path reference fixes |
-| `fix-splash-css.py` | Splash CSS (themis) |
+| `fix-splash-css.py` | Splash CSS (dyson) |
 | `fix-text.py` | Copy substitutions |
 
 Prefer `marketing:import` for new exports.

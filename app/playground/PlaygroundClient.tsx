@@ -15,18 +15,18 @@ const SUGGESTIONS = [
   { label: "Surprise me", icon: "spark" },
   { label: "Find the flaw in a proof", icon: "search" },
   { label: "Show me beautiful code", icon: "code" },
-  { label: "Have a themis", icon: "bulb" },
+  { label: "Have a dyson", icon: "bulb" },
   { label: "Pressure-test my idea", icon: "flask" },
 ] as const;
 
-const DEFAULT_SYSTEM = `You are Themis, a multimodal evaluation model created by [Ontitled] for creative judgment — style, tone, and taste.
+const DEFAULT_SYSTEM = `You are Dyson, a multimodal evaluation model created by [Ontitled] for creative judgment — style, tone, and taste.
 
 <date>
 Today's date is {{ current_date }}
 </date>
 
 <model_information>
-Name: Themis
+Name: Dyson
 Overview: You are an actuarial engine for creative judgment — private evaluations with verified creative experts.
 Knowledge cutoff: April 2026
 Creator: [Ontitled]
@@ -168,7 +168,7 @@ export default function PlaygroundClient({ session }: Props) {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<{ role: "user" | "assistant"; text: string }[]>([]);
   const [modelOpen, setModelOpen] = useState(false);
-  const [model, setModel] = useState("Themis");
+  const [model, setModel] = useState("Dyson");
   const [reasoning, setReasoning] = useState(4);
   const [maxTokens, setMaxTokens] = useState(100);
   const [webSearch, setWebSearch] = useState(false);
@@ -192,7 +192,7 @@ export default function PlaygroundClient({ session }: Props) {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/themis/chat", {
+      const res = await fetch("/api/dyson/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -201,7 +201,7 @@ export default function PlaygroundClient({ session }: Props) {
             ...messages.map((m) => ({ role: m.role, content: m.text })),
             { role: "user", content: trimmed },
           ],
-          model: model === "Themis Mini" ? "themis-mini" : "themis",
+          model: model === "Dyson Mini" ? "dyson-mini" : "dyson",
           systemPrompt,
         }),
       });
@@ -278,7 +278,7 @@ export default function PlaygroundClient({ session }: Props) {
               <div className="pg-empty">
                 <h2 className="pg-headline">Science is better when shared.</h2>
                 <p className="pg-sub">
-                  Test our new model, Themis, right here —{" "}
+                  Test our new model, Dyson, right here —{" "}
                   <button type="button" className="pg-inline-link">
                     or learn more about it
                   </button>
@@ -317,7 +317,7 @@ export default function PlaygroundClient({ session }: Props) {
                     >
                       <div className="pg-thinking-card">
                         <ThinkingOrb state="solving" size={20} speed={1.35} />
-                        <span className="pg-thinking-label">Themis is solving</span>
+                        <span className="pg-thinking-label">Dyson is solving</span>
                      </div>
                    </BorderBeam>
                  </div>
@@ -347,7 +347,7 @@ export default function PlaygroundClient({ session }: Props) {
                 <button
                   type="submit"
                   className="pg-send"
-                  aria-label={loading ? "Themis is solving…" : "Send"}
+                  aria-label={loading ? "Dyson is solving…" : "Send"}
                   disabled={!input.trim() || loading}
                   data-loading={loading}
                 >
@@ -361,7 +361,7 @@ export default function PlaygroundClient({ session }: Props) {
             </form>
             </BorderBeam>
             <p className="pg-disclaimer">
-              Themis is AI and can make mistakes. Your use must follow our{" "}
+              Dyson is AI and can make mistakes. Your use must follow our{" "}
               <button type="button" className="pg-inline-link">
                 Acceptable Use Policy
               </button>
@@ -386,7 +386,7 @@ export default function PlaygroundClient({ session }: Props) {
                 </button>
                 {modelOpen ? (
                   <div className="pg-model-menu" role="listbox">
-                    {["Themis", "Themis Mini"].map((m) => (
+                    {["Dyson", "Dyson Mini"].map((m) => (
                       <button
                         key={m}
                         type="button"

@@ -10,8 +10,8 @@ const sourceSerif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  title: "Themis — [Ontitled]",
-  description: "Sign in to Themis",
+  title: "Dyson — [Ontitled]",
+  description: "Sign in to Dyson",
 };
 
 export default function RootLayout({

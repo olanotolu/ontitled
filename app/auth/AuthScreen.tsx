@@ -86,7 +86,7 @@ const copy: Record<
     visual: "/auth/signup-visual.png",
     body: (
       <>
-        Ontitled builds Themis — private creative judgment with verified
+        Ontitled builds Dyson — private creative judgment with verified
         experts, for style, tone, and taste.
       </>
     ),

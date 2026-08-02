@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { EchoProvider } from "@/lib/themis/providers/echo";
+import { EchoProvider } from "@/lib/dyson/providers/echo";
 
 describe("EchoProvider", () => {
   it("returns echo of last user message", async () => {
@@ -52,9 +52,9 @@ describe("EchoProvider", () => {
 });
 
 describe("provider factory", () => {
-  it("buildThemisProvider returns EchoProvider without env vars", async () => {
-    const { buildThemisProvider } = await import("@/lib/themis/providers/factory");
-    const provider = buildThemisProvider();
+  it("buildDysonProvider returns EchoProvider without env vars", async () => {
+    const { buildDysonProvider } = await import("@/lib/dyson/providers/factory");
+    const provider = buildDysonProvider();
     const res = await provider.chat(
       { messages: [{ role: "user", content: "hi" }] },
       { userId: "u1", workspaceId: "ws1" }

@@ -1,16 +1,16 @@
-import type { ThemisChatRequest, ThemisChatResponse, ThemisProviderContext } from "../types";
-import type { ThemisProvider } from "../provider";
+import type { DysonChatRequest, DysonChatResponse, DysonProviderContext } from "../types";
+import type { DysonProvider } from "../provider";
 import { randomBytes } from "node:crypto";
 
 function msgId() {
   return `msg_${randomBytes(8).toString("hex")}`;
 }
 
-export class EchoProvider implements ThemisProvider {
+export class EchoProvider implements DysonProvider {
   async chat(
-    req: ThemisChatRequest,
-    _ctx: ThemisProviderContext
-  ): Promise<ThemisChatResponse> {
+    req: DysonChatRequest,
+    _ctx: DysonProviderContext
+  ): Promise<DysonChatResponse> {
     const lastUser = req.messages
       .filter((m) => m.role === "user")
       .pop();

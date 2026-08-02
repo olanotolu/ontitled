@@ -8,7 +8,7 @@ Static Framer exports + a **shared Ontitled nav shell**. Product app (Auth0) sta
 |-----|------|--------|
 | `/` | `public/home.html` | Brand home |
 | `/index` | `public/index.html` | Creative Arena / research (was contralabs `/research`) |
-| `/themis` | `public/themis.html` | Themis product marketing |
+| `/dyson` | `public/dyson.html` | Dyson product marketing |
 | `/company` | `public/company.html` | About |
 | `/our-thesis` | `public/our-thesis.html` | Short thesis |
 | `/research`, `/datasets` | → `/index` | Permanent redirects |
@@ -37,7 +37,7 @@ python3 scripts/inject-marketing-nav.py
 
 ```bash
 npm run marketing:import -- --target index --from ./path/to/export.html
-# targets: home | index | themis | company | thesis
+# targets: home | index | dyson | company | thesis
 ```
 
 This localizes `framerusercontent.com` assets into `public/contra-assets/`, light-rebrands, writes the target file, and re-injects the shared nav.
@@ -49,11 +49,11 @@ Run with `npm run dev`, then hard-refresh each URL (Cmd+Shift+R).
 - [ ] **`/`** — home hero loads; **black** ribbon + **[Ontitled]** nav (not Ontitled)
 - [ ] **`/index`** — “Creative intelligence.” content; same Ontitled nav; **no** splash; **no** “contra LABS”
 - [ ] **Refresh `/index`** — still Index content (not home glitch)
-- [ ] **`/themis`** — Themis page + shared nav
+- [ ] **`/dyson`** — Dyson page + shared nav
 - [ ] **`/company`** — About + shared nav (legacy company nav hidden)
 - [ ] **`/our-thesis`** — thesis + shared nav
 - [ ] **`/research`** — redirects to `/index`
-- [ ] **Nav links** — Themis, Dike, Index, Jobs, Company all resolve (no 500)
+- [ ] **Nav links** — Dyson, Dike, Index, Jobs, Company all resolve (no 500)
 - [ ] **Get in touch** — opens partnership CTA
 - [ ] **Mobile** (&lt;810px) — hamburger opens drawer
 - [ ] **`/login`** — still product Auth0 screen (not marketing)

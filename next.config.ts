@@ -33,6 +33,12 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: false,
       },
+      // Keep old product URL working after the Dyson rename.
+      {
+        source: "/themis",
+        destination: "/dyson",
+        permanent: true,
+      },
       // Convenience alias — Auth0 SDK mounts sign-out at /auth/logout
       {
         source: "/logout",
@@ -61,8 +67,8 @@ const nextConfig: NextConfig = {
       ],
       afterFiles: [
         {
-          source: "/themis",
-          destination: "/themis.html",
+          source: "/dyson",
+          destination: "/dyson.html",
         },
         {
           source: "/dike",

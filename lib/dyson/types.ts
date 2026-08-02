@@ -1,22 +1,22 @@
-export type ThemisMessage = {
+export type DysonMessage = {
   role: "system" | "user" | "assistant";
   content: string;
 };
 
-export type ThemisChatRequest = {
-  messages: ThemisMessage[];
+export type DysonChatRequest = {
+  messages: DysonMessage[];
   model?: string;
   systemPrompt?: string;
 };
 
-export type ThemisChatResponse = {
+export type DysonChatResponse = {
   id: string;
-  message: ThemisMessage;
+  message: DysonMessage;
   model: string;
   usage?: { inputTokens: number; outputTokens: number };
 };
 
-export type ThemisProviderContext = {
+export type DysonProviderContext = {
   userId: string;
   workspaceId: string;
 };

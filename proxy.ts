@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 /**
- * Auth0 only for product routes. Marketing HTML (/index, /, /themis, …)
+ * Auth0 only for product routes. Marketing HTML (/index, /, /dyson, …)
  * must not run auth middleware — it breaks hard-refresh on static pages.
  */
 const AUTH_MATCHERS = [
@@ -36,6 +36,7 @@ export async function proxy(request: NextRequest) {
     pathname === "/" ||
     pathname === "/index" ||
     pathname.startsWith("/index/") ||
+    pathname === "/dyson" ||
     pathname === "/themis" ||
     pathname === "/company" ||
     pathname === "/our-thesis" ||

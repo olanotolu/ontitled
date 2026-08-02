@@ -16,7 +16,7 @@ export default function NotFound() {
           [Ontitled]
         </Link>
         <nav className="nf-nav" aria-label="Primary">
-          <Link href="/themis">Themis</Link>
+          <Link href="/dyson">Dyson</Link>
           <Link href="/index">Index</Link>
           <Link href="/company">Company</Link>
         </nav>
@@ -37,8 +37,8 @@ export default function NotFound() {
           <Link href="/index" className="nf-btn nf-btn-ghost">
             Explore Index
           </Link>
-          <Link href="/themis" className="nf-btn nf-btn-ghost">
-            Try Themis
+          <Link href="/dyson" className="nf-btn nf-btn-ghost">
+            Try Dyson
           </Link>
         </div>
 

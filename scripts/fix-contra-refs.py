@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 
 # Files to process
-html_files = [Path('public/home.html'), Path('public/themis.html')]
+html_files = [Path('public/home.html'), Path('public/dyson.html')]
 mjs_files = list(Path('public/contra-assets').glob('*.mjs'))
 js_files = list(Path('public/contra-assets').glob('*.js'))
 json_files = list(Path('public/contra-assets').glob('*.json'))

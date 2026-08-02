@@ -5,7 +5,7 @@
  * Usage:
  *   node scripts/marketing-import.mjs --target home --from ./export.html
  *   node scripts/marketing-import.mjs --target index --from ./research.html
- *   node scripts/marketing-import.mjs --target themis --from ./themis.html
+ *   node scripts/marketing-import.mjs --target dyson --from ./dyson.html
  *
  * After write, runs inject-marketing-nav.py so Ontitled nav is attached.
  */
@@ -26,7 +26,7 @@ const ASSETS = path.join(PUBLIC, "contra-assets");
 const TARGETS = {
   home: "home.html",
   index: "index.html",
-  themis: "themis.html",
+  dyson: "dyson.html",
   company: "company.html",
   thesis: "our-thesis.html",
 };
@@ -155,7 +155,7 @@ async function main() {
   const args = parseArgs(process.argv);
   if (args.help || !args.target || !args.from) {
     console.log(`Usage:
-  npm run marketing:import -- --target <home|index|themis|company|thesis> --from <file.html>
+  npm run marketing:import -- --target <home|index|dyson|company|thesis> --from <file.html>
 
 Targets:
 ${Object.entries(TARGETS)

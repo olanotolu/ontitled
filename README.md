@@ -1,6 +1,6 @@
 # [Ontitled]
 
-Next.js app for **[Ontitled]** — product (Themis) + marketing site.
+Next.js app for **[Ontitled]** — product (Dyson) + marketing site.
 
 ## Structure
 
@@ -11,7 +11,7 @@ lib/                 # Auth0, Supabase, settings helpers
 public/
   home.html          # /
   index.html    # /index  (Creative Arena / research)
-  themis.html        # /themis
+  dyson.html         # /dyson
   company.html       # /company
   our-thesis.html    # /our-thesis
   marketing/         # Shared Ontitled nav (nav.css + nav.js)
@@ -33,7 +33,7 @@ supabase/            # Migrations
 |-----|------|
 | `/` | `public/home.html` |
 | `/index` | `public/index.html` |
-| `/themis` | `public/themis.html` |
+| `/dyson` | `public/dyson.html` |
 | `/company` | `public/company.html` |
 | `/our-thesis` | `public/our-thesis.html` |
 
@@ -47,7 +47,7 @@ Auth middleware **does not** run on marketing paths.
 |-----|---------|
 | `/login`, `/signup` | Auth |
 | `/dashboard` | Logged-in home |
-| `/playground` | Themis playground |
+| `/playground` | Dyson playground |
 | `/settings/*` | Account / workspace |
 
 ## Setup
@@ -68,7 +68,7 @@ npm run marketing:nav
 
 # Import a Framer export (localizes assets + injects nav)
 npm run marketing:import -- --target index --from ./export.html
-# targets: home | index | themis | company | thesis
+# targets: home | index | dyson | company | thesis
 
 # Smoke-test routes (dev server must be running)
 npm run marketing:smoke

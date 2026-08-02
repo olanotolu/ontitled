@@ -17,7 +17,7 @@ PUBLIC = ROOT / "public"
 MARKETING_PAGES = [
     "home.html",
     "index.html",
-    "themis.html",
+    "dyson.html",
     "company.html",
     "our-thesis.html",
 ]
@@ -27,7 +27,7 @@ HEAD_SNIPPET = """
 """
 
 BODY_SNIPPET = """
-<script src="/marketing/nav.js?v=96300" id="ot-marketing-nav-js" defer></script>
+<script src="/marketing/nav.js?v=96400" id="ot-marketing-nav-js" defer></script>
 """
 
 
@@ -102,7 +102,7 @@ def inject(html: str) -> str:
         else:
             html = HEAD_SNIPPET + html
 
-    if 'id="ot-marketing-nav-js"' not in html and 'src="/marketing/nav.js?v=96300"' not in html:
+    if 'id="ot-marketing-nav-js"' not in html and 'src="/marketing/nav.js?v=96400"' not in html:
         if re.search(r"</body\s*>", html, re.I):
             html = re.sub(
                 r"</body\s*>",

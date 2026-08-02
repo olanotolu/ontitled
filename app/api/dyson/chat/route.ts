@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
 import { authenticateRequest } from "@/lib/settings/api-key-auth";
-import { buildThemisProvider } from "@/lib/themis/providers/factory";
-import type { ThemisChatRequest } from "@/lib/themis/types";
+import { buildDysonProvider } from "@/lib/dyson/providers/factory";
+import type { DysonChatRequest } from "@/lib/dyson/types";
 
 export async function POST(req: Request) {
   const auth = await authenticateRequest(req);
   if ("error" in auth) return auth.error;
 
-  let body: ThemisChatRequest;
+  let body: DysonChatRequest;
   try {
-    body = (await req.json()) as ThemisChatRequest;
+    body = (await req.json()) as DysonChatRequest;
   } catch {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const provider = buildThemisProvider();
+  const provider = buildDysonProvider();
 
   try {
     const response = await provider.chat(body, {
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     return NextResponse.json(response);
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Chat failed";
-    console.error("Themis chat error:", msg);
+    console.error("Dyson chat error:", msg);
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

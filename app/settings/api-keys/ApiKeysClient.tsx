@@ -66,7 +66,7 @@ export default function ApiKeysClient({ session }: { session: SessionData }) {
     <SettingsShell
       session={session}
       title="API Keys"
-      description="Authenticate programmatic access to Themis APIs."
+      description="Authenticate programmatic access to Dyson APIs."
     >
       {loading ? <p className="settings-muted">Loading…</p> : null}
       {error ? <p className="settings-error">{error}</p> : null}

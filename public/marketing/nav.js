@@ -9,7 +9,7 @@
     "https://calendly.com/partnerships-ontitled/ontitled-partnership-request";
 
   var LINKS = [
-    { href: "/themis", label: "Themis" },
+    { href: "/dyson", label: "Dyson" },
     { href: "/company", label: "Company" },
     { href: "/our-thesis", label: "Our thesis" },
   ];
@@ -350,7 +350,7 @@
   }
 
   /**
-   * Hero primary CTA: "Request partnership" → "Try Themis" → /themis
+   * Hero primary CTA: "Request partnership" → "Try Dyson" → /dyson
    * Framer rehydrates from modules, so we re-apply after splash + on a short loop.
    * Prefer href-only rewrites when possible to reduce text hydration churn.
    */
@@ -368,17 +368,17 @@
       var isPartnerCopy =
         text.indexOf("request partnership") !== -1 ||
         (text.indexOf("partner") !== -1 && text.indexOf("request") !== -1);
-      // Primary dark CTA in hero Buttons row (even if already "Try Themis")
+      // Primary dark CTA in hero Buttons row (even if already "Try Dyson")
       var inButtons =
         !!a.closest('[data-framer-name="Buttons"]') &&
         (isCalendlyPartner ||
-          href === "/themis" ||
-          text.indexOf("try themis") !== -1 ||
+          href === "/dyson" ||
+          text.indexOf("try dyson") !== -1 ||
           isPartnerCopy);
       if (!isCalendlyPartner && !isPartnerCopy && !inButtons) continue;
       // Only rewrite the primary pill in the Buttons group / calendly partners
       if (inButtons || isCalendlyPartner || isPartnerCopy) {
-        a.setAttribute("href", "/themis");
+        a.setAttribute("href", "/dyson");
         a.removeAttribute("target");
         a.removeAttribute("rel");
       }
@@ -387,7 +387,7 @@
       while ((node = walker.nextNode())) {
         var raw = node.textContent || "";
         if (/request\s*partnership/i.test(raw) || /^partner/i.test(raw.trim())) {
-          node.textContent = "Try Themis";
+          node.textContent = "Try Dyson";
         }
       }
     }

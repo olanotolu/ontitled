@@ -5,7 +5,7 @@ import { AuthScreen } from "../auth/AuthScreen";
 
 export const metadata: Metadata = {
   title: "Sign up — [Ontitled]",
-  description: "Create your Themis account",
+  description: "Create your Dyson account",
 };
 
 export default async function SignupPage({

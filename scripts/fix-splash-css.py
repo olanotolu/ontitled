@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Fix splash screen CSS for mobile in themis.html."""
+"""Fix splash screen CSS for mobile in dyson.html."""
 from pathlib import Path
 
-p = Path('public/themis.html')
+p = Path('public/dyson.html')
 t = p.read_text()
 
 # Fix 1: Add height:auto to zubHS override + mobile media query
