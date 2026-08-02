@@ -10,9 +10,6 @@
 
   var LINKS = [
     { href: "/themis", label: "Themis" },
-    { href: "/dike", label: "Dike" },
-    { href: "/index", label: "Index" },
-    { href: "/jobs", label: "Jobs" },
     { href: "/company", label: "Company" },
   ];
 

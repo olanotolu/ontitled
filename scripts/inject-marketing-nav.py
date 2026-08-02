@@ -27,7 +27,7 @@ HEAD_SNIPPET = """
 """
 
 BODY_SNIPPET = """
-<script src="/marketing/nav.js?v=96100" id="ot-marketing-nav-js" defer></script>
+<script src="/marketing/nav.js?v=96200" id="ot-marketing-nav-js" defer></script>
 """
 
 
@@ -102,7 +102,7 @@ def inject(html: str) -> str:
         else:
             html = HEAD_SNIPPET + html
 
-    if 'id="ot-marketing-nav-js"' not in html and 'src="/marketing/nav.js?v=96100"' not in html:
+    if 'id="ot-marketing-nav-js"' not in html and 'src="/marketing/nav.js?v=96200"' not in html:
         if re.search(r"</body\s*>", html, re.I):
             html = re.sub(
                 r"</body\s*>",
