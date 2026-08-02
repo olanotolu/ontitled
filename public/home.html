@@ -798,12 +798,9 @@ window.addEventListener('pageshow', function(event) {
   fixLabelHeights();
   window.addEventListener('resize', fixLabelHeights);
   window.addEventListener('pageshow', function(e){ if(e.persisted) fixLabelHeights(); });
-  if(document.body) {
-    mo3 = new MutationObserver(schedule);
-    mo3.observe(document.body, {childList:true, subtree:true});
-    setTimeout(function () { try { mo3.disconnect(); } catch (e) {} }, 6000);
-  }
-  [0,100,300,600,1000,2000,3000].forEach(function(t){ setTimeout(fixLabelHeights, t); });
+  // Measure after Framer has hydrated; do not observe the button subtree while
+  // hover swaps the Start/End layers.
+  [0, 1000, 2000].forEach(function(t){ setTimeout(fixLabelHeights, t); });
 })();
 </script>
 
