@@ -290,7 +290,6 @@
     if (splashFinishing || document.body.classList.contains("ot-preloader-done")) {
       showNav();
       killBgVideos();
-      rewriteHeroCta();
       revealAppear();
       return;
     }
@@ -303,7 +302,6 @@
       document.body.classList.add("ot-hero-in");
       revealAppear();
     });
-    rewriteHeroCta();
 
     window.setTimeout(function () {
       var splash = document.getElementById("ot-splash");
@@ -323,7 +321,6 @@
       document.body.classList.remove("ot-splash-active");
       splashFinishing = false;
       revealAppear();
-      rewriteHeroCta();
     }, 720);
   }
 
@@ -349,47 +346,6 @@
     });
   }
 
-  /**
-   * Hero primary CTA: "Request partnership" → "Try Dyson" → /dyson
-   * Framer rehydrates from modules, so we re-apply after splash + on a short loop.
-   * Prefer href-only rewrites when possible to reduce text hydration churn.
-   */
-  function rewriteHeroCta() {
-    var hero = document.querySelector("#hero, [data-framer-name='HERO']");
-    var scope = hero || document;
-    var links = scope.querySelectorAll("a");
-    for (var i = 0; i < links.length; i++) {
-      var a = links[i];
-      var href = (a.getAttribute("href") || "").toLowerCase();
-      var text = (a.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-      var isCalendlyPartner =
-        href.indexOf("calendly.com/partnerships-") !== -1 ||
-        href.indexOf("calendly.com/partnerships") !== -1;
-      var isPartnerCopy =
-        text.indexOf("request partnership") !== -1 ||
-        (text.indexOf("partner") !== -1 && text.indexOf("request") !== -1);
-      // Primary dark CTA in hero Buttons row (even if already "Try Dyson")
-      var inButtons =
-        !!a.closest('[data-framer-name="Buttons"]') &&
-        (isCalendlyPartner || isPartnerCopy);
-      if (!isCalendlyPartner && !isPartnerCopy && !inButtons) continue;
-      // Only rewrite the primary pill in the Buttons group / calendly partners
-      if (inButtons || isCalendlyPartner || isPartnerCopy) {
-        a.setAttribute("href", "/dyson");
-        a.removeAttribute("target");
-        a.removeAttribute("rel");
-      }
-      var walker = document.createTreeWalker(a, NodeFilter.SHOW_TEXT, null);
-      var node;
-      while ((node = walker.nextNode())) {
-        var raw = node.textContent || "";
-        if (/request\s*partnership/i.test(raw) || /^partner/i.test(raw.trim())) {
-          node.textContent = "Try Dyson";
-        }
-      }
-    }
-  }
-
   function watchSplash() {
     killBgVideos();
 
@@ -401,7 +357,6 @@
       var staleSplash = document.getElementById("ot-splash");
       if (staleSplash) staleSplash.style.display = "none";
       showNav();
-      rewriteHeroCta();
       return;
     }
 
@@ -421,7 +376,6 @@
         forceHidePreLoader();
       }
       revealAppear();
-      rewriteHeroCta();
     }, holdMs + 1500);
   }
 
@@ -436,10 +390,11 @@
     hideLegacyLabs();
     hideDecorativeSvg();
     watchSplash();
-    // Re-assert CTA / appear / labs / svg after Framer late hydration
+    // Re-assert appear / labs / svg after Framer late hydration.
+    // Hero CTA text + href are baked into SSR and the hydration bundle —
+    // no runtime rewriting needed (that fought Framer's hover layers).
     [400, 900, 1600, 2800, 4500].forEach(function (ms) {
       setTimeout(function () {
-        rewriteHeroCta();
         hideLegacyLabs();
         hideDecorativeSvg();
         if (document.body.classList.contains("ot-preloader-done") ||
