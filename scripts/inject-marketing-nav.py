@@ -27,7 +27,7 @@ HEAD_SNIPPET = """
 """
 
 BODY_SNIPPET = """
-<script src="/marketing/nav.js?v=96600" id="ot-marketing-nav-js" defer></script>
+<script src="/marketing/nav.js?v=96601" id="ot-marketing-nav-js" defer></script>
 """
 
 

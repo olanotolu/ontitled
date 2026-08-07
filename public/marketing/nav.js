@@ -12,6 +12,7 @@
     { href: "/dyson", label: "Dyson" },
     { href: "/company", label: "Company" },
     { href: "/our-thesis", label: "Our thesis" },
+    { href: "/omposition", label: "Omposition" },
   ];
 
   // Exact chrome names only — never bare "Header" / "Banner" (content uses those)
