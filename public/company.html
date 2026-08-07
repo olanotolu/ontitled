@@ -3,16 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About — [Ontitled]</title>
-  <meta name="description" content="[Ontitled] is the frontier human data and evaluation lab for creative AI. We set the benchmark for style, tone, and taste." />
-  <meta property="og:title" content="About — [Ontitled]" />
-  <meta property="og:description" content="The frontier human data and evaluation lab for creative AI." />
+  <title>Company — [Ontitled]</title>
+  <meta name="description" content="[Ontitled] is the frontier human data and evaluation lab for creative AI — building the systems that teach models what style, tone, and taste actually mean." />
+  <meta property="og:title" content="Company — [Ontitled]" />
+  <meta property="og:description" content="[Ontitled] is the frontier human data and evaluation lab for creative AI — building the systems that teach models what style, tone, and taste actually mean." />
   <meta property="og:image" content="/contra-assets/3VWbqj3oSlaixwW5FS0stUsdR7g.png" />
+  <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Company — [Ontitled]" />
+  <meta name="twitter:description" content="[Ontitled] is the frontier human data and evaluation lab for creative AI — building the systems that teach models what style, tone, and taste actually mean." />
+  <meta name="twitter:image" content="/contra-assets/3VWbqj3oSlaixwW5FS0stUsdR7g.png" />
   <link rel="icon" href="/ontitled-favicon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="canonical" href="https://ontitled.com/company" />
   <style>
     @font-face {
       font-family: "GT Standard L Regular";
@@ -28,1079 +30,130 @@
       font-style: normal;
       font-display: swap;
     }
-    @font-face {
-      font-family: "GT Standard L Bold";
-      src: url("/contra-assets/xlKAYTsnLGjR3aP5UPgagRxxAY.woff2") format("woff2");
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
 
     :root {
       --bg: #fbfaf6;
-      --bg-elevated: #f4f1ea;
-      --bg-warm: #f0ebe3;
       --ink: #2b2b29;
-      --ink-muted: rgba(43, 43, 41, 0.7);
-      --ink-faint: rgba(43, 43, 41, 0.4);
-      --line: rgba(43, 43, 41, 0.1);
-      --sage: #a5beba;
-      --sage-deep: #387478;
-      --brand-secondary: #494444;
-      --stone: #c8bcae;
-      --max: 1120px;
+      --ink-muted: rgba(43, 43, 41, 0.72);
+      --sans: "GT Standard L Regular", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
-      --nav-font: "GT Standard L Regular", "Inter", system-ui, sans-serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--nav-font);
+
+    html, body {
+      min-height: 100%;
       background: var(--bg);
       color: var(--ink);
-      line-height: 1.55;
-      font-weight: 400;
+    }
+
+    body {
+      font-family: var(--sans);
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: clip;
+      display: flex;
+      flex-direction: column;
       min-height: 100vh;
       min-height: 100dvh;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
     }
-    main {
-      flex: 1 0 auto;
-    }
-    .footer {
-      flex: 0 0 auto;
-      margin-top: auto;
-    }
+
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; height: auto; }
-    button { font: inherit; -webkit-tap-highlight-color: transparent; }
-    a, button { -webkit-tap-highlight-color: transparent; }
 
-    /* ——— Nav appear (matches Framer: y -160 → 0, delay 0.5s, 0.8s) ——— */
-    @keyframes nav-slide-in {
-      from {
-        opacity: 1;
-        transform: translate3d(0, -160px, 0);
-      }
-      to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-      }
-    }
-    @keyframes nav-link-in {
-      from {
-        opacity: 0;
-        transform: translate3d(0, -8px, 0);
-      }
-      to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-      }
+    :focus-visible {
+      outline: 2px solid #387478;
+      outline-offset: 3px;
     }
 
-    /* ——— Nav (matches Framer top bar) ——— */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 40;
-      padding-top: env(safe-area-inset-top, 0);
-      pointer-events: none;
-      animation: nav-slide-in 0.8s cubic-bezier(0.48, 0.05, 0.35, 0.99) 0.5s both;
-      will-change: transform;
-    }
-    .nav > * { pointer-events: auto; }
-
-    /* Left ribbon mark — same as main site */
-    .nav-ribbon {
-      position: fixed;
-      top: 0;
-      left: 58px;
-      z-index: 45;
-      display: block;
-      width: 62px;
-      height: 130px;
-      text-decoration: none;
-      pointer-events: auto;
-      animation: nav-slide-in 0.8s cubic-bezier(0.48, 0.05, 0.35, 0.99) 0.5s both;
-      will-change: transform;
-    }
-    .nav-ribbon svg {
-      display: block;
-      width: 62px;
-      height: 130px;
-    }
-
-    .nav-shell {
-      width: 100%;
-      max-width: 1920px;
-      margin: 0 auto;
-      height: 102px;
-      padding: 12px 160px 0;
-      display: flex;
-      align-items: center;
-      box-sizing: border-box;
-    }
-    .nav-inner {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-    }
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      min-width: 0;
-    }
-    .logo {
-      font-family: "GT Standard L Medium", "GT Standard L Regular", system-ui, sans-serif;
-      font-weight: 500;
-      font-size: 15px;
-      letter-spacing: -0.03em;
-      color: var(--ink);
-      white-space: nowrap;
-      line-height: 1;
-      transition: color 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
-      flex-shrink: 0;
-      animation: nav-link-in 0.45s cubic-bezier(0.48, 0.05, 0.35, 0.99) 0.95s both;
-    }
-    .logo:hover {
-      color: rgba(43, 43, 41, 0.55);
-      transform: translateX(2px);
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .nav-links a {
-      font-family: var(--nav-font);
-      font-size: 17px;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      line-height: 1.2;
-      color: var(--ink);
-      transition: color 0.2s ease, transform 0.25s ease;
-      white-space: nowrap;
-      display: inline-block;
-      animation: nav-link-in 0.45s cubic-bezier(0.48, 0.05, 0.35, 0.99) both;
-    }
-    .nav-links li:nth-child(1) a { animation-delay: 1s; }
-    .nav-links li:nth-child(2) a { animation-delay: 1.05s; }
-    .nav-links li:nth-child(3) a { animation-delay: 1.1s; }
-    .nav-links li:nth-child(4) a { animation-delay: 1.15s; }
-    .nav-links li:nth-child(5) a { animation-delay: 1.2s; }
-    .nav-links li:nth-child(6) a { animation-delay: 1.25s; }
-    .nav-links a:hover {
-      color: var(--ink-muted);
-      transform: translateY(-1px);
-    }
-    .nav-links a[aria-current="page"] { color: var(--ink); }
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      flex-shrink: 0;
-    }
-    .nav-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 48px;
-      padding: 12px 24px;
-      border-radius: 24px;
-      background: var(--ink);
-      color: var(--bg) !important;
-      font-family: var(--nav-font);
-      font-size: 15px !important;
-      font-weight: 400 !important;
-      letter-spacing: -0.01em;
-      white-space: nowrap;
-      transition: background 0.2s ease, transform 0.25s ease;
-      animation: nav-link-in 0.45s cubic-bezier(0.48, 0.05, 0.35, 0.99) 1.15s both;
-    }
-    .nav-cta:hover {
-      background: var(--brand-secondary);
-      transform: translateY(-1px);
-    }
-    .nav-toggle {
-      display: none;
-      width: 40px;
-      height: 40px;
-      border: 0;
-      background: transparent;
-      color: var(--ink);
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .nav-toggle svg { width: 22px; height: 22px; }
-
-    /* Offset page content under fixed nav */
     main {
-      padding-top: 72px;
-      padding-bottom: clamp(48px, 8vw, 96px);
-    }
-
-    /* ——— Hero ——— */
-    .hero {
-      padding: clamp(72px, 14vw, 148px) clamp(20px, 4vw, 48px) clamp(56px, 10vw, 96px);
-      text-align: center;
-    }
-    .eyebrow {
-      font-size: 13px;
-      font-weight: 400;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-      margin-bottom: 20px;
-    }
-    .hero h1 {
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-weight: 500;
-      font-size: clamp(64px, 12vw, 128px);
-      line-height: 0.92;
-      letter-spacing: -0.03em;
-      margin-bottom: clamp(28px, 5vw, 48px);
-    }
-    .mission {
-      max-width: 42rem;
-      margin: 0 auto;
-      font-size: clamp(18px, 2.2vw, 22px);
-      line-height: 1.55;
-      color: var(--ink-muted);
-      font-weight: 300;
-    }
-    .mission strong {
-      color: var(--ink);
-      font-weight: 400;
-    }
-
-    /* ——— Vision band ——— */
-    .vision {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: clamp(40px, 8vw, 80px) clamp(20px, 4vw, 48px) clamp(80px, 12vw, 140px);
-      display: grid;
-      grid-template-columns: 1fr 1.05fr;
-      gap: clamp(32px, 6vw, 72px);
-      align-items: center;
-    }
-    .vision-copy h2 {
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-weight: 500;
-      font-size: clamp(32px, 4.2vw, 48px);
-      line-height: 1.12;
-      letter-spacing: -0.02em;
-      margin-bottom: 20px;
-      max-width: 16ch;
-    }
-    .vision-copy p {
-      font-size: 16.5px;
-      line-height: 1.65;
-      color: var(--ink-muted);
-      max-width: 38ch;
-      margin-bottom: 32px;
-    }
-    .actions {
+      flex: 1 0 auto;
       display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .btn {
-      display: inline-flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      height: 44px;
-      padding: 0 20px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 500;
-      transition: transform 0.2s var(--ease), background 0.2s, color 0.2s, border-color 0.2s;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn-primary {
-      background: var(--ink);
-      color: var(--bg);
-    }
-    .btn-primary:hover { background: var(--brand-secondary); }
-    .btn-ghost {
-      border: 1px solid var(--line);
-      color: var(--ink);
-      background: transparent;
-    }
-    .btn-ghost:hover {
-      border-color: rgba(43, 43, 41, 0.22);
-      background: rgba(43, 43, 41, 0.04);
-    }
-    .btn svg { width: 14px; height: 14px; opacity: 0.7; }
-
-    .vision-media {
-      position: relative;
-      border-radius: 4px;
-      overflow: hidden;
-      aspect-ratio: 4 / 5;
-      background: var(--bg-warm);
-      box-shadow:
-        0 24px 60px rgba(43, 43, 41, 0.1),
-        0 2px 8px rgba(43, 43, 41, 0.04);
-    }
-    .vision-media img {
+      padding:
+        calc(88px + clamp(32px, 6vw, 72px))
+        clamp(20px, 5vw, 64px)
+        clamp(48px, 8vw, 96px);
+      gap: clamp(36px, 6vw, 64px);
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: saturate(0.95) contrast(1.02);
-      transition: transform 1.2s var(--ease);
-    }
-    .vision-media:hover img { transform: scale(1.03); }
-    .vision-media::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg, transparent 60%, rgba(43, 43, 41, 0.22) 100%),
-        linear-gradient(90deg, rgba(56, 116, 120, 0.06), transparent 45%);
-      pointer-events: none;
-    }
-    .vision-caption {
-      position: absolute;
-      left: 16px;
-      bottom: 14px;
-      z-index: 1;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(251, 250, 246, 0.9);
-    }
-
-    /* ——— Footer (matches Framer site footer) ——— */
-    .footer {
-      width: 100%;
-      padding: 80px 0 0;
-      text-align: center;
-      background: var(--bg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .footer-inner {
-      width: min(100%, 1600px);
+      max-width: 920px;
       margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 40px;
-    }
-    .footer-top {
-      width: min-content;
-      max-width: 100%;
-      margin: 0 auto;
-      padding: 0 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 32px;
-      box-sizing: border-box;
-    }
-    .footer-brand-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-      width: min-content;
-      max-width: 100%;
-    }
-    .footer-logo {
-      font-family: "GT Standard L Medium", "GT Standard L Regular", system-ui, sans-serif;
-      font-weight: 500;
-      font-size: clamp(40px, 5.2vw, 56px);
-      letter-spacing: -0.05em;
-      line-height: 1;
-      color: var(--brand-secondary);
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    .footer-logo:hover { color: var(--ink); }
-    .footer-tagline {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-      font-family: var(--nav-font);
-      font-size: 16px;
-      line-height: 1.4;
-      color: var(--ink-muted);
-      letter-spacing: -0.01em;
-      white-space: nowrap;
-    }
-    .footer-socials {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .footer-socials a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px;
-      height: 48px;
-      color: var(--ink);
-      transition: color 0.2s ease, opacity 0.2s ease;
-    }
-    .footer-socials a:hover { color: var(--ink-muted); }
-    .footer-socials svg {
-      width: 18px;
-      height: 18px;
-      display: block;
-    }
-    .footer-cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 48px;
-      padding: 12px 24px;
-      border-radius: 24px;
-      background: var(--ink);
-      color: var(--bg) !important;
-      font-family: var(--nav-font);
-      font-size: 15px;
-      letter-spacing: -0.01em;
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-    .footer-cta:hover {
-      background: var(--brand-secondary);
-      transform: translateY(-1px);
-    }
-    .footer-links {
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 40px;
-      list-style: none;
-      height: 60px;
-      box-sizing: border-box;
-    }
-    .footer-links li {
-      flex: 1 1 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-width: 0;
-    }
-    .footer-links a {
-      font-family: var(--nav-font);
-      font-size: 17px;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-      transition: color 0.2s ease;
-      padding: 10px 4px;
-      white-space: nowrap;
-    }
-    .footer-links a:hover { color: var(--ink-muted); }
-    .footer-art {
-      position: relative;
-      width: 100vw;
-      max-width: 100%;
-      margin: 0;
-      margin-left: calc(50% - 50vw);
-      overflow: hidden;
-      aspect-ratio: 3.69231;
-      height: clamp(220px, 28vw, 434px);
-      flex: none;
-    }
-    .footer-art-fade {
-      position: absolute;
-      top: -70px;
-      left: 0;
-      right: 0;
-      height: 80px;
-      z-index: 2;
-      background: linear-gradient(180deg, var(--bg) 0%, rgba(254, 252, 248, 0) 100%);
-      pointer-events: none;
-    }
-    .footer-art-media {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
-    .footer-art video,
-    .footer-art img {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 101%;
-      height: 210%;
-      max-width: none;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-    }
-
-    /* ——— Motion ——— */
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
-    }
-    .reveal.is-in { opacity: 1; transform: none; }
-    .reveal-delay-1 { transition-delay: 0.08s; }
-    .reveal-delay-2 { transition-delay: 0.16s; }
-    .reveal-delay-3 { transition-delay: 0.24s; }
-
-    @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; transition: none; }
-      .vision-media img { transition: none; }
-      .nav,
-      .nav-ribbon,
-      .logo,
-      .nav-links a,
-      .nav-cta {
-        animation: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-      }
-      html { scroll-behavior: auto; }
-    }
-
-    /* ——— Responsive ——— */
-    @media (max-width: 1400px) {
-      .nav-ribbon {
-        left: 43px;
-        width: 47px;
-        height: 99px;
-      }
-      .nav-ribbon svg { width: 47px; height: 99px; }
-    }
-
-    @media (max-width: 1200px) {
-      .nav-shell {
-        height: 77px;
-        padding: 10px 120px 0;
-      }
-      .nav-left,
-      .nav-links { gap: 24px; }
-      .nav-links a { font-size: 15px; }
-      .nav-ribbon {
-        left: 32px;
-        width: 38px;
-        height: 80px;
-      }
-      .nav-ribbon svg { width: 38px; height: 80px; }
-    }
-
-    @media (max-width: 900px) {
-      .nav-shell {
-        height: 63px;
-        padding: 6px 20px 0 90px;
-      }
-      .nav-left { gap: 20px; }
-      .nav-links { gap: 16px; }
-      .nav-links a { font-size: 14px; }
-      .nav-cta {
-        height: 40px;
-        padding: 8px 16px;
-        font-size: 14px !important;
-      }
-      .nav-ribbon {
-        left: 13px;
-        width: 30px;
-        height: 64px;
-      }
-      .nav-ribbon svg { width: 30px; height: 64px; }
-      .vision {
-        grid-template-columns: 1fr;
-        padding-top: clamp(24px, 6vw, 48px);
-        padding-bottom: clamp(56px, 10vw, 96px);
-      }
-      .vision-media {
-        order: -1;
-        aspect-ratio: 16 / 11;
-        max-height: min(420px, 52vw);
-        width: 100%;
-      }
-      .vision-copy h2 { max-width: none; }
-      .vision-copy p { max-width: none; }
     }
 
     @media (max-width: 810px) {
-      .nav-shell {
-        height: 56px;
-        padding: 4px 20px 0 56px;
-      }
-      .nav-links-desktop { display: none; }
-      .nav-cta-desktop { display: none; }
-      .nav-toggle {
-        display: inline-flex;
-        min-width: 44px;
-        min-height: 44px;
-      }
-      .nav-ribbon {
-        left: 13px;
-        width: 30px;
-        height: 64px;
-      }
-      .nav-ribbon svg { width: 30px; height: 64px; }
-      .nav-drawer {
-        display: none;
-        position: fixed;
-        top: calc(56px + env(safe-area-inset-top, 0px));
-        left: 12px;
-        right: 12px;
-        z-index: 50;
-        background: var(--bg);
-        border-radius: 16px;
-        box-shadow:
-          0 16px 48px rgba(43, 43, 41, 0.12),
-          0 0 0 1px rgba(43, 43, 41, 0.06);
-        padding: 8px 0 16px;
-        max-height: min(80vh, 560px);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-      .nav-drawer.is-open { display: block; }
-      body.menu-open { overflow: hidden; }
-      .nav-drawer .nav-cta {
-        display: flex;
-        width: calc(100% - 32px);
-        margin: 8px 16px 12px;
-        height: 48px;
-        font-size: 15px !important;
-      }
-      .nav-drawer-list {
-        list-style: none;
-        margin: 0;
-        padding: 0 8px;
-      }
-      .nav-drawer-list li {
-        border-top: 1px solid rgba(43, 43, 41, 0.08);
-      }
-      .nav-drawer-list a {
-        display: flex;
-        align-items: center;
-        min-height: 56px;
-        padding: 14px 16px;
-        font-family: "GT Standard L Medium", var(--nav-font);
-        font-size: 17px;
-        letter-spacing: -0.01em;
-        color: rgb(20, 23, 31);
-      }
-
-      .hero {
-        padding: clamp(48px, 12vw, 80px) 20px clamp(40px, 8vw, 64px);
-      }
-      .hero h1 {
-        font-size: clamp(52px, 16vw, 80px);
-        margin-bottom: 20px;
-      }
-      .eyebrow {
-        font-size: 12px;
-        margin-bottom: 14px;
-      }
-      .mission {
-        font-size: 17px;
-        line-height: 1.55;
-        padding: 0 4px;
-      }
-
-      .vision {
-        padding-left: 20px;
-        padding-right: 20px;
-        gap: 28px;
-      }
-      .vision-copy h2 {
-        font-size: clamp(28px, 7.5vw, 36px);
-        margin-bottom: 14px;
-      }
-      .vision-copy p {
-        font-size: 15.5px;
-        margin-bottom: 24px;
-      }
-      .actions {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .btn {
-        width: 100%;
-        min-height: 48px;
-        height: 48px;
-        font-size: 15px;
-      }
-      .vision-media {
-        border-radius: 6px;
-        max-height: none;
-        aspect-ratio: 4 / 3;
-      }
-      .vision-caption {
-        font-size: 10px;
-        left: 12px;
-        bottom: 12px;
-      }
-
-      .footer {
-        padding-top: 64px;
-      }
-      .footer-inner { gap: 40px; width: 100%; }
-      .footer-top { gap: 28px; width: 100%; }
-      .footer-brand-block { width: 100%; gap: 20px; }
-      .footer-logo { font-size: 36px; white-space: normal; }
-      .footer-tagline {
-        font-size: 15px;
-        white-space: normal;
-        padding: 0 12px;
-      }
-      .footer-links {
-        flex-direction: column;
-        flex-wrap: nowrap;
-        gap: 0;
-        height: auto;
-        width: 100%;
-        max-width: none;
-        padding: 0;
-      }
-      .footer-links li {
-        flex: none;
-        width: 100%;
-      }
-      .footer-links a {
-        width: 100%;
-        min-height: 52px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-top: 1px solid var(--line);
-        font-size: 16px;
-        padding: 14px 12px;
-      }
-      .footer-art {
-        height: 180px;
-        aspect-ratio: auto;
-        margin-left: 0;
-        width: 100%;
-      }
-      .footer-art video,
-      .footer-art img {
-        width: 100%;
-        height: 100%;
-        position: relative;
+      main {
+        padding-top: calc(72px + clamp(28px, 8vw, 48px));
       }
     }
 
-    @media (min-width: 811px) {
-      .nav-drawer { display: none !important; }
+    .mission {
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: clamp(1.125rem, 2.1vw, 1.375rem);
+      line-height: 1.55;
+      letter-spacing: -0.015em;
+      color: var(--ink-muted);
+      text-align: center;
+      text-wrap: pretty;
+      max-width: 38em;
     }
 
-    @media (max-width: 380px) {
-      .hero h1 { font-size: 48px; }
-      .logo { font-size: 13px; }
+    .mission strong {
+      color: var(--ink);
+      font-family: "GT Standard L Medium", var(--sans);
+      font-weight: 500;
     }
 
+    .frame {
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #f0ebe3;
+      box-shadow:
+        0 28px 64px rgba(43, 43, 41, 0.1),
+        0 2px 8px rgba(43, 43, 41, 0.04);
+      aspect-ratio: 4 / 5;
+    }
+
+    .frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.94) contrast(1.02);
+    }
+
+    /* Legacy chrome (hidden by shared marketing nav) */
+    .nav-legacy { display: none !important; }
   </style>
-
-<link rel="preload" as="image" href="/ontitled-favicon-transparent.png" fetchpriority="high">
+  <link rel="preload" as="image" href="/ontitled-favicon-transparent.png" fetchpriority="high" />
+  <link rel="preload" as="image" href="/contra-assets/rXZq00I8qUTEM9GWwDnoStXjKKw.png" fetchpriority="high" />
 
 <link rel="stylesheet" href="/marketing/nav.css?v=97100" id="ot-marketing-nav-css" />
 </head>
 <body>
-  <a class="nav-ribbon nav-legacy" href="/" aria-label="[Ontitled] home">
-    <svg viewBox="0 0 62 130" xmlns="http://www.w3.org/2000/svg" role="presentation">
-      <path d="M 62 128.979 C 57.834 127.71 53.925 125.957 50.356 123.798 C 45.31 120.894 40.991 117.089 37.692 112.642 C 35.187 109.429 33.16 105.897 31.714 102.135 L 30.652 102.135 L 30.652 130 L 30.652 102.135 L 29.575 102.135 C 28.163 105.868 26.2 109.375 23.773 112.568 C 20.548 117.035 16.328 120.857 11.389 123.773 C 7.901 125.94 4.076 127.702 0.001 128.978 L 0.001 130 L 0 130 L 0 0 L 62 0 Z" fill="rgb(0, 0, 0)"/><image href="/ontitled-favicon-transparent.png" x="-12" y="22" width="86" height="86" preserveAspectRatio="xMidYMid meet" />
-      <path d="M 0 17.331 L 15.658 17.331 L 15.658 32 L 15.087 32 C 14.382 30.074 13.402 28.242 12.174 26.55 C 10.554 24.2 8.419 22.183 5.905 20.625 C 4.09 19.444 2.102 18.502 0 17.827 Z M 18.341 32 L 18.341 17.331 L 33.999 17.331 L 33.999 17.827 C 31.897 18.502 29.909 19.444 28.094 20.625 C 25.579 22.182 23.445 24.2 21.825 26.55 C 20.597 28.242 19.618 30.074 18.912 32 Z M 15.592 0.001 L 15.592 14.668 L 0 14.668 L 0 14.153 C 2.077 13.479 4.041 12.544 5.838 11.376 C 8.353 9.819 10.487 7.801 12.107 5.45 C 13.336 3.759 14.315 1.927 15.02 0.001 Z M 18.407 14.667 L 18.407 0 L 18.98 0 C 19.684 1.926 20.664 3.758 21.892 5.45 C 23.511 7.801 25.646 9.819 28.161 11.375 L 28.161 11.374 C 29.958 12.543 31.923 13.477 34 14.151 L 34 14.667 Z" fill="rgb(251, 250, 246)" transform="translate(14 42)" display="none"/>
-    </svg>
-  </a>
+  <a class="nav-ribbon nav-legacy" href="/" aria-label="[Ontitled] home" hidden></a>
+  <header class="nav nav-legacy" id="nav" hidden></header>
 
-  <header class="nav nav-legacy" id="nav">
-    <div class="nav-shell">
-      <div class="nav-inner">
-        <div class="nav-left">
-          <a class="logo" href="/">[Ontitled]</a>
-          <ul class="nav-links nav-links-desktop" id="navLinks">
-            <li><a href="/dyson">Dyson</a></li>
-            <li><a href="/dike">Dike</a></li>
-            <li><a href="/index">Index</a></li>
-            <li><a href="/jobs">Jobs</a></li>
-            <li><a href="/company" aria-current="page">Company</a></li>
-          </ul>
-        </div>
-        <div class="nav-right">
-          <a class="nav-cta nav-cta-desktop" href="https://calendly.com/partnerships-ontitled/ontitled-partnership-request" target="_blank" rel="noopener">Get in touch</a>
-          <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="navToggle">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-              <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mobile menu (mirrors Framer drawer) -->
-    <div class="nav-drawer" id="navDrawer" hidden>
-      <a class="nav-cta" href="https://calendly.com/partnerships-ontitled/ontitled-partnership-request" target="_blank" rel="noopener">Get in touch</a>
-      <ul class="nav-drawer-list">
-        <li><a href="https://ontitled.com/creative-arena">Creative Arena</a></li>
-        <li><a href="/dyson">Dyson</a></li>
-        <li><a href="/dike">Dike</a></li>
-        <li><a href="/company" aria-current="page">Company</a></li>
-        <li><a href="/index">Index</a></li>
-        <li><a href="/jobs">Jobs</a></li>
-      </ul>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <p class="eyebrow reveal">Company</p>
-      <h1 class="reveal reveal-delay-1">About</h1>
-      <p class="mission reveal reveal-delay-2">
-        <strong>[Ontitled]</strong> is the frontier human data and evaluation lab for creative AI —
-        building the systems that teach models what style, tone, and taste actually mean.
-      </p>
-    </section>
-
-    <section class="vision">
-      <div class="vision-copy">
-        <h2 class="reveal">Our vision for the future of creative AI</h2>
-        <p class="reveal reveal-delay-1">
-          We believe the next generation of creative tools must be grounded in human judgment —
-          not scraped averages. Through verified creative experts and rigorous evaluation, we set
-          the benchmark for how models understand and produce creative work.
-        </p>
-        <div class="actions reveal reveal-delay-2">
-          <a class="btn btn-primary" href="./index">
-            Index
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a class="btn btn-ghost" href="./dyson">
-            Explore Dyson
-          </a>
-        </div>
-      </div>
-      <figure class="vision-media reveal reveal-delay-1">
-        <img
-          src="/contra-assets/rXZq00I8qUTEM9GWwDnoStXjKKw.png"
-          alt="Classical study — a stand-in for human creative judgment at the center of Ontitled’s work"
-          width="1182"
-          height="936"
-          loading="eager"
-        />
-        <figcaption class="vision-caption">Human judgment · first principle</figcaption>
-      </figure>
-    </section>
-
+  <main id="main">
+    <p class="mission">
+      <strong>[Ontitled]</strong> is the frontier human data and evaluation lab for creative AI — building the systems that teach models what style, tone, and taste actually mean.
+    </p>
+    <figure class="frame">
+      <img
+        src="/contra-assets/rXZq00I8qUTEM9GWwDnoStXjKKw.png"
+        alt=""
+        width="1182"
+        height="936"
+        loading="eager"
+        decoding="async"
+      />
+    </figure>
   </main>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-top">
-        <a class="footer-logo" href="/">[Ontitled]</a>
-        <div class="footer-brand-block">
-          <p class="footer-tagline">
-            <span>Title the work, not the token.</span>
-            <span></span>
-          </p>
-          <ul class="footer-socials" aria-label="Social links">
-            <li>
-              <a href="https://x.com/ontitled" target="_blank" rel="noopener" aria-label="X">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.727-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.youtube.com/@ontitled" target="_blank" rel="noopener" aria-label="YouTube">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/></svg>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/company/ontitled" target="_blank" rel="noopener" aria-label="LinkedIn">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z"/></svg>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.instagram.com/ontitled" target="_blank" rel="noopener" aria-label="Instagram">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.64-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.tiktok.com/@ontitled" target="_blank" rel="noopener" aria-label="TikTok">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.73a8.19 8.19 0 0 0 4.76 1.52V6.79a4.85 4.85 0 0 1-1-.1z"/></svg>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.pinterest.com/ontitled" target="_blank" rel="noopener" aria-label="Pinterest">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.08 3.15 9.42 7.59 11.17-.1-.95-.2-2.4.04-3.44.22-.94 1.4-5.96 1.4-5.96s-.36-.72-.36-1.78c0-1.67.97-2.92 2.17-2.92 1.02 0 1.52.77 1.52 1.69 0 1.03-.66 2.57-1 4-.28 1.2.6 2.17 1.78 2.17 2.13 0 3.77-2.25 3.77-5.5 0-2.87-2.06-4.88-5.01-4.88-3.41 0-5.41 2.56-5.41 5.21 0 1.03.4 2.14.89 2.74a.36.36 0 0 1 .08.34c-.09.38-.3 1.2-.34 1.37-.05.22-.18.27-.41.16-1.53-.71-2.49-2.95-2.49-4.75 0-3.87 2.81-7.42 8.11-7.42 4.26 0 7.57 3.04 7.57 7.1 0 4.24-2.67 7.65-6.38 7.65-1.25 0-2.42-.65-2.82-1.41l-.77 2.93c-.28 1.07-1.03 2.41-1.54 3.23A12 12 0 0 0 12 24c6.63 0 12-5.37 12-12S18.63 0 12 0z"/></svg>
-              </a>
-            </li>
-          </ul>
-          <a class="footer-cta" href="https://calendly.com/partnerships-ontitled/ontitled-partnership-request" target="_blank" rel="noopener">Request partnership</a>
-        </div>
-      </div>
-
-      <ul class="footer-links">
-        <li><a href="/dyson">Dyson</a></li>
-        <li><a href="/index">Index</a></li>
-        <li><a href="/jobs">Jobs</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-art" aria-hidden="true">
-      <div class="footer-art-fade"></div>
-      <div class="footer-art-media">
-        <video
-          src="/contra-assets/hmg5dFU33RwVgzS4V0wrSxuKJ3E.mp4"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-        ></video>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    (function () {
-      var nav = document.getElementById("nav");
-      var toggle = document.getElementById("navToggle");
-      var drawer = document.getElementById("navDrawer");
-
-      function setMenuOpen(open) {
-        if (!toggle || !drawer || !nav) return;
-        drawer.classList.toggle("is-open", open);
-        if (open) drawer.removeAttribute("hidden");
-        else drawer.setAttribute("hidden", "");
-        nav.classList.toggle("is-open", open);
-        document.body.classList.toggle("menu-open", open);
-        toggle.setAttribute("aria-expanded", open ? "true" : "false");
-        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-        var path = toggle.querySelector("path");
-        if (path) {
-          path.setAttribute(
-            "d",
-            open ? "M6 6l12 12M18 6L6 18" : "M4 7h16M4 12h16M4 17h16"
-          );
-        }
-      }
-
-      if (toggle && drawer) {
-        toggle.addEventListener("click", function () {
-          setMenuOpen(!drawer.classList.contains("is-open"));
-        });
-        drawer.querySelectorAll("a").forEach(function (a) {
-          a.addEventListener("click", function () {
-            setMenuOpen(false);
-          });
-        });
-        window.addEventListener("resize", function () {
-          if (window.innerWidth > 810) setMenuOpen(false);
-        });
-        document.addEventListener("keydown", function (e) {
-          if (e.key === "Escape") setMenuOpen(false);
-        });
-      }
-
-      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        var nodes = document.querySelectorAll(".reveal");
-        if ("IntersectionObserver" in window) {
-          var io = new IntersectionObserver(
-            function (entries) {
-              entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add("is-in");
-                  io.unobserve(entry.target);
-                }
-              });
-            },
-            { threshold: 0.08, rootMargin: "0px 0px -24px 0px" }
-          );
-          nodes.forEach(function (n) { io.observe(n); });
-        } else {
-          nodes.forEach(function (n) { n.classList.add("is-in"); });
-        }
-      } else {
-        document.querySelectorAll(".reveal").forEach(function (n) {
-          n.classList.add("is-in");
-        });
-      }
-    })();
-  </script>
-
-<script>
-/* Remove Datasets nav + block external research#datasets leaks */
-(function () {
-  function isDatasetsLink(a) {
-    if (!a || a.tagName !== "A") return false;
-    var href = (a.getAttribute("href") || "").toLowerCase();
-    var text = (a.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-    if (text === "datasets") return true;
-    if (href.indexOf("research#datasets") !== -1) return true;
-    if (href.indexOf("/datasets") !== -1 && href.indexOf("huggingface") === -1) return true;
-    if (href.indexOf("ontitled.com") !== -1 && href.indexOf("research") !== -1) return true;
-    return false;
-  }
-
-  function scrub(root) {
-    var scope = root && root.querySelectorAll ? root : document;
-    var links = scope.querySelectorAll ? scope.querySelectorAll("a") : [];
-    for (var i = 0; i < links.length; i++) {
-      var a = links[i];
-      if (!isDatasetsLink(a)) continue;
-      var node = a.closest('[data-framer-name="Link"], [data-framer-name="Human Creativity Benchmark"], .framer-mkxirh, .framer-1sa4zri-container, .framer-bj4eth-container') || a;
-      if (node && node.parentNode) node.parentNode.removeChild(node);
-    }
-  }
-
-  function blockExternal(e) {
-    var a = e.target && e.target.closest ? e.target.closest("a") : null;
-    if (!a) return;
-    var href = a.getAttribute("href") || "";
-    if (/ontitled\.com\/research/i.test(href) || /research#datasets/i.test(href) || /\/research(\/|$|#)/i.test(href)) {
-      e.preventDefault();
-      e.stopPropagation();
-      var next = "/index";
-      try {
-        var u = new URL(href, window.location.origin);
-        if (u.pathname.indexOf("/research") === 0) next = u.pathname.replace(/^\/research/, "/index") + u.hash;
-      } catch (err) {}
-      window.location.assign(next);
-    }
-  }
-
-  document.addEventListener("click", blockExternal, true);
-  document.addEventListener("auxclick", blockExternal, true);
-
-  function run() { scrub(document); }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
-  else run();
-  setTimeout(run, 0);
-  setTimeout(run, 250);
-  setTimeout(run, 1000);
-  setTimeout(run, 2500);
-  if (document.body) {
-    var mo = new MutationObserver(function () { run(); });
-    mo.observe(document.body, { childList: true, subtree: true });
-  }
-})();
-</script>
-
-<script src="/marketing/nav.js?v=96500" id="ot-marketing-nav-js" defer></script>
+<script src="/marketing/nav.js?v=96600" id="ot-marketing-nav-js" defer></script>
 </body>
 </html>
