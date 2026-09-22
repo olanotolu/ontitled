@@ -62,7 +62,7 @@ const nextConfig: NextConfig = {
         },
         {
           source: "/",
-          destination: "/home.html",
+          destination: "/omposition.html",
         },
       ],
       afterFiles: [
