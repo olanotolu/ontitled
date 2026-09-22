@@ -95,6 +95,10 @@ const nextConfig: NextConfig = {
           destination: "/our-thesis.html",
         },
         {
+          source: "/omposition",
+          destination: "/omposition.html",
+        },
+        {
           source: "/company",
           destination: "/company.html",
         },
