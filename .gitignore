@@ -48,6 +48,22 @@ research/
 docs/superpowers/
 public/contra-assets/*.mp4
 public/contra-assets/*.webm
+
+# Temp screenshots / scratch output
+.tmp-*
+*.old.*
+
+# Cloudflare wrangler local cache
+.wrangler/
+
+# Scrape / research output
+.firecrawl/
+
+# ML model weights
+*.pt
+*.onnx
+
+# Local tooling
 .claude/settings.local.json*
 trajector-doctor-*.tar.gz
 trajector-doctor-*/
