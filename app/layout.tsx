@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Ontitled",
+  title: "Ontitled — We make old giants dance again.",
   description: "We make old giants dance again.",
+  icons: { icon: "/icon.svg" },
 };
 
 export default function RootLayout({
