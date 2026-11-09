@@ -6,31 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "test": "vitest run",
-    "typecheck": "tsc --noEmit",
-    "marketing:nav": "python3 scripts/inject-marketing-nav.py",
-    "marketing:import": "node scripts/marketing-import.mjs",
-    "marketing:smoke": "node scripts/marketing-smoke.mjs",
-    "supabase:link": "supabase link --project-ref evwquagmfetnjhenpaqd",
-    "supabase:push": "supabase db push",
-    "supabase:types": "supabase gen types typescript --linked > lib/supabase/database.types.ts",
-    "supabase:status": "supabase projects list"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^4.25.0",
-    "@supabase/supabase-js": "^2.110.7",
-    "border-beam": "^1.3.0",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest",
-    "thinking-orbs": "^0.1.1"
+    "react-dom": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "typescript": "latest",
-    "vitest": "^4.1.10"
+    "typescript": "latest"
   }
 }

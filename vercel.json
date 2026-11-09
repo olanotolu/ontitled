@@ -1,15 +1,9 @@
 {
   "headers": [
     {
-      "source": "/((?!contra-assets).*)",
+      "source": "/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/contra-assets/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }
       ]
     }
   ]

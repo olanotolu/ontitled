@@ -48,3 +48,6 @@ research/
 docs/superpowers/
 public/contra-assets/*.mp4
 public/contra-assets/*.webm
+.claude/settings.local.json*
+trajector-doctor-*.tar.gz
+trajector-doctor-*/
