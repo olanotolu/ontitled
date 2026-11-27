@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
           source: "/",
           destination: "/index.html",
         },
+        {
+          source: "/manifesto",
+          destination: "/manifesto.html",
+        },
       ],
       afterFiles: [],
       fallback: [],
