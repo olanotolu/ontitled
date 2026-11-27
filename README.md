@@ -1,20 +1,20 @@
 # [Ontitled]
 
-Single-page site for **[Ontitled]** — "We make old giants dance again."
+Single-page site for **[Ontitled]** — "what exists is not all that can exist."
 
 ## Structure
 
 ```text
 app/layout.tsx      # Bare Next.js root layout
-public/omposition.html   # The page (served at / via rewrite)
-next.config.ts      # / → /omposition.html
+public/index.html   # The page (served at / via rewrite)
+next.config.ts      # / → /index.html
 ```
 
 ## Routes
 
 | URL | Serves |
 |-----|--------|
-| `/` | `public/omposition.html` |
+| `/` | `public/index.html` |
 
 ## Setup
 
@@ -28,6 +28,5 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Deploy
 
 ```bash
-npm run build
-vercel deploy
+npx wrangler pages deploy public --project-name ontitled
 ```

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Ontitled — We make old giants dance again.",
-  description: "We make old giants dance again.",
+  title: "ontitled.",
+  description: "Reality is not finished.",
   icons: { icon: "/icon.svg" },
 };
 

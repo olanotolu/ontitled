@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       beforeFiles: [
         {
           source: "/",
-          destination: "/omposition.html",
+          destination: "/index.html",
         },
       ],
       afterFiles: [],
